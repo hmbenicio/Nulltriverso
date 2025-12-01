@@ -3,8 +3,6 @@
 Aplicação mobile de bem-estar que integra nutrição, tecnologia e visual de “multiverso”.  
 A primeira entrega do ecossistema Nulltriverso é um módulo completo de **IMC** desenvolvido em **React Native com Expo**, totalmente client-side: cálculo, classificação, persistência local e visualizações modernas — tudo no dispositivo, sem backend nesta versão.
 
----
-
 ## Principais funcionalidades
 
 - Cálculo de IMC com **nome, peso (kg) e altura (cm)**, aceitando números com **ponto ou vírgula**.  
@@ -15,8 +13,6 @@ A primeira entrega do ecossistema Nulltriverso é um módulo completo de **IMC**
   - **Linha de tendência mockada** (SVG).  
 - Interface com gradientes e identidade visual temática do Nulltriverso.
 
----
-
 ## Fluxo atual da aplicação
 
 1. App inicia em `HomeIMCPage` (ou tela principal definida no projeto).  
@@ -24,16 +20,12 @@ A primeira entrega do ecossistema Nulltriverso é um módulo completo de **IMC**
 3. Gauge e linha de tendência atualizam com base no cálculo.  
 4. Último cálculo permanece salvo para consultas futuras.
 
----
-
-## 🧰 Tecnologias utilizadas
+## Tecnologias utilizadas
 
 - **React Native 0.81 + Expo 54**  
 - **AsyncStorage** para armazenamento local  
 - **react-native-svg** para gauge e gráficos  
 - **expo-linear-gradient** para identidade visual  
-
----
 
 ## Como executar o projeto
 
@@ -43,18 +35,16 @@ npm install
 npm start   # Expo menu (a = Android, i = iOS, w = Web)
 ```
 
----
-
 ## Requisitos:
 
 - Node.js 18+
 - App Expo Go instalado em dispositivo ou emulador
 
----
-
 ## Estrutura do repositório
+
 bash
 Copiar código
+
 Nulltriverso/
 │
 ├── frontend/             # Aplicação móvel (Expo/React Native)
@@ -70,8 +60,6 @@ Nulltriverso/
 │
 └── Apresentação/         # Materiais de apresentação do projeto
 
----
-
 ## Documentação
 - <a href="Docs/01-Documentação de Contexto.md">Documentação de Contexto</a>
 - <a href="Docs/02-Especificação do Projeto.md">Especificação do Projeto</a>
@@ -86,8 +74,6 @@ Nulltriverso/
 - <a href="Docs/11-Registro de Testes de Usabilidade.md">Registro de Testes de Usabilidade</a>
 - <a href="Docs/12-Apresentação do Projeto.md">Apresentação do Projeto</a>
 - <a href="Docs/13-Referências.md">Referências</a>
-
----
 
 ## Contatos e equipe
 Projeto desenvolvido para portfólio pessoal.
