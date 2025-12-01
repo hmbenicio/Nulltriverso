@@ -1,0 +1,15 @@
+export const colors = {
+  ink: "#0f482f",
+  inkMuted: "#4a5f55",
+  inkSoft: "#7b8f86",
+  accent: "#22c55e",
+  warn: "#f59e0b",
+  error: "#b91c1c",
+  surface: "#ffffff",
+  border: "#ebe2d9",
+  surfaceMuted: "#f7f4ef",
+  primary: "#0f482f",
+  badge: "#cfd8dc",
+  background: "#ebe2d9",
+  backgroundLight: "#f7f4ef",
+};
