@@ -1,33 +1,29 @@
 # Projeto de Interface
 
-> **Pré-requisitos**: Consulte a <a href="02-Especificação do Projeto.md"> Especificação do Projeto</a> para obter detalhes sobre os requisitos funcionais, não funcionais e as histórias de usuário que guiaram o desenvolvimento da interface.
+## Visão geral
+O app possui uma única tela (Home) que concentra entrada de dados e retorno do resultado. A hierarquia é curta para reduzir fricção: header com texto guia, cartão de formulário, cartão de resultado e duas visualizações (gauge e linha).
 
-Este documento descreve as principais interfaces da plataforma, com foco na interação do usuário, fluxos de navegação e os protótipos interativos que demonstram as funcionalidades do sistema. A elaboração das interfaces segue as diretrizes e necessidades definidas na documentação de especificação, visando atender aos requisitos e expectativas do usuário.
+## Identidade visual
+- **Paleta**: verdes e tons terrosos (`#0f482f` primário, `#22c55e` sucesso, `#f59e0b` alerta, `#ef4444` crítico) com fundos claros (`#f7f4ef` / `#ebe2d9`) para legibilidade.
+- **Tipografia**: uso da família padrão do sistema com pesos fortes para títulos e contraste moderado para texto de apoio.
+- **Iconografia/ilustrações**: gauge semicircular com faixas coloridas e labels, mais linha evolutiva simulada.
 
-## Diagrama de Fluxo
+## Componentes-chave
+- **SectionCard**: cartão com padding e borda sutil, usado para formulário e resultados.
+- **TextField**: entrada com borda clara, suporte a teclado numérico/decimal e autocapitalização para nome.
+- **PrimaryButton**: botão verde com texto em alto contraste.
+- **ResultRow**: linha chave/valor para exibir dados calculados.
+- **ImcGauge**: velocímetro SVG animado mostrando a faixa do IMC.
+- **ImcLineChart**: linha de tendência usando dados mockados para ilustrar evolução.
 
-O diagrama de fluxo apresenta o caminho de interação do usuário com o sistema, sem a necessidade de detalhamento imediato do design das telas. Este diagrama é essencial para mapear as principais ações e navegação que o usuário realizará dentro do sistema. Ele ajuda a planejar as interações e assegura que o wireframe final seja eficaz e intuitivo.
+## Fluxo da tela
+1. **Header**: título “Calculadora de IMC” e subtítulo orientativo.
+2. **Dados do paciente**: campos de nome, peso (kg) e altura (cm); mensagem de erro logo abaixo se validação falhar; botão “Calcular IMC”.
+3. **Resultado**: badge de status colorido, barra de progresso proporcional ao IMC, valores formatados (1 casa para peso/altura e 2 para IMC).
+4. **Visualizações**: gauge semicircular com faixas de IMC e ponteiro animado; linha de evolução com pontos pré-definidos para demonstrar tendência.
 
-### Elementos do Diagrama de Fluxo
-
-O diagrama é composto por "caixas" (boxes) que representam as principais funcionalidades do sistema, como menus, botões e acessos, e as interações que o usuário pode realizar, como editar, pesquisar, filtrar e configurar. As conexões entre essas caixas indicam o fluxo de navegação do usuário.
-
-```mermaid
-flowchart LR
-    Inicio(( )) --> Acao1[Ação 1]
-    Acao1 --> Acao2[Ação 2]
-    Acao2 --> Decisao{Decisão}
-    Decisao -->|Sim| Acao3[Ação 3]
-    Decisao -->|Não| Acao4[Ação 4]
-    Acao3 --> Acao5[Ação 5]
-    Acao4 --> Acao5
-    Acao5 --> Fim((( )))
-```
-
-## Wireframes
-
-Os wireframes são protótipos iniciais de design utilizados para estruturar a interface de usuário de uma aplicação ou site. Eles servem como um esboço para definir a disposição dos elementos da interface e como as páginas se relacionam. No contexto do projeto, os wireframes ajudam a visualizar a estrutura da interface sem a preocupação com o design visual final.
-
-Os wireframes são fundamentais para testar e iterar o layout da interface, garantindo que a navegação e as funcionalidades estejam claras e fáceis de usar antes de iniciar o design visual mais detalhado.
-
-![Exemplo de Wireframe](img/Wireframes.png)
+## Acessibilidade e UX
+- Campos usam teclado apropriado e validação imediata.
+- Cores refletem estados (azul/verde/âmbar/vermelho) e texto acompanha para não depender só de cor.
+- Layout em rolagem única, com `KeyboardAvoidingView` para evitar sobreposição do teclado.
+- Mensagens curtas e em português simples para facilitar entendimento pelo público amplo.

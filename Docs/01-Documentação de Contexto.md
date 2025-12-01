@@ -1,162 +1,44 @@
 # Introdução
 
-Este documento apresenta uma visão geral do projeto, contextualizando seu desenvolvimento e destacando os principais elementos que o motivam. São abordados o cenário em que o projeto está inserido, o problema que se pretende resolver, os objetivos estratégicos, a justificativa para sua realização e a definição do público-alvo.
+Nulltriverso é um ecossistema de bem‑estar que une tecnologia (o “Null” da programação), nutrição e um olhar de multiverso para jornadas de saúde personalizadas. O módulo de IMC é a primeira entrega desse universo: uma calculadora móvel, construída em React Native com Expo, que valida dados básicos do paciente, calcula o Índice de Massa Corporal e exibe status, gauge ilustrativo e evolução simulada. Os dados ficam gravados localmente no aparelho, permitindo reuso imediato mesmo sem conectividade.
 
 # Problema
 
-Nesta seção, descreve-se de maneira clara e objetiva o problema que a aplicação buscará solucionar. Evite, neste momento, mencionar a solução ou aspectos técnicos da aplicação. Apresente o contexto em que o problema ocorre — como o ambiente empresarial, tecnologias envolvidas ou fatores relevantes — sempre utilizando informações concretas e já conhecidas. Ainda não é o momento para definir requisitos ou propor soluções. Opcionalmente, pode-se aplicar metodologias como o Design Thinking para apoiar a investigação e ampliar a compreensão do problema em todas as suas dimensões.
+Pessoas que desejam acompanhar o próprio peso ou orientar pacientes nem sempre têm uma ferramenta simples, offline e coerente entre dispositivos. Aplicativos existentes costumam exigir cadastro complexo, depender de internet ou não exibem os resultados de forma didática. Para o time de produto, isso impede validar rapidamente a linguagem visual e os fluxos que serão reaproveitados em futuros módulos do Nulltriverso (cardápios, agenda e metas nutricionais).
 
 # Objetivos
 
-O objetivo geral do projeto é desenvolver um software que solucione o problema descrito anteriormente de forma prática e eficiente.
+**Objetivo geral:** entregar um módulo móvel de IMC pronto para uso que sirva como prova de conceito para o ecossistema Nulltriverso.
 
-Os seguintes objetivos específicos nortearão o projeto:
-
-- Pesquisar e aplicar tecnologias adequadas, considerando critérios como desempenho, escalabilidade e usabilidade.
-- Explorar abordagens metodológicas que favoreçam a resolução do problema, priorizando experimentação, análise de dados e integração de funcionalidades específicas.
-
-Esses objetivos garantirão o foco da pesquisa e orientarão a arquitetura e implementação da solução.
+**Objetivos específicos**
+- Validar o fluxo base de coleta de nome, peso (kg) e altura (cm) com feedback imediato e mensagens de erro claras.
+- Persistir o último cálculo no dispositivo para consulta rápida.
+- Exibir status do IMC com cores padronizadas e visualizações (gauge e linha evolutiva) que serão reaproveitadas em outros módulos.
+- Demonstrar um código front-end desacoplado (componentes reutilizáveis, constantes e utilidades) pronto para crescer com novas features do Nulltriverso.
 
 # Justificativa
 
-Esta seção fundamenta tecnicamente o desenvolvimento da aplicação, destacando a motivação, os objetivos específicos e os critérios que definiram o escopo do projeto. A escolha da aplicação partiu da identificação de uma necessidade concreta ou de uma oportunidade de otimização de processos existentes. A definição dos objetivos foi orientada pela viabilidade técnica, impacto potencial e alinhamento estratégico com as tecnologias selecionadas.
+O IMC é uma métrica universal, simples de explicar ao usuário e barata de validar tecnicamente. Entregar essa funcionalidade primeiro permite:
+- Testar a identidade visual e a camada de componentes antes de acoplar backends ou integrações clínicas.
+- Coletar feedback rápido sobre mensagens, ergonomia de formulários e persistência local.
+- Manter o escopo enxuto (sem backend) enquanto definimos padrões de arquitetura, testes e analytics para os próximos módulos (dietas, metas, gamificação).
 
-Para aprofundar a compreensão do problema, serão utilizados instrumentos como:
+# Público-alvo
 
-## Métodos de Coleta de Dados
+Perfis priorizados na primeira entrega:
 
-- **Questionários**: Coleta de dados quantitativos sobre necessidades e pontos de melhoria percebidos pelos usuários.
-- **Entrevistas**: Obtenção de dados qualitativos aprofundados, visando entender expectativas e desafios sob a ótica dos stakeholders.
-- **Análise Estatística**: Estudo de dados históricos ou de uso do sistema para identificar padrões e orientar decisões.
+1. **Aline, 32, dev em home office** — quer um app rápido, sem cadastro, para acompanhar peso e discutir metas com a nutricionista.
+2. **Carlos, 45, professor com pouco tempo livre** — precisa de mensagens diretas e memória local para revisar o último cálculo sem depender de internet.
+3. **Profissionais de saúde parceiros** — usam o app como vitrine do futuro Nulltriverso e avaliam clareza das faixas e do vocabulário.
 
-Esses métodos fornecerão evidências sólidas para validação de requisitos, identificação de restrições e refinamento das funcionalidades a serem implementadas.
+Principais stakeholders e expectativas:
 
-## Exemplos de Gráficos e Tabelas
+| Stakeholder          | Interesse principal                     | Expectativa-chave                        |
+| -------------------- | --------------------------------------- | ---------------------------------------- |
+| Usuários finais      | Simplicidade e clareza do resultado     | Fluxo rápido, mensagens amigáveis        |
+| Nutricionistas       | Linguagem e faixas corretas de IMC      | Classificação conforme OMS               |
+| Time de produto      | Validação de UX e componentes           | Base reaproveitável para novos módulos   |
+| Engenharia           | Padrões de código e armazenagem local   | Simplicidade, baixo acoplamento          |
+| Marketing/Parcerias  | Narrativa do “Null + Nutri + Multiverso”| Demonstração tangível do conceito        |
 
-### Gráfico de Distribuição de Respostas
-
-Apresentação visual da distribuição das respostas coletadas via questionários, destacando áreas críticas para os usuários.
-
-**Exemplo**
-> #### Nível de Satisfação
-> Este gráfico representa os níveis de satisfação com base em respostas coletadas:
-
-| Nível                 | Gráfico                                      |
-|-----------------------|----------------------------------------------|
-| Muito Insatisfeito    | ███                                          |
-| Insatisfeito          | ████████████                                 |
-| Neutro                | ████████████████████                         |
-| Satisfeito            | ███████████████████████████████              |
-| Muito Satisfeito      | ███████████████                              |
-
-### Tabela de Análise de Requisitos
-
-| Requisito             | Prioridade | Fonte de Dados     | Observações                     |
-|----------------------|------------|--------------------|---------------------------------|
-| Funcionalidade A     | Alta       | Questionário       | Essencial para operação         |
-| Desempenho de Sistema| Média      | Entrevista         | Depende da infraestrutura       |
-| Integração com API X | Alta       | Análise Estatística| Fundamental para escalabilidade |
-
-Todas as decisões técnicas serão registradas com base nas evidências coletadas, garantindo rastreabilidade, transparência e alinhamento com as necessidades do usuário.
-
-# Público-Alvo
-
-A definição clara dos perfis de usuários é crucial para orientar o design e a implementação da aplicação, assegurando que ela atenda às necessidades de diferentes níveis de experiência e interação com tecnologia.
-
-## Perfis de Usuários
-
-### 1. Usuário Iniciante
-
-**Descrição**: Pouca ou nenhuma familiaridade com a tecnologia.
-
-**Características**:
-- Preferência por interfaces simples.
-- Necessidade de suporte adicional (tutoriais, mensagens de ajuda).
-
-**Objetivo**: Realizar tarefas básicas com facilidade.
-
-### 2. Usuário Intermediário
-
-**Descrição**: Alguma experiência prévia, mas não domínio completo.
-
-**Características**:
-- Busca por maior eficiência e recursos avançados.
-- Necessita de suporte ocasional.
-
-**Objetivo**: Agilizar processos e utilizar funcionalidades mais elaboradas.
-
-### 3. Usuário Avançado
-
-**Descrição**: Usuários experientes com capacidade de customização e otimização do sistema.
-
-**Características**:
-- Alta autonomia.
-- Interesse em personalização e uso intensivo das funcionalidades.
-
-**Objetivo**: Maximizar o potencial da aplicação.
-
-### Gestores e Administradores
-
-**Descrição**: Responsáveis pela gestão do sistema e análise estratégica.
-
-**Características**:
-- Configuração e manutenção do sistema.
-- Uso de dados para suporte à decisão.
-
-**Objetivo**: Assegurar eficiência operacional e apoiar decisões estratégicas.
-
-## Diagrama de Personas
-
-A seguir, apresenta-se um diagrama ilustrativo dos perfis de usuários, suas necessidades e objetivos de uso do sistema.
-
-![Diagrama de Personas](img/DiagramadePersonas.png)
-
-## Mapa de Stakeholders
-
-O mapa de stakeholders detalha os diferentes grupos de interesse relacionados ao projeto, permitindo o alinhamento das entregas com suas expectativas e níveis de influência.
-
-| Stakeholder         | Tipo de Interação           | Nível de Influência | Expectativas                        |
-|---------------------|-----------------------------|----------------------|-------------------------------------|
-| Usuários Finais     | Interação Direta            | Alta                 | Usabilidade, suporte                |
-| Gestores            | Supervisão e Monitoramento  | Alta                 | Relatórios, eficiência operacional  |
-| Equipe de Suporte   | Suporte Técnico             | Média                | Diagnóstico rápido, documentação clara |
-| Desenvolvedores     | Desenvolvimento             | Alta                 | Clareza de requisitos, feedback constante |
-| Executivos          | Aprovação Estratégica       | Baixa                | Viabilidade econômica, inovação     |
-
-```mermaid
-flowchart TB
-    Titulo(["Mapa de Stakeholders"])
-    Titulo --> Intro["O mapa de stakeholders detalha os diferentes grupos de interesse relacionados ao projeto, permitindo o alinhamento das entregas com suas expectativas e níveis de influência."]
-    
-    Intro --> Usuarios["Usuários Finais"]
-    Intro --> Gestores["Gestores"]
-    Intro --> Suporte["Equipe de Suporte"]
-    Intro --> Devs["Desenvolvedores"]
-    Intro --> Executivos["Executivos"]
-    
-    Usuarios -->|Tipo de Interação: Interação Direta| U1["Nível de Influência: Alta"]
-    U1 -->|Expectativas| U2["Usabilidade, suporte"]
-    
-    Gestores -->|Tipo de Interação: Supervisão e Monitoramento| G1["Nível de Influência: Alta"]
-    G1 -->|Expectativas| G2["Relatórios, eficiência operacional"]
-    
-    Suporte -->|Tipo de Interação: Suporte Técnico| S1["Nível de Influência: Média"]
-    S1 -->|Expectativas| S2["Diagnóstico rápido, documentação clara"]
-    
-    Devs -->|Tipo de Interação: Desenvolvimento| D1["Nível de Influência: Alta"]
-    D1 -->|Expectativas| D2["Clareza de requisitos, feedback constante"]
-    
-    Executivos -->|Tipo de Interação: Aprovação Estratégica| E1["Nível de Influência: Baixa"]
-    E1 -->|Expectativas| E2["Viabilidade econômica, inovação"]
-    
-    Fim(["A identificação e a compreensão desses stakeholders são fundamentais para guiar o desenvolvimento da aplicação e garantir sua aceitação e sucesso no ambiente real."])
-    
-    U2 --> Fim
-    G2 --> Fim
-    S2 --> Fim
-    D2 --> Fim
-    E2 --> Fim
-
-```
-
-A identificação e a compreensão desses stakeholders são fundamentais para guiar o desenvolvimento da aplicação e garantir sua aceitação e sucesso no ambiente real.
+Entregar valor rápido a esses grupos é essencial para escalar o Nulltriverso para outros “universos” de saúde.

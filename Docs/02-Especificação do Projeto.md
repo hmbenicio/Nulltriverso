@@ -1,206 +1,85 @@
-# Especificações do Projeto
+# Especificação do Projeto
 
-> **Pré-requisitos**: Consulte a <a href="01-Documentação de Contexto.md"> Documentação de Contexto</a></span> para obter informações adicionais sobre o contexto do projeto.
-
-Esta seção detalha a definição do problema e a ideia de solução a partir da perspectiva do usuário. Aqui, abordamos os diagramas de personas, histórias de usuários, requisitos funcionais e não funcionais, além das restrições do projeto.
-
-A seguir, você encontrará uma visão geral do que será coberto, incluindo as técnicas e ferramentas utilizadas para elaborar as especificações do projeto.
+O módulo de IMC do Nulltriverso valida dados básicos de um paciente e retorna seu status nutricional de forma rápida, offline e visualmente clara. A seguir estão as personas, histórias de usuário, requisitos e restrições que guiam a primeira entrega.
 
 ## Personas
 
-**Pedro Paulo** tem 26 anos, é arquiteto recém-formado e trabalha de forma autônoma. Seu objetivo é se especializar através de um mestrado fora do país. Ele adora viajar, é solteiro e sempre sonhou em fazer um intercâmbio. Atualmente, está à procura de uma agência que o ajude a encontrar universidades na Europa que aceitem alunos estrangeiros.
+- **Aline (32, dev em home office)**: usa o app entre reuniões, prefere preencher poucos campos e quer respostas claras para discutir com a nutricionista. Dói ler mensagens técnicas ou ter de criar conta.
+- **Carlos (45, professor)**: consulta o IMC eventualmente; precisa de fonte legível, cores objetivas e lembrar o último cálculo sem depender de internet.
+- **Dra. Bianca (nutricionista)**: avalia se as faixas de IMC estão corretas e se o vocabulário evita alarmismo; quer uma visualização rápida para explicar ao paciente.
 
-Enumere e detalhe as personas relacionadas ao seu projeto, utilizando os documentos e referências abaixo para ajudar na definição:
+## Histórias de Usuário
 
-- Lembre-se de personalizar as descrições e detalhar as necessidades de cada persona de forma precisa.
-
-## Histórias de Usuários
-
-Com base na análise das personas, foram identificadas as seguintes histórias de usuários:
-
-| EU COMO... `PERSONA` | QUERO/PRECISO ... `FUNCIONALIDADE` | PARA ... `MOTIVO/VALOR`                  |
-| -------------------- | ---------------------------------- | ---------------------------------------- |
-| Usuário do sistema   | Registrar minhas tarefas           | Não esquecer de fazê-las                 |
-| Administrador        | Alterar permissões                 | Gerenciar as contas de maneira eficiente |
-
-- As histórias de usuários ajudam a capturar os requisitos funcionais e não funcionais de forma clara. Se possível, agrupe as histórias por contexto para facilitar consultas futuras.
+| EU COMO | QUERO | PARA |
+| ------ | ----- | ---- |
+| Usuário de primeira viagem | Calcular IMC apenas com nome, peso (kg) e altura (cm) | Saber rapidamente meu status e próxima ação |
+| Usuário recorrente | Ver o último resultado ao abrir o app | Comparar com medidas anteriores sem recálculo |
+| Usuário visual | Enxergar o status com cores e gauge | Entender em que faixa estou sem ler muito texto |
+| Dra. Bianca | Validar se o cálculo segue a tabela OMS | Garantir que a recomendação ao paciente é segura |
+| Time de produto | Reaproveitar componentes e constantes de IMC | Evoluir para novos módulos sem refazer UI |
 
 ## Modelagem do Processo de Negócio
 
-### Análise da Situação Atual
+**Estado atual**: cálculo feito manualmente ou em sites que pedem cadastro e não guardam o histórico.
 
-Descreva os problemas atuais que justificam a implementação da sua proposta. Se o sistema já estiver em operação, forneça o modelo atual. Caso contrário, explique como as tarefas seriam realizadas sem o uso de tecnologia.
-
-### Descrição Geral da Proposta
-
-Apresente sua proposta de solução, destacando os limites e as conexões com as estratégias e objetivos do negócio. Além disso, aponte as oportunidades de melhoria que sua solução oferece.
-
-### Processo 1 – NOME DO PROCESSO
-
-Apresente o nome do processo e as oportunidades de melhoria identificadas. Em seguida, insira o modelo do processo, utilizando o padrão BPMN.
-
-```mermaid
-flowchart LR
-    Inicio(( )) --> Cotacao[Manejo de Cotação]
-    Cotacao --> Aprovar[Aprovar Pedido]
-    Aprovar -->|Aprovado| Decisao{Aprovado?}
-    Decisao -->|Não| Fim1((( )))
-    Decisao -->|Sim| ParaleloInicio[Início Paralelo]
-    ParaleloInicio --> Pedido[Manejo de Pedido]
-    ParaleloInicio --> Envio[Manejo de Envio]
-    Pedido --> ParaleloFim[Fim Paralelo]
-    Envio --> ParaleloFim
-    ParaleloFim --> Revisar[Revisar Pedido]
-    Revisar --> Fim2((( )))
-```
-
-### Processo 2 – NOME DO PROCESSO
-
-Da mesma forma, apresente o nome e as oportunidades de melhoria para o processo 2. Inclua também o modelo BPMN do processo.
-
-```mermaid
-flowchart LR
-    Inicio(( )) --> Cotacao[Manejo de Cotação]
-    Cotacao --> Aprovar[[Subprocesso: Aprovar Pedido]]
-    Aprovar -->|Aprovado| Decisao{Aprovado?}
-    Decisao -->|Não| Fim1((( )))
-    Decisao -->|Sim| ParaleloInicio[Início Paralelo]
-    ParaleloInicio --> Pedido[Manejo de Pedido]
-    ParaleloInicio --> Envio[Manejo de Envio]
-    Pedido --> ParaleloFim[Fim Paralelo]
-    Envio --> ParaleloFim
-    ParaleloFim --> Revisar[Revisar Pedido]
-    Revisar --> Fim2((( )))
-```
+**Proposta**:
+1) Usuário insere nome, peso (kg) e altura (cm).  
+2) App valida formato/valores; exibe erro imediato se algo estiver vazio ou inválido.  
+3) App calcula IMC, determina status (abaixo, normal, sobrepeso, obesidades 1-3).  
+4) Resultado é salvo no armazenamento local (`AsyncStorage`) e exibido com gauge e linha evolutiva simulada.  
+5) Na reabertura, o último resultado é carregado automaticamente.
 
 ## Indicadores de Desempenho
 
-Defina os principais indicadores de desempenho e estabeleça metas para o projeto. As informações necessárias para gerar esses indicadores devem ser capturadas no diagrama de classes, que será detalhado posteriormente.
-
-Modelo sugerido:
-
-| Indicador                   | Objetivos                                                             | Descrição                                                 | Cálculo | Fonte dados         | Perspectiva               |
-| --------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------- | ------- | ------------------- | ------------------------- |
-| Percentual reclamações      | Avaliar quantitativamente as reclamações                              | Percentual de reclamações em relação ao total atendimento |         | Tabela reclamações  | Aprendizado e Crescimento |
-| Taxa de Requisições abertas | Melhorar a prestação de serviços medindo a porcentagem de requisições | Mede % de requisições atendidas na semana                 | \*100   | Tabela solicitações | Processos internos        |
-| Taxa de entrega de material | Manter controle sobre os materiais que estão sendo entregues          | Mede % de material entregue dentro do mês                 |         | Tabela Pedidos      | Clientes                  |
+| Indicador | Objetivo | Cálculo/Fonte |
+| --------- | -------- | ------------- |
+| Conversão de cálculo | 90% dos usuários que começam o formulário completam o cálculo | Nº cálculos / Nº sessões que interagem com inputs |
+| Erro de validação | < 5% de tentativas com erros repetidos | Nº erros exibidos / Nº cliques em “Calcular IMC” |
+| Tempo de resposta | < 200 ms do clique até exibir resultado | Medido via logs locais/perf de render |
+| Retenção do último cálculo | 100% de persistência local em reabertura | Nº sessões com resgate de dados / Nº sessões com cálculo prévio |
 
 ## Requisitos
 
-A seguir, os requisitos funcionais e não funcionais detalham o escopo do projeto. Para definir as prioridades, use uma técnica de priorização de requisitos e explique como ela foi aplicada.
+### Funcionais
 
-### Requisitos Funcionais
+| ID | Descrição | Prioridade |
+| -- | --------- | ---------- |
+| RF-01 | Permitir entrada de nome, peso em kg e altura em cm com máscara decimal simples | Alta |
+| RF-02 | Validar campos obrigatórios e valores positivos, exibindo mensagem de erro contextual | Alta |
+| RF-03 | Calcular IMC usando peso/(altura²) e classificar conforme faixas OMS (abaixo, normal, sobrepeso, obesidades 1-3) | Alta |
+| RF-04 | Salvar o último cálculo no dispositivo e recarregar automaticamente na abertura | Alta |
+| RF-05 | Exibir resultado numérico, status colorido, gauge semicircular e linha evolutiva simulada | Média |
+| RF-06 | Funcionar offline após instalado | Alta |
 
-| ID     | Descrição do Requisito                  | Prioridade | Responsável           |
-| ------ | --------------------------------------- | ---------- | --------------------- |
-| RF-001 | Permitir que o usuário cadastre tarefas | ALTA       | Nome do Desenvolvedor |
-| RF-002 | Emitir um relatório de tarefas no mês   | MÉDIA      | Nome do Desenvolvedor |
+### Não Funcionais
 
-### Requisitos Não Funcionais
-
-| ID      | Descrição do Requisito                                                  | Prioridade |
-| ------- | ----------------------------------------------------------------------- | ---------- |
-| RNF-001 | O sistema deve ser responsivo para dispositivos móveis                  | MÉDIA      |
-| RNF-002 | O sistema deve processar requisições do usuário em no máximo 3 segundos | BAIXA      |
-
-Classifique os requisitos como funcionais (RF) ou não funcionais (RNF), e lembre-se de garantir que todas as histórias de usuário sejam cobertas. Os requisitos funcionais tratam de funcionalidades da aplicação, enquanto os não funcionais dizem respeito a aspectos técnicos, como desempenho ou usabilidade.
+| ID | Descrição | Prioridade |
+| --- | --------- | ---------- |
+| RNF-01 | App em React Native com Expo 54 e compatibilidade Android/iOS | Alta |
+| RNF-02 | Operar sem backend; dados restritos ao armazenamento local | Alta |
+| RNF-03 | Interface responsiva, com contraste adequado e fontes legíveis | Média |
+| RNF-04 | Código modular (componentes, constantes, utilidades separadas) | Alta |
+| RNF-05 | Tempo de render do resultado abaixo de 200 ms em aparelhos medianos | Média |
 
 ## Restrições
 
-O projeto tem as seguintes restrições:
+| ID | Restrição |
+| -- | --------- |
+| R-01 | Não há backend; nenhuma informação sai do dispositivo nesta versão. |
+| R-02 | Apenas cálculo de IMC está no escopo inicial; demais módulos (metas, cardápio, agenda) ficam para fases futuras. |
+| R-03 | Uso de dependências aprovadas do Expo; sem libs nativas fora do ecossistema suportado. |
 
-| ID  | Restrição                                             |
-| --- | ----------------------------------------------------- |
-| 01  | O projeto deverá ser entregue até o final do semestre |
-| 02  | Não pode ser desenvolvido um módulo de backend        |
+## Casos de Uso (visão textual)
 
-Detalhe as restrições que limitam sua solução. As restrições muitas vezes determinam o que pode ou não ser feito durante o desenvolvimento.
+- **Calcular IMC**: ator Usuário fornece nome, peso, altura → sistema valida → calcula IMC → exibe status e visualizações → persiste resultado.
+- **Reabrir app**: ator Usuário abre app → sistema lê `AsyncStorage` → popula painel de resultados.
 
-## Diagrama de Casos de Uso
+## Matriz de Rastreabilidade (trecho)
 
-O diagrama de casos de uso é uma ferramenta essencial após a elicitação de requisitos. Ele oferece uma representação gráfica das interações entre os usuários e o sistema, identificando atores, casos de uso e seus relacionamentos.
+| História | RF/RNF associados | Testes previstos |
+| -------- | ----------------- | ---------------- |
+| Calcular IMC com 3 campos | RF-01, RF-02, RF-03 | TS-01 Validação; TS-02 Cálculo correto |
+| Reabrir com último resultado | RF-04, RNF-02 | TS-03 Persistência local |
+| Visualizar gauge e linha | RF-05, RNF-03 | TS-04 Renderização das visualizações |
 
-## Matriz de Rastreabilidade
-
-A matriz de rastreabilidade ajuda a mapear a relação entre os requisitos e outros artefatos, como objetivos de negócio. Ela facilita o acompanhamento e a verificação do cumprimento dos requisitos.
-
-|        | MK  | RF-01 | RNF-01 | TC01 | TC02 | M100 | DC-01 | GV  | RF-02 |
-| ------ | --- | ----- | ------ | ---- | ---- | ---- | ----- | --- | ----- |
-| MK     |     |       |        |      |      |      |       |     |       |
-| RF-01  |     |       |        |      |      |      |       |     |       |
-| RNF-01 |     |       |        |      |      |      |       |     |       |
-| TC01   |     |       |        |      |      |      |       |     |       |
-| TC02   |     |       |        |      |      |      |       |     |       |
-| M100   |     |       |        |      |      |      |       |     |       |
-| DC-01  |     |       |        |      |      |      |       |     |       |
-| GV     |     |       |        |      |      |      |       |     |       |
-| RF-02  |     |       |        |      |      |      |       |     |       |
-
----
-
-# Gerenciamento de Projeto
-
-O gerenciamento de projeto, segundo o PMBoK v6, envolve dez áreas essenciais: Integração, Escopo, Cronograma, Custos, Qualidade, Recursos, Comunicações, Riscos, Aquisições e Partes Interessadas. Cada uma dessas áreas se inter-relaciona e é fundamental para o sucesso do projeto.
-
-## Gerenciamento de Tempo
-
-Ferramentas como diagramas e gráficos de Gantt ajudam a organizar as atividades e a estimar prazos de conclusão. Essas ferramentas são essenciais para o controle eficiente do cronograma.
-
-**Exemplo:**
-
-> #### Diagrama de Rede de Atividades
->
-> - Este diagrama representa a sequência de atividades para a entrega, instalação e aceitação de equipamentos e software.
->
-> #### Fluxo de Atividades:
-
-```mermaid
-flowchart LR
-    A1["Atividade 1 (01) Entregar equipamentos."] --> A2["Atividade 2 (24) Testar equipamentos."]
-    A1 --> A4["Atividade 4 (88) Escrever programas."]
-    A2 --> A3["Atividade 3 (60) Instalar equipamentos."]
-    A4 --> A5["Atividade 5 (30) Testar e depurar."]
-    A5 --> A6["Atividade 6 (10) Treinar usuários."]
-    A3 --> A7["Atividade 7 (15) Aceitação"]
-    A6 --> A7
-```
-**Exemplo:**
-> #### Gráfico de Gantt:
-> Aqui está o gráfico de Gantt baseado nas atividades e suas dependências. Ele mostra a sequência e a duração de cada tarefa ao longo do tempo, começando em 1º de janeiro de 2025.
-
-![Gráfico de Gantt](img/GraficoGantt.png)
-
-## Gerenciamento de Equipe
-
-Uma gestão de equipe bem organizada melhora a produtividade do projeto. Ferramentas de controle de tarefas são fundamentais para garantir o bom andamento do trabalho em equipe.
-
-> - #### CRONOGRAMA DE PROJETO SIMPLES - 2025
-
-| Nome da Equipe          | Atividade                                   | Data de Início | Data de Término | Observações |
-| ----------------------- | ------------------------------------------- | -------------- | --------------- | ----------- |
-| **Equipe de Marketing** | Definir Expectativas do Cliente             | 07-Ago-2025    | 11-Ago-2025     |             |
-|                         | Formalizar Abordagem                        | 14-Ago-2025    | 25-Ago-2025     |             |
-|                         | Elaborar um Plano de Trabalho               | 21-Ago-2025    | 01-Set-2025     |             |
-|                         | Contratual: Receber Feedback                | 04-Set-2025    | 08-Set-2025     |             |
-|                         | **MS: Enviar plano de trabalho**            | 11-Set-2025    | 15-Set-2025     | Marco (MS)  |
-| **Grupo de Interface**  | Concordar com um Plano                      | 14-Ago-2025    | 18-Ago-2025     |             |
-|                         | Concordar com a Abordagem                   | 21-Ago-2025    | 25-Ago-2025     |             |
-|                         | Configurar GUI                              | 28-Ago-2025    | 08-Set-2025     |             |
-|                         | Contratual: Receber Feedback                | 11-Set-2025    | 15-Set-2025     |             |
-| **Equipe de QM**        | Testar Valores #1                           | 04-Set-2025    | 29-Set-2025     |             |
-|                         | Contratual: Receber Feedback                | 02-Out-2025    | 06-Out-2025     |             |
-|                         | **MS: Enviar plano de relatório de testes** | 09-Out-2025    | 13-Out-2025     | Marco (MS)  |
-
-## Gestão de Orçamento
-
-O orçamento do projeto deve ser gerido com base nos dados do escopo e do tempo, além dos custos envolvidos em cada etapa.
-
-> - #### ORÇAMENTO
-   | Recursos Necessários | Valor (R$)     |
-   | -------------------- | -------------- |
-   | Recursos humanos     | 200.000,00     |
-   | Hardware             | 25.000,00      |
-   | Rede                 | 2.400,00       |
-   | Software             | 24.000,00      |
-   | Serviços             | 5.000,00       |
-   | **TOTAL**            | **256.400,00** |
+Essa base será expandida conforme novos módulos do Nulltriverso forem adicionados.

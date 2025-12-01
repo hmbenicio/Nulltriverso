@@ -1,32 +1,30 @@
 # Plano de Testes de Software
 
-> **Pré-requisitos:**  
-> Consulte os documentos relacionados antes de prosseguir: <a href="02-Especificação do Projeto.md"> Especificação do Projeto</a></span>, <a href="04-Projeto de Interface.md"> Projeto de Interface</a>.
+## Objetivo
+Validar que o módulo de IMC funciona offline, calcula e classifica corretamente, persiste o último resultado e apresenta feedback claro ao usuário.
 
-Este documento apresenta os cenários de testes que serão utilizados na validação da aplicação. O objetivo é demonstrar como os requisitos estão sendo atendidos por meio dos testes realizados.
+## Estratégia
+- Testes manuais exploratórios no Expo Go (Android/iOS).
+- Testes funcionais focados em validação de campos, cálculo e persistência.
+- Inspeção visual das cores/faixas e animações do gauge.
 
-**Instruções**:
-1. Enumere os casos de teste de forma sequencial.
-2. Certifique-se de que os requisitos associados a cada caso de teste estão corretamente descritos, conforme a seção "2 - Especificação do Projeto".
+## Casos de teste
 
-Exemplo de estrutura para os casos de teste:
+| ID | Cenário | Passos resumidos | Resultado esperado |
+| -- | ------- | ---------------- | ------------------ |
+| TS-01 | Campos obrigatórios | Deixar nome vazio e clicar em “Calcular IMC” | Mensagem “Informe seu nome.” exibida |
+| TS-02 | Peso/altura inválidos | Inserir “0” ou valor negativo em peso/altura | Mensagem “Peso inválido.” ou “Altura inválida.” |
+| TS-03 | Cálculo correto | Nome “A”, peso 80 kg, altura 180 cm | IMC 24.69 (≈24.7) e status “Peso normal” |
+| TS-04 | Classificação por faixa | Testar IMC 17, 23, 28, 33, 37 | Status: Abaixo / Normal / Sobrepeso / Obesidade 1 / Obesidade 2+ |
+| TS-05 | Persistência local | Calcular; fechar app; reabrir | Último cálculo carregado automaticamente |
+| TS-06 | Gauge e barra de status | Calcular IMC e observar gauge/progress bar | Ponteiro e barra na faixa correta, cor condizente |
+| TS-07 | Entrada com vírgula | Inserir peso “70,5” e altura “175,5” | Valores convertidos e cálculo executado |
+| TS-08 | Responsividade e teclado | Abrir teclado e rolar | Campos não ficam escondidos; scroll funcional |
 
-### Caso de Teste 01 – Cadastrar Perfil
+## Critérios de aceitação
+- 100% dos testes críticos (TS-01 a TS-05) devem passar.
+- Nenhum crash ao abrir, calcular ou reabrir o app.
 
-| **Campo**                | **Descrição**                                                                                           |
-|:-------------------------|:-------------------------------------------------------------------------------------------------------|
-| **Requisito Associado**   | RF-00X - A aplicação deve apresentar, na página principal, a funcionalidade de cadastro de usuários.     |
-| **Objetivo do Teste**     | Verificar se o usuário consegue se cadastrar na aplicação.                                               |
-| **Passos**                | 1. Acessar o navegador. <br> 2. Informar o endereço do site: `https://adota-pet.herokuapp.com/src/index.html`.<br> 3. Clicar em "Criar conta". <br> 4. Preencher os campos obrigatórios: e-mail, nome, sobrenome, celular, CPF, senha e confirmação de senha. <br> 5. Aceitar os termos de uso. <br> 6. Clicar em "Registrar". |
-| **Critério de Êxito**     | O cadastro deve ser realizado com sucesso, e o usuário deve ser redirecionado para a página de perfil.   |
-
----
-
-### Caso de Teste 02 – Efetuar Login
-
-| **Campo**                | **Descrição**                                                                                           |
-|:-------------------------|:-------------------------------------------------------------------------------------------------------|
-| **Requisito Associado**   | RF-00Y - A aplicação deve permitir login por meio do endereço de e-mail do usuário.                      |
-| **Objetivo do Teste**     | Verificar se o usuário consegue realizar login corretamente.                                           |
-| **Passos**                | 1. Acessar o navegador. <br> 2. Informar o endereço do site: `https://adota-pet.herokuapp.com/src/index.html`. <br> 3. Clicar no botão "Entrar". <br> 4. Preencher o campo de e-mail. <br> 5. Preencher o campo da senha. <br> 6. Clicar em "Login". |
-| **Critério de Êxito**     | O login deve ser realizado com sucesso, permitindo o acesso à área restrita do usuário.                 |
+## Ambiente de teste
+- Expo Go 54, Android 12+ e iOS 16+.
+- Sem conexão exigida após instalação.

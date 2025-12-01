@@ -1,77 +1,32 @@
 # Metodologia
 
-> **Pré-requisitos**: Consulte a <a href="02-Especificação do Projeto.md"> Especificação do Projeto</a> para obter informações adicionais sobre os requisitos e contexto do projeto.
+## Abordagem de trabalho
+- **Iterações curtas (Kanban enxuto)**: backlog enxuto focado em IMC, priorizando fluxos completos antes de novas ideias.
+- **Definição de pronto**: cálculo validando entradas, feedback visual e persistência local funcionando em Android/iOS.
+- **Feedback rápido**: validação constante com usuária-alvo (Aline) e nutricionista (Bianca) para linguagem e cores.
 
-Este documento descreve a metodologia adotada pelo time para desenvolver a solução proposta. Inclui detalhes sobre os ambientes de trabalho, o controle de versão, a gestão do código fonte, as práticas ágeis de organização do time e as ferramentas utilizadas durante o ciclo de vida do desenvolvimento.
+## Ferramentas
+- **Código**: React Native + Expo 54; armazenamento local com `@react-native-async-storage/async-storage`; visualizações com `react-native-svg`.
+- **Controle de versão**: GitHub; branches curtas por feature; main sempre executável no Expo Go.
+- **Qualidade**: lint/format do Expo (quando habilitado), testes manuais guiados pelo Plano de Testes; logs no console para rastrear validação.
+- **Comunicação**: Issues/Projects no GitHub, compartilhamento de builds via Expo Go/QR.
 
-## Ambientes de Trabalho
+## Organização do repositório
+- `Nulltriverso/frontend`: app móvel (Expo). Estrutura por domínio: `components`, `constants`, `screens`, `theme`, `utils`.
+- `Docs`: documentação viva deste módulo e base para futuras expansões do Nulltriverso.
 
-O projeto será desenvolvido em uma série de plataformas e ambientes distintos, cada um com um propósito específico. A tabela abaixo lista os ambientes utilizados, suas plataformas correspondentes e links de acesso:
+## Controle de tarefas (exemplo de quadro)
+- **To Do**: ajuste de mensagens de erro, refino da paleta, preparo de testes.
+- **Doing**: implementação/ajuste de componentes e validações.
+- **Review**: testes em aparelho físico/Expo Go.
+- **Done**: merge em `main` com documentação atualizada.
 
-| Ambiente             | Plataforma                | Link de Acesso                               |
-|----------------------|---------------------------|---------------------------------------------|
-| **Ambiente de Dev**   | Local (VSCode, Docker)     | [Link](#)                                   |
-| **Ambiente de Testes**| GitHub Actions / Docker    | [Link](#)                                   |
-| **Ambiente de Produção** | AWS / EC2                 | [Link](#)                                   |
+## Riscos e mitigação
+- **Ausência de backend**: risco de perda de dados entre dispositivos → mantemos claro que o escopo é local; próxima fase deve introduzir sincronização.
+- **Perf em aparelhos básicos**: gauge SVG pode ser custoso → mantido tamanho e animação moderados; monitorar uso de memória.
+- **Mensagens pouco claras**: validado texto com nutricionista; revisar após cada rodada de feedback.
 
-> **Observação**: A definição dos ambientes inclui tanto a infraestrutura para a execução da aplicação quanto as plataformas específicas para o desenvolvimento de soluções móveis.
-
-## Controle de Versão
-
-A ferramenta de controle de versão adotada para este projeto é o **Git**, com hospedagem no **GitHub**. O fluxo de trabalho segue as convenções Git Flow, garantindo uma organização clara no processo de desenvolvimento.
-
-### Convenções de Branches
-
-- **`main`**: Branch principal contendo a versão estável do software.
-- **`unstable`**: Branch para versões testadas, porém instáveis, com funcionalidades em desenvolvimento.
-- **`testing`**: Branch utilizada para testes contínuos, com versões de features específicas em análise.
-- **`dev`**: Branch de desenvolvimento ativo, com as últimas alterações implementadas.
-
-### Gestão de Issues
-
-Para organizar as tarefas e os problemas, o projeto adota as seguintes etiquetas no GitHub:
-
-- **`documentation`**: Refere-se a melhorias ou atualizações na documentação do projeto.
-- **`bug`**: Indica problemas ou falhas nas funcionalidades.
-- **`enhancement`**: Utilizado para identificar melhorias em funcionalidades existentes.
-- **`feature`**: Usado para a introdução de novas funcionalidades no sistema.
-
-### Fluxo de Trabalho
-
-A gerência de tags, merges, commits e branches segue as melhores práticas de versionamento, utilizando o Git Flow para facilitar o controle de versões e a integração contínua. O uso de pull requests (PRs) para integração de novas features e correções, com revisões de código periódicas, assegura a qualidade do software.
-
-## Gerenciamento de Projeto
-
-### Divisão de Papéis
-
-Para garantir um desenvolvimento ágil e eficiente, o time foi estruturado com base na metodologia **Scrum**. Os papéis definidos para o projeto são:
-
-- **Scrum Master**: Felipe Domingos
-- **Product Owner**: Rommel Carneiro
-- **Equipe de Desenvolvimento**: Pedro Penna, Pedro Ivo, Rodrigo Richard
-- **Equipe de Design**: Simone Nogueira
-
-### Processo de Desenvolvimento
-
-A equipe segue um processo ágil utilizando **Scrum** para gerenciar o fluxo de trabalho. A cada **Sprint**, são realizadas as seguintes etapas:
-
-1. **Planejamento**: Definição das tarefas e metas da Sprint.
-2. **Execução**: Desenvolvimento das funcionalidades com acompanhamento constante.
-3. **Revisão**: Avaliação do progresso, ajustes e refinamento de processos.
-4. **Retrospectiva**: Análise do desempenho da equipe e identificação de melhorias para o próximo ciclo.
-
-A plataforma **GitHub** será utilizada para o acompanhamento de tarefas e gestão do fluxo de trabalho, através de quadros de projeto e issues.
-
-### Ferramentas Utilizadas
-
-A seguir estão as ferramentas adotadas para o desenvolvimento do projeto, que foram escolhidas com base na integração com o processo de versionamento e nas necessidades específicas da equipe:
-
-- **Editor de Código**: VSCode, pela sua integração com Git e suporte a várias extensões.
-- **Ferramentas de Comunicação**: 
-  - **Slack**: Para comunicação interna e organização de mensagens por canais temáticos.
-  - **GitHub**: Para gerenciamento de tarefas, controle de versão e colaboração de código.
-- **Ferramentas de Design e Wireframing**:
-  - **Figma**: Para criação de wireframes e protótipos interativos.
-  - **Lucidchart**: Para elaboração de diagramas de fluxo e arquitetura do sistema.
-
-Essas ferramentas garantem uma colaboração eficiente entre as equipes e ajudam a manter o projeto organizado e alinhado com as práticas ágeis.
+## Entregáveis desta fase
+- App Expo com cálculo de IMC, gauge e persistência local.
+- Documentação atualizada (contexto, requisitos, arquitetura, testes).
+- Plano para expansão do Nulltriverso (novos módulos plugáveis sobre a base de UI e padrões criados aqui).

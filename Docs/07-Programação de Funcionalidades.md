@@ -1,22 +1,24 @@
 # Programação de Funcionalidades
 
-> **Pré-requisitos:**  
-> Antes de iniciar, verifique a seguinte documentação: <a href="02-Especificação do Projeto.md"> Especificação do Projeto</a>, <a href="04-Projeto de Interface.md"> Projeto de Interface</a>, <a href="03-Metodologia.md"> Metodologia</a>, <a href="05-Arquitetura da Solução.md"> Arquitetura da Solução</a>.
+## Escopo entregue
 
-## Descrição
+| Item | Descrição | Status |
+| ---- | --------- | ------ |
+| Formulário de dados | Campos de nome, peso (kg) e altura (cm) com teclado adequado e parse de vírgula/ponto | Concluído |
+| Validação e feedback | Mensagens imediatas para campos vazios ou valores não positivos | Concluído |
+| Cálculo e classificação | Funções em `utils/imc.js` que calculam IMC e retornam status e cor da faixa | Concluído |
+| Persistência local | Salvamento do último cálculo no `AsyncStorage` e recuperação automática na abertura | Concluído |
+| Visualizações | Gauge semicircular com faixas OMS e linha de evolução mockada para demonstração | Concluído |
+| Tema e componentes | Paleta centralizada e componentes reutilizáveis para futuras features | Concluído |
 
-Esta fase da implementação envolve o desenvolvimento das funcionalidades do sistema de acordo com os requisitos definidos. O código-fonte gerado deve ser bem estruturado e organizado, considerando as melhores práticas de desenvolvimento. Para cada requisito funcional, o artefato resultante (geralmente código-fonte ou documentação relacionada) deve ser detalhado e validado conforme os seguintes critérios:
+## Detalhes de implementação
+- **HomeScreen** controla estado do formulário e resultado; usa `useEffect` para carregar dados salvos e `useMemo` para derivar cores/progressos.
+- **Utils** concentram cálculo (`calculateImc`), classificação (`statusFromImc`), cor (`colorFromImc`), clamp e parse de número com vírgula (`parseLocaleNumber`).
+- **Persistência**: chave `imc:last`; falhas de escrita/leitura são logadas via `console.warn`.
+- **Visualizações**: gauge animado com `Animated` e `react-native-svg`; linha usa dados mockados de seis meses para ilustrar tendência.
 
-- **Requisitos atendidos**: Relacionar os requisitos específicos que estão sendo implementados.
-- **Estruturas de dados**: Definir claramente as estruturas de dados que estão sendo utilizadas para implementar a funcionalidade.
-- **Ambiente de hospedagem**: Incluir instruções sobre como a funcionalidade deve ser acessada e validada no ambiente de produção ou homologação.
-  
-Esta implementação deve estar de acordo com as práticas ágeis, garantindo a entregabilidade contínua e revisões rápidas de código.
-
----
-
-## Padrão de Entregáveis
-
-- **Artefatos**: Para cada requisito funcional, o artefato correspondente será criado, incluindo código-fonte, testes unitários, documentação e outros artefatos necessários.
-- **Testes**: Incluir scripts de testes para validação dos requisitos. A implementação deve ser testada tanto no nível unitário quanto no de integração.
-- **Versionamento**: Todos os artefatos devem ser versionados corretamente no repositório.
+## Pendências planejadas (próximas iterações)
+- Histórico real de cálculos por usuário.
+- Exportação/compartilhamento do resultado.
+- Telemetria para medir conversão e erros de validação.
+- Internacionalização (pt-BR / en-US) e suporte a unidades imperiais, se necessário.
