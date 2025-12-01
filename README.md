@@ -42,9 +42,6 @@ npm start   # Expo menu (a = Android, i = iOS, w = Web)
 
 ## Estrutura do repositório
 
-bash
-Copiar código
-
 Nulltriverso/
 │
 ├── frontend/               # Aplicação móvel (Expo / React Native)
