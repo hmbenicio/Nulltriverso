@@ -47,18 +47,20 @@ Copiar código
 
 Nulltriverso/
 │
-├── frontend/             # Aplicação móvel (Expo/React Native)
-│   ├── src/pages/        # Telas principais
-│   ├── src/components/   # Componentes reutilizáveis
-│   ├── src/constants/    # Tabelas, faixas da OMS, temas
-│   ├── src/utils/        # Funções de cálculo e helpers
-│   ├── src/theme/        # Paleta, gradientes e estilos globais
+├── frontend/               # Aplicação móvel (Expo / React Native)
+│   ├── src/pages/          # Telas principais (Home, IMC, Histórico etc.)
+│   ├── src/components/     # Componentes reutilizáveis (inputs, cards, gauge)
+│   ├── src/constants/      # Faixas da OMS, temas, textos fixos
+│   ├── src/utils/          # Funções de cálculo, conversões e validações
+│   ├── src/theme/          # Paleta, gradientes e estilos globais
+│   └── app.json            # Configurações do projeto Expo
 │
-├── backend/              # Futuras integrações (vazio na versão atual)
+├── backend/                # Estrutura reservada para futuras integrações (vazio)
 │
-├── Docs/                 # Documentação funcional, técnica e de testes
+├── Docs/                   # Documentação funcional, técnica e de testes
 │
-└── Apresentação/         # Materiais de apresentação do projeto
+└── Apresentação/           # Materiais de apresentação do projeto (slides, assets)
+
 
 ## Documentação
 - <a href="Docs/01-Documentação de Contexto.md">Documentação de Contexto</a>
