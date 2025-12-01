@@ -42,22 +42,16 @@ npm start   # Expo menu (a = Android, i = iOS, w = Web)
 
 ## Estrutura do repositório
 
-Nulltriverso/
-│
-├── frontend/               # Aplicação móvel (Expo / React Native)
-│   ├── src/pages/          # Telas principais (Home, IMC, Histórico etc.)
-│   ├── src/components/     # Componentes reutilizáveis (inputs, cards, gauge)
-│   ├── src/constants/      # Faixas da OMS, temas, textos fixos
-│   ├── src/utils/          # Funções de cálculo, conversões e validações
-│   ├── src/theme/          # Paleta, gradientes e estilos globais
-│   └── app.json            # Configurações do projeto Expo
-│
-├── backend/                # Estrutura reservada para futuras integrações (vazio)
-│
-├── Docs/                   # Documentação funcional, técnica e de testes
-│
-└── Apresentação/           # Materiais de apresentação do projeto (slides, assets)
-
+- `Nulltriverso/` – projeto completo.
+  - `frontend/` – aplicação móvel (Expo/React Native).
+    - `frontend/src/pages/` – telas principais do app IMC.
+    - `frontend/src/components/` – componentes de interface reutilizáveis (inputs, cards, gauge).
+    - `frontend/src/constants/` – faixas da OMS, textos fixos e tabelas.
+    - `frontend/src/utils/` – cálculos, conversões e funções auxiliares.
+    - `frontend/src/theme/` – paleta, gradientes e estilos globais.
+  - `backend/` – reservado para futuras integrações (vazio nesta versão).
+- `Docs/` – documentação funcional, técnica e de testes.
+- `Apresentação/` – arquivos de apresentação e materiais visuais do projeto.
 
 ## Documentação
 - <a href="Docs/01-Documentação de Contexto.md">Documentação de Contexto</a>
