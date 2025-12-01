@@ -27,17 +27,17 @@ O Nulltriverso é um ecossistema de bem-estar que combina tecnologia, nutrição
 ## Links úteis
 - Código fonte: `Nulltriverso/frontend/src` (guia em `Src/README.md`)
 - Documentação detalhada:
-<li><a href="Docs/01-Documentacao de Contexto.md">Documentacao de Contexto</a></li>
-<li><a href="Docs/02-Especificacao do Projeto.md">Especificacao do Projeto</a></li>
-<li><a href="Docs/03-Metodologia.md">Metodologia</a></li>
-<li><a href="Docs/04-Projeto de Interface.md">Projeto de Interface</a></li>
-<li><a href="Docs/05-Arquitetura da Solucao.md">Arquitetura da Solucao</a></li>
-<li><a href="Docs/06-Template Padrao da Aplicacao.md">Template Padrao da Aplicacao</a></li>
-<li><a href="Docs/07-Programacao de Funcionalidades.md">Programacao de Funcionalidades</a></li>
-<li><a href="Docs/08-Plano de Testes de Software.md">Plano de Testes de Software</a></li>
-<li><a href="Docs/09-Registro de Testes de Software.md">Registro de Testes de Software</a></li>
-<li><a href="Docs/10-Plano de Testes de Usabilidade.md">Plano de Testes de Usabilidade</a></li>
-<li><a href="Docs/11-Registro de Testes de Usabilidade.md">Registro de Testes de Usabilidade</a></li>
-<li><a href="Docs/12-Apresentacao do Projeto.md">Apresentacao do Projeto</a></li>
-<li><a href="Docs/13-Referencias.md">Referencias</a></li>
+  1. `Docs/01-Documentação de Contexto.md`
+  2. `Docs/02-Especificação do Projeto.md`
+  3. `Docs/03-Metodologia.md`
+  4. `Docs/04-Projeto de Interface.md`
+  5. `Docs/05-Arquitetura da Solução.md`
+  6. `Docs/06-Template Padrão da Aplicação.md`
+  7. `Docs/07-Programação de Funcionalidades.md`
+  8. `Docs/08-Plano de Testes de Software.md`
+  9. `Docs/09-Registro de Testes de Software.md`
+  10. `Docs/10-Plano de Testes de Usabilidade.md`
+  11. `Docs/11-Registro de Testes de Usabilidade.md`
+  12. `Docs/12-Apresentação do Projeto.md`
+  13. `Docs/13-Referências.md`
 - Apresentação: `Apresentação/README.md`
