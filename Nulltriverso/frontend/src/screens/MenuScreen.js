@@ -1,12 +1,19 @@
-import React, { useMemo } from "react";
-import { Dimensions, FlatList, Pressable, StyleSheet, Text, View, Image } from "react-native";
+import React, { useEffect, useMemo, useRef } from "react";
+import {
+  Animated,
+  Dimensions,
+  Easing,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
-import { Feather } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { Octicons } from "@expo/vector-icons";
-import { SimpleLineIcons } from "@expo/vector-icons";
 import { colors } from "../theme/colors";
+import BottomBar from "../components/BottomBar";
 
 const MENU_COLUMNS = 3;
 const H_PADDING = 24;
@@ -20,6 +27,8 @@ const MenuScreen = ({
   onOpenGc,
   onOpenMi,
   onOpenPeso,
+  onProfile,
+  onExit,
 }) => {
   const cardSize = useMemo(() => {
     const { width } = Dimensions.get("window");
@@ -112,8 +121,88 @@ const MenuScreen = ({
     []
   );
 
-  const renderItem = ({ item }) => (
-    <View style={[styles.cardWrapper, { width: cardSize }]}>
+  const renderItem = ({ item, index }) => (
+    <MenuCard item={item} cardSize={cardSize} index={index} />
+  );
+
+  return (
+    <LinearGradient colors={[colors.backgroundLight, colors.background]} style={styles.screen}>
+      <StatusBar style="dark" />
+      <View style={styles.header}>
+        <Text style={styles.kicker}>Seu universo de saude</Text>
+        <Text style={styles.title}>Menu de projetos</Text>
+        <Text style={styles.subtitle}>
+          Explore ferramentas pensadas para nutricao, habitos e bem-estar.
+        </Text>
+      </View>
+      <FlatList
+        data={menuItems}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.key}
+        numColumns={MENU_COLUMNS}
+        columnWrapperStyle={{ gap: GAP }}
+        contentContainerStyle={styles.grid}
+        ItemSeparatorComponent={() => <View style={{ height: GAP }} />}
+        showsVerticalScrollIndicator={false}
+      />
+      <BottomBar onMenu={() => {}} onProfile={onProfile} onExit={onExit} />
+    </LinearGradient>
+  );
+};
+
+const MenuCard = ({ item, cardSize, index }) => {
+  const entryAnim = useRef(new Animated.Value(0)).current;
+  const pressAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    Animated.timing(entryAnim, {
+      toValue: 1,
+      duration: 420,
+      delay: index * 65,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: true,
+    }).start();
+  }, [entryAnim, index]);
+
+  const handlePressIn = () =>
+    Animated.spring(pressAnim, {
+      toValue: 0.97,
+      useNativeDriver: true,
+      speed: 18,
+      bounciness: 4,
+    }).start();
+
+  const handlePressOut = () =>
+    Animated.spring(pressAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 20,
+      bounciness: 6,
+    }).start();
+
+  const animatedStyle = {
+    opacity: entryAnim,
+    transform: [
+      {
+        translateY: entryAnim.interpolate({
+          inputRange: [0, 1],
+          outputRange: [16, 0],
+        }),
+      },
+      {
+        scale: Animated.multiply(
+          entryAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0.95, 1],
+          }),
+          pressAnim
+        ),
+      },
+    ],
+  };
+
+  return (
+    <Animated.View style={[styles.cardWrapper, { width: cardSize }, animatedStyle]}>
       <Pressable
         style={({ pressed }) => [
           item.image ? styles.cardImage : styles.card,
@@ -127,6 +216,8 @@ const MenuScreen = ({
           pressed && styles.cardPressed,
         ]}
         onPress={item.onPress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
       >
         <View
           style={[
@@ -171,30 +262,7 @@ const MenuScreen = ({
         </View>
       </Pressable>
       <Text style={styles.cardTitle}>{item.title}</Text>
-    </View>
-  );
-
-  return (
-    <LinearGradient colors={[colors.backgroundLight, colors.background]} style={styles.screen}>
-      <StatusBar style="dark" />
-      <View style={styles.header}>
-        <Text style={styles.kicker}>Seu universo de saude</Text>
-        <Text style={styles.title}>Menu de projetos</Text>
-        <Text style={styles.subtitle}>
-          Explore ferramentas pensadas para nutricao, habitos e bem-estar.
-        </Text>
-      </View>
-      <FlatList
-        data={menuItems}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.key}
-        numColumns={MENU_COLUMNS}
-        columnWrapperStyle={{ gap: GAP }}
-        contentContainerStyle={styles.grid}
-        ItemSeparatorComponent={() => <View style={{ height: GAP }} />}
-        showsVerticalScrollIndicator={false}
-      />
-    </LinearGradient>
+    </Animated.View>
   );
 };
 
@@ -227,7 +295,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   grid: {
-    paddingBottom: 40,
+    paddingBottom: 120,
     gap: GAP,
   },
   cardWrapper: {
