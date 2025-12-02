@@ -12,7 +12,14 @@ const MENU_COLUMNS = 3;
 const H_PADDING = 24;
 const GAP = 14;
 
-const MenuScreen = ({ onOpenImc }) => {
+const MenuScreen = ({
+  onOpenImc,
+  onOpenEer,
+  onOpenTmb,
+  onOpenGet,
+  onOpenGc,
+  onOpenMi,
+}) => {
   const cardSize = useMemo(() => {
     const { width } = Dimensions.get("window");
     const availableWidth = width - H_PADDING * 2 - GAP * (MENU_COLUMNS - 1);
@@ -33,30 +40,35 @@ const MenuScreen = ({ onOpenImc }) => {
         title: "EER",
         accent: colors.warn,
         image: require("../../assets/02_Icone_EER.png"),
+        onPress: onOpenEer,
       },
       {
         key: "tmb",
         title: "TMB/BMR",
         accent: "#256fca",
         image: require("../../assets/03_Icone_TMB.png"),
+        onPress: onOpenTmb,
       },
       {
         key: "get",
         title: "GET",
         accent: "#f29a64",
         image: require("../../assets/04_Icone_GET.png"),
+        onPress: onOpenGet,
       },
       {
         key: "gordura",
         title: "% Gordura",
         accent: "#e3b952",
         image: require("../../assets/05_Icone_GC.png"),
+        onPress: onOpenGc,
       },
       {
         key: "musculo",
         title: "Muscular",
         accent: "#e94856",
         image: require("../../assets/06_Icone_MI.png"),
+        onPress: onOpenMi,
       },
       {
         key: "rcq",

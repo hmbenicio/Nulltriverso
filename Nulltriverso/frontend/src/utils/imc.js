@@ -1,3 +1,5 @@
+import { parseLocaleNumber } from "./number";
+
 export const statusFromImc = (imc) => {
   if (imc < 18.5) return "Abaixo do peso";
   if (imc <= 24.9) return "Peso normal";
@@ -24,7 +26,4 @@ export const calculateImc = ({ weightKg, heightCm }) => {
   return Number(imc.toFixed(2));
 };
 
-export const parseLocaleNumber = (value) => {
-  if (value === null || value === undefined) return NaN;
-  return parseFloat(String(value).replace(",", "."));
-};
+export { parseLocaleNumber };
