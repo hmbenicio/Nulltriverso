@@ -11,6 +11,7 @@
 | GET | GEB (Harris-Benedict) x NAF selecionado, mostrando fator e descricao, persistencia `get:last` | Concluido |
 | % Gordura corporal | Protocolos Jackson & Pollock (3 ou 7 dobras + Siri) e US Navy (circunferencias), persistencia `gc:last` | Concluido |
 | MAMA | CB e PCT em mm ou cm, calcula CMB e area do braco, persistencia `mi:last` | Concluido |
+| Peso acamado | Equacoes de Chumlea por sexo com CPA/AJ/CB/DCSE, persistencia `bed:last` | Concluido |
 | Componentes e paleta | Cards, botoes, inputs, pills e ResultRow reutilizaveis; paleta em `theme/colors.js` | Concluido |
 | Placeholders futuros | RCQ, RCEst, Bio, NAF detalhado, Macros, Hidrica no menu (sem logica) | Pendente |
 
@@ -21,6 +22,7 @@
 - **GetScreen**: `utils/get` calcula GEB e multiplica pelo NAF (lista em `constants/get`).  
 - **GcScreen**: protocolos em `constants/gc`; `utils/gc` aplica Jackson & Pollock + Siri ou formula US Navy em cm; campos dinamicos por protocolo.  
 - **MiScreen**: `utils/mi` converte PCT mm->cm quando escolhido e calcula CMB/area.  
+- **BedriddenWeightScreen**: `utils/bedridden` aplica Chumlea por sexo com CPA/AJ/CB/DCSE e guarda resultado.  
 - **Persistencia**: cada tela carrega ultimo resultado no `useEffect` inicial; erros de IO sao logados com `console.warn`.
 
 ## Pendencias/roadmap

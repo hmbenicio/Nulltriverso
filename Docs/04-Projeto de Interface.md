@@ -23,10 +23,12 @@ O app abre em um **menu em grade** com cards ilustrados para cada calculadora. C
 - **TMB**: idade/peso/altura, sexo; resultado com kcal/dia e dados informados.  
 - **GET**: idade/peso/altura, sexo e lista de NAF; resultado mostra GEB (Harris-Benedict), fator e total.  
 - **%GC**: escolha de protocolo (Jackson3, Jackson7, US Navy); campos dinamicos (soma das dobras ou pescoco/cintura/quadril); resultado exibe metodo e, se aplicavel, densidade corporal.  
-- **MAMA**: circunferencia do braco e PCT; pill de unidade mm/cm; resultado traz CMB e area do braco.
+- **MAMA**: circunferencia do braco e PCT; pill de unidade mm/cm; resultado traz CMB e area do braco.  
+- **Peso acamado**: pills de sexo e campos para CPA, altura do joelho, CB e dobra subescapular; resultado destaca peso estimado e repete medidas usadas.
 
 ## Acessibilidade e UX
 - Teclados apropriados (decimal) e `KeyboardAvoidingView` em todas as telas.  
 - Cores acompanham texto para nao depender apenas de cor.  
 - Mensagens curtas e diretas; botoes com verbos de acao.  
-- Layouts com espaco entre elementos (`gap`) e padding consistente (24 px lateral).
+- Layouts com espaco entre elementos (`gap`) e padding consistente (24 px lateral).  
+- Barra inferior fixa com botoes de menu, perfil (stub) e sair (stub) para consistencia de navegacao.

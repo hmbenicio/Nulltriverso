@@ -7,11 +7,11 @@
 - **Backend**: inexistente nesta fase; todo processamento ocorre no dispositivo.
 
 ## Camadas e responsabilidades
-- **Navegacao**: `App.js` troca telas manualmente entre menu e calculadoras.  
-- **Telas (`src/screens/`)**: `MenuScreen`, `HomeScreen` (IMC), `EerScreen`, `TmbScreen`, `GetScreen`, `GcScreen`, `MiScreen`. Cada tela orquestra formulario, valida entradas e chama utilidades de calculo.  
+- **Navegacao**: `App.js` troca telas manualmente entre menu e calculadoras; `BottomBar` padroniza botoes de menu/perfil/sair.  
+- **Telas (`src/screens/`)**: `MenuScreen`, `HomeScreen` (IMC), `EerScreen`, `TmbScreen`, `GetScreen`, `GcScreen`, `MiScreen`, `BedriddenWeightScreen`. Cada tela orquestra formulario, valida entradas e chama utilidades de calculo.  
 - **Componentes (`src/components/`)**: cards, botoes, inputs, rows de resultado, gauge e grafico reutilizaveis.  
-- **Constantes (`src/constants/`)**: faixas de IMC, fatores de atividade, NAFs, protocolos de gordura corporal, chaves de storage.  
-- **Utilidades (`src/utils/`)**: funcoes puras para calculos (IMC, EER, TMB/GET, %GC, MAMA) e parse numerico.  
+- **Constantes (`src/constants/`)**: faixas de IMC, fatores de atividade, NAFs, protocolos de gordura corporal, equacoes de peso acamado e chaves de storage.  
+- **Utilidades (`src/utils/`)**: funcoes puras para calculos (IMC, EER, TMB/GET, %GC, MAMA, peso acamado) e parse numerico.  
 - **Tema (`src/theme/colors.js`)**: paleta centralizada.
 
 ## Fluxo de dados (exemplos)
@@ -19,7 +19,8 @@
 - **EER**: tela coleta sexo/idade/peso/altura/atividade/gestacao -> `utils/eer` aplica IOM + fator + bonus gestacional -> grava em `eer:last`.  
 - **TMB/GET**: `utils/tmb` calcula Harris-Benedict; `utils/get` calcula GEB e multiplica pelo NAF -> chaves `tmb:last` e `get:last`.  
 - **%GC**: protocolo escolhido em `constants/gc`; `utils/gc` aplica Jackson & Pollock + Siri ou US Navy -> salva em `gc:last`.  
-- **MAMA**: `utils/mi` calcula CMB e area a partir de CB e PCT (convertendo mm para cm) -> salva em `mi:last`.
+- **MAMA**: `utils/mi` calcula CMB e area a partir de CB e PCT (convertendo mm para cm) -> salva em `mi:last`.  
+- **Peso acamado**: `utils/bedridden` aplica equacoes de Chumlea por sexo com CPA/AJ/CB/DCSE -> salva em `bed:last`.
 
 ## Decisoes tecnicas
 - **Sem backend** para permitir uso offline e entrega rapida; futuras versoes podem sincronizar historico real.  

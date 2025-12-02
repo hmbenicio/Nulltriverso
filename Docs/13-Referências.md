@@ -7,6 +7,7 @@
 - Siri, W.E. - Body composition from fluid spaces (conversao DC -> %GC).  
 - US Navy Body Fat Formula - metodo de circunferencias.  
 - Frisancho, A.R. - Anthropometric standards for the assessment of growth and nutritional status (referencia para PCT/CB).  
+- Chumlea WC et al. - Prediction of body weight for the nonambulatory elderly from anthropometry.  
 - Documentacao Expo 54 - https://docs.expo.dev/  
 - React Native SVG - https://github.com/software-mansion/react-native-svg  
 - AsyncStorage - https://react-native-async-storage.github.io/async-storage/docs/install/

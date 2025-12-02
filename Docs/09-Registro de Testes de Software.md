@@ -14,11 +14,12 @@
 | TS-GC-01 | Pendente | Jackson & Pollock + Siri (3 dobras) |
 | TS-GC-02 | Pendente | US Navy fem masc, log10 em cm |
 | TS-MI-01 | Pendente | Conversao mm->cm e CMB/area |
+| TS-PESO-01 | Pendente | Chumlea por sexo com CPA/AJ/CB/DCSE |
 | TS-PER-01 | Pendente | Ultimos resultados recarregados em todas as telas |
 
 ## Resumo
-- Versao expandida para varias calculadoras ainda nao foi testada manualmente.  
-- Priorizar smoke completo nas seis telas em aparelho fisico e emulador.
+- Versao expandida para varias calculadoras (incluindo peso acamado) ainda nao foi testada manualmente.  
+- Priorizar smoke completo nas setes telas em aparelho fisico e emulador.
 
 ## Pendencias para proxima rodada
 - Executar a sessao acima e registrar valores obtidos.  

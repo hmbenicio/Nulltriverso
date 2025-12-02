@@ -26,10 +26,10 @@
 ## Riscos e mitigacao
 - **Ausencia de backend**: dados limitados ao dispositivo; comunicamos escopo local e planejamos sincronizacao futura.  
 - **Perf em aparelhos basicos**: componentes leves, sem animacoes pesadas; SVG em tamanho moderado.  
-- **Formula interpretada incorretamente**: textos trazem citacao de metodo (IOM, Harris-Benedict, Siri, US Navy); revisao com profissional.  
+- **Formula interpretada incorretamente**: textos trazem citacao de metodo (IOM, Harris-Benedict, Siri, US Navy, Chumlea); revisao com profissional.  
 - **Escalabilidade de UI**: uso de componentes e paleta centralizados; novos modulos reutilizam pills, cards e ResultRow.
 
 ## Entregaveis desta fase
-- Menu com calculadoras IMC, EER, TMB, GET, %GC e MAMA funcionando offline.  
+- Menu com calculadoras IMC, EER, TMB, GET, %GC, MAMA e peso acamado funcionando offline.  
 - Documentacao atualizada (contexto, especificacao, arquitetura, testes, apresentacao).  
 - Plano de evolucao para modulos futuros (RCQ, RCEst, Bioimpedancia, Macros, Hidrica, NAF detalhado).
