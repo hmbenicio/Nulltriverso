@@ -33,7 +33,7 @@ const initialForm = {
   height: "",
 };
 
-const HomeScreen = () => {
+const HomeScreen = ({ onBack }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -108,10 +108,11 @@ const HomeScreen = () => {
         style={styles.flex}
         keyboardVerticalOffset={80}
       >
-        <ScrollView
-          contentContainerStyle={styles.scroll}
-          keyboardShouldPersistTaps="handled"
-        >
+        <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
+          {onBack ? (
+            <PrimaryButton label="Voltar para o menu" onPress={onBack} />
+          ) : null}
+
           <View style={styles.header}>
             <Text style={styles.kicker}>Saude em segundos</Text>
             <Text style={styles.title}>Calculadora de IMC</Text>

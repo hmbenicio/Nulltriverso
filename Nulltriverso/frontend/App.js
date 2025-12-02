@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import MenuScreen from "./src/screens/MenuScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 
 export default function App() {
-  return <HomeScreen />;
+  const [screen, setScreen] = useState("menu");
+
+  if (screen === "imc") {
+    return <HomeScreen onBack={() => setScreen("menu")} />;
+  }
+
+  return <MenuScreen onOpenImc={() => setScreen("imc")} />;
 }
