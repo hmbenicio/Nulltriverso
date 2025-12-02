@@ -16,6 +16,7 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
+import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { GC_PROTOCOLS, GC_STORAGE_KEY } from "../constants/gc";
 import { calculateBodyFat } from "../utils/gc";
@@ -37,7 +38,7 @@ const initialForm = {
   hip: "",
 };
 
-const GcScreen = ({ onBack }) => {
+const GcScreen = ({ onMenu, onProfile, onExit }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -151,8 +152,6 @@ const GcScreen = ({ onBack }) => {
         keyboardVerticalOffset={80}
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-          {onBack ? <PrimaryButton label="Voltar para o menu" onPress={onBack} /> : null}
-
           <View style={styles.header}>
             <Text style={styles.kicker}>Composicao corporal</Text>
             <Text style={styles.title}>% Gordura Corporal</Text>
@@ -304,7 +303,24 @@ const GcScreen = ({ onBack }) => {
               • Resultados sao estimativas de campo; metodos laboratoriais (DXA, balanca, etc.) sao mais precisos.
             </Text>
           </SectionCard>
+
+          <SectionCard style={styles.helperCard}>
+            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.helperText}>
+              • Jackson AS, Pollock ML. Generalized equations for predicting body density of men. Br J Nutr. 1978.
+            </Text>
+            <Text style={styles.helperText}>
+              • Jackson AS, Pollock ML, Ward A. Generalized equations for predicting body density of women. Med Sci Sports Exerc. 1980.
+            </Text>
+            <Text style={styles.helperText}>
+              • Siri WE. Body composition from fluid spaces and density. In: Techniques for measuring body composition. 1961.
+            </Text>
+            <Text style={styles.helperText}>
+              • Hodgdon JA, Beckett MB. Prediction of percent body fat for US Navy men and women. 1984.
+            </Text>
+          </SectionCard>
         </ScrollView>
+        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
@@ -320,6 +336,7 @@ const styles = StyleSheet.create({
   scroll: {
     paddingHorizontal: 24,
     paddingVertical: 42,
+    paddingBottom: 140,
     gap: 22,
   },
   header: {

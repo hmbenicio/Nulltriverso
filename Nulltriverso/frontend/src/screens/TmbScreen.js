@@ -16,6 +16,7 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
+import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { TMB_STORAGE_KEY } from "../constants/tmb";
 import { calculateTmb } from "../utils/tmb";
@@ -33,7 +34,7 @@ const initialForm = {
   sex: "female",
 };
 
-const TmbScreen = ({ onBack }) => {
+const TmbScreen = ({ onMenu, onProfile, onExit }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -98,8 +99,6 @@ const TmbScreen = ({ onBack }) => {
         keyboardVerticalOffset={80}
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-          {onBack ? <PrimaryButton label="Voltar para o menu" onPress={onBack} /> : null}
-
           <View style={styles.header}>
             <Text style={styles.kicker}>Base para o GET</Text>
             <Text style={styles.title}>TMB · Taxa Metabolica Basal</Text>
@@ -203,7 +202,18 @@ const TmbScreen = ({ onBack }) => {
               • TMB e uma estimativa: bioimpedancia ou calorimetria podem refinar o valor real.
             </Text>
           </SectionCard>
+
+          <SectionCard style={styles.helperCard}>
+            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.helperText}>
+              • Harris JA, Benedict FG. A biometric study of human basal metabolism. Proc Natl Acad Sci. 1918.
+            </Text>
+            <Text style={styles.helperText}>
+              • Roza AM, Shizgal HM. The Harris-Benedict equation reevaluated. Am J Clin Nutr. 1984.
+            </Text>
+          </SectionCard>
         </ScrollView>
+        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
@@ -219,6 +229,7 @@ const styles = StyleSheet.create({
   scroll: {
     paddingHorizontal: 24,
     paddingVertical: 42,
+    paddingBottom: 140,
     gap: 22,
   },
   header: {

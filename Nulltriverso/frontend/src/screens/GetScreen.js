@@ -16,6 +16,7 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
+import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { GET_STORAGE_KEY, NAF_LEVELS } from "../constants/get";
 import { calculateGet } from "../utils/get";
@@ -34,7 +35,7 @@ const initialForm = {
   naf: "sedentary",
 };
 
-const GetScreen = ({ onBack }) => {
+const GetScreen = ({ onMenu, onProfile, onExit }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -103,8 +104,6 @@ const GetScreen = ({ onBack }) => {
         keyboardVerticalOffset={80}
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-          {onBack ? <PrimaryButton label="Voltar para o menu" onPress={onBack} /> : null}
-
           <View style={styles.header}>
             <Text style={styles.kicker}>Energia total do dia</Text>
             <Text style={styles.title}>GET · Gasto Energetico Total</Text>
@@ -236,7 +235,18 @@ const GetScreen = ({ onBack }) => {
               • Escolha o NAF conforme rotina: sedentario (1.2) ate extremamente ativo (1.9).
             </Text>
           </SectionCard>
+
+          <SectionCard style={styles.helperCard}>
+            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.helperText}>
+              • FAO/WHO/UNU Expert Consultation. Human energy requirements. Rome, 2004.
+            </Text>
+            <Text style={styles.helperText}>
+              • Harris JA, Benedict FG. A biometric study of human basal metabolism. Proc Natl Acad Sci. 1918.
+            </Text>
+          </SectionCard>
         </ScrollView>
+        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
@@ -252,6 +262,7 @@ const styles = StyleSheet.create({
   scroll: {
     paddingHorizontal: 24,
     paddingVertical: 42,
+    paddingBottom: 140,
     gap: 22,
   },
   header: {

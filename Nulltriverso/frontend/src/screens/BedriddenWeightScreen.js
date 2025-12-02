@@ -16,6 +16,7 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
+import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { BED_STORAGE_KEY } from "../constants/bedridden";
 import { calculateBedriddenWeight } from "../utils/bedridden";
@@ -34,7 +35,7 @@ const initialForm = {
   subscapularFold: "",
 };
 
-const BedriddenWeightScreen = ({ onBack }) => {
+const BedriddenWeightScreen = ({ onMenu, onProfile, onExit }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -103,8 +104,6 @@ const BedriddenWeightScreen = ({ onBack }) => {
         keyboardVerticalOffset={80}
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-          {onBack ? <PrimaryButton label="Voltar para o menu" onPress={onBack} /> : null}
-
           <View style={styles.header}>
             <Text style={styles.kicker}>Paciente acamado</Text>
             <Text style={styles.title}>Peso estimado (Chumlea)</Text>
@@ -208,7 +207,18 @@ const BedriddenWeightScreen = ({ onBack }) => {
               • Se houver balanca de cama/cadeira, prefira afericao direta e use a estimativa apenas como apoio.
             </Text>
           </SectionCard>
+
+          <SectionCard style={styles.helperCard}>
+            <Text style={styles.legendTitle}>Referencias bibliograficas</Text>
+            <Text style={styles.helperText}>
+              • Chumlea WC, Roche AF, Steinbaugh ML. Estimating stature and weight of the elderly from knee height. J Am Geriatr Soc. 1985.
+            </Text>
+            <Text style={styles.helperText}>
+              • Chumlea WC et al. Prediction of body weight for the nonambulatory elderly from anthropometry. J Am Diet Assoc. 1988.
+            </Text>
+          </SectionCard>
         </ScrollView>
+        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
@@ -224,6 +234,7 @@ const styles = StyleSheet.create({
   scroll: {
     paddingHorizontal: 24,
     paddingVertical: 42,
+    paddingBottom: 140,
     gap: 22,
   },
   header: {

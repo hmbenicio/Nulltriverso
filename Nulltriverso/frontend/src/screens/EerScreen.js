@@ -17,6 +17,7 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
+import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { ACTIVITY_LEVELS, EER_STORAGE_KEY } from "../constants/eer";
 import { calculateEer } from "../utils/eer";
@@ -37,7 +38,7 @@ const initialForm = {
   gestationalWeeks: "",
 };
 
-const EerScreen = ({ onBack }) => {
+const EerScreen = ({ onMenu, onProfile, onExit }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -122,10 +123,6 @@ const EerScreen = ({ onBack }) => {
         keyboardVerticalOffset={80}
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-          {onBack ? (
-            <PrimaryButton label="Voltar para o menu" onPress={onBack} />
-          ) : null}
-
           <View style={styles.header}>
             <Text style={styles.kicker}>Nutricionistas e pacientes</Text>
             <Text style={styles.title}>EER · Necessidade Energetica</Text>
@@ -306,7 +303,18 @@ const EerScreen = ({ onBack }) => {
               • Para criancas, utilize as equacoes especificas por faixa etaria (fora do escopo desta tela).
             </Text>
           </SectionCard>
+
+          <SectionCard style={styles.helperCard}>
+            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.helperText}>
+              • Institute of Medicine (2005). Dietary Reference Intakes for Energy, Carbohydrate, Fiber, Fat, Fatty Acids, Cholesterol, Protein, and Amino Acids.
+            </Text>
+            <Text style={styles.helperText}>
+              • Butte NF et al. Estimated energy requirements of the human body. Am J Clin Nutr. 2005.
+            </Text>
+          </SectionCard>
         </ScrollView>
+        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
@@ -322,6 +330,7 @@ const styles = StyleSheet.create({
   scroll: {
     paddingHorizontal: 24,
     paddingVertical: 42,
+    paddingBottom: 140,
     gap: 22,
   },
   header: {

@@ -16,6 +16,7 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
+import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { MI_STORAGE_KEY } from "../constants/mi";
 import { calculateMama } from "../utils/mi";
@@ -32,7 +33,7 @@ const initialForm = {
   tricepsUnit: "mm",
 };
 
-const MiScreen = ({ onBack }) => {
+const MiScreen = ({ onMenu, onProfile, onExit }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -96,8 +97,6 @@ const MiScreen = ({ onBack }) => {
         keyboardVerticalOffset={80}
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-          {onBack ? <PrimaryButton label="Voltar para o menu" onPress={onBack} /> : null}
-
           <View style={styles.header}>
             <Text style={styles.kicker}>Massa muscular</Text>
             <Text style={styles.title}>Indice de Muscularidade (MAMA)</Text>
@@ -193,7 +192,18 @@ const MiScreen = ({ onBack }) => {
               • Compare com tabelas de referencia por idade/sexo para interpretar o indice de muscularidade.
             </Text>
           </SectionCard>
+
+          <SectionCard style={styles.helperCard}>
+            <Text style={styles.legendTitle}>Referencias bibliograficas</Text>
+            <Text style={styles.helperText}>
+              • Heymsfield SB et al. Anthropometric measurement of muscle mass: revised equations for calculating midarm muscle area. Am J Clin Nutr. 1982.
+            </Text>
+            <Text style={styles.helperText}>
+              • Frisancho AR. Anthropometric Standards for the Assessment of Growth and Nutritional Status. Univ. of Michigan Press, 1990.
+            </Text>
+          </SectionCard>
         </ScrollView>
+        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
@@ -209,6 +219,7 @@ const styles = StyleSheet.create({
   scroll: {
     paddingHorizontal: 24,
     paddingVertical: 42,
+    paddingBottom: 140,
     gap: 22,
   },
   header: {

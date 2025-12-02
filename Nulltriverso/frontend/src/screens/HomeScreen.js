@@ -26,6 +26,7 @@ import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
 import ImcGauge from "../components/ImcGauge";
 import ImcLineChart from "../components/ImcLineChart";
+import BottomBar from "../components/BottomBar";
 
 const initialForm = {
   name: "",
@@ -33,7 +34,7 @@ const initialForm = {
   height: "",
 };
 
-const HomeScreen = ({ onBack }) => {
+const HomeScreen = ({ onMenu, onProfile, onExit }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -109,10 +110,6 @@ const HomeScreen = ({ onBack }) => {
         keyboardVerticalOffset={80}
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-          {onBack ? (
-            <PrimaryButton label="Voltar para o menu" onPress={onBack} />
-          ) : null}
-
           <View style={styles.header}>
             <Text style={styles.kicker}>Saude em segundos</Text>
             <Text style={styles.title}>Calculadora de IMC</Text>
@@ -215,7 +212,18 @@ const HomeScreen = ({ onBack }) => {
             </Text>
             <ImcLineChart />
           </SectionCard>
+
+          <SectionCard style={styles.referenceCard}>
+            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.referenceText}>
+              • WHO. Obesity: preventing and managing the global epidemic. WHO Technical Report Series 894, 2000.
+            </Text>
+            <Text style={styles.referenceText}>
+              • WHO. BMI classification (adult). Geneva: World Health Organization.
+            </Text>
+          </SectionCard>
         </ScrollView>
+        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
@@ -231,6 +239,7 @@ const styles = StyleSheet.create({
   scroll: {
     paddingHorizontal: 24,
     paddingVertical: 42,
+    paddingBottom: 140,
     gap: 22,
   },
   header: {
@@ -318,6 +327,13 @@ const styles = StyleSheet.create({
     color: colors.ink,
     fontWeight: "800",
     fontSize: 16,
+  },
+  referenceCard: {
+    gap: 8,
+  },
+  referenceText: {
+    color: colors.inkMuted,
+    lineHeight: 20,
   },
 });
 
