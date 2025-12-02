@@ -1,22 +1,25 @@
 # Registro de Testes de Software
 
-## Sessão 2025-12-01 (manual, Expo Go)
+## Sessao 2025-12-02 (planejada)
 
-| ID | Resultado | Observações |
+| ID | Resultado | Observacoes |
 | -- | --------- | ----------- |
-| TS-01 | Aprovado | Mensagem “Informe seu nome.” exibida ao submeter sem nome |
-| TS-02 | Aprovado | Peso/altura 0 retornam mensagens “Peso inválido.” / “Altura inválida.” |
-| TS-03 | Aprovado | 80 kg, 180 cm → IMC 24.69 (renderizado 24.69) e status “Peso normal” |
-| TS-04 | Aprovado | IMCs simulados 17/23/28/33/37 mostraram faixas corretas e cores coerentes |
-| TS-05 | Aprovado | Último cálculo carregado após fechar e reabrir app |
-| TS-06 | Aprovado | Gauge moveu ponteiro para a faixa correspondente; barra de status acompanhou cor |
-| TS-07 | Aprovado | Entrada “70,5” e “175,5” parseadas corretamente |
-| TS-08 | Aprovado | `KeyboardAvoidingView` manteve campos visíveis; scroll funcional |
+| TS-IMC-01 | Pendente | Revalidar mensagens obrigatorias apos ajustes de copy |
+| TS-IMC-02 | Pendente | Confirmar status/cores e gauge |
+| TS-IMC-03 | Pendente | Verificar leitura de `imc:last` |
+| TS-EER-01 | Pendente | Conferir fator por sexo (PA) |
+| TS-EER-02 | Pendente | Bonus gestacional aplicado corretamente |
+| TS-TMB-01 | Pendente | Valores Harris-Benedict conferidos |
+| TS-GET-01 | Pendente | GEB x NAF exibido corretamente |
+| TS-GC-01 | Pendente | Jackson & Pollock + Siri (3 dobras) |
+| TS-GC-02 | Pendente | US Navy fem masc, log10 em cm |
+| TS-MI-01 | Pendente | Conversao mm->cm e CMB/area |
+| TS-PER-01 | Pendente | Ultimos resultados recarregados em todas as telas |
 
 ## Resumo
-- Nenhum bug crítico encontrado.
-- Performance aceitável em aparelho intermediário; animação do gauge dentro do esperado.
+- Versao expandida para varias calculadoras ainda nao foi testada manualmente.  
+- Priorizar smoke completo nas seis telas em aparelho fisico e emulador.
 
-## Pendências para próxima rodada
-- Validar em aparelho de entrada com 2 GB RAM.
-- Incluir automação mínima para funções de cálculo (`utils/imc.js`) em futura suíte de testes.
+## Pendencias para proxima rodada
+- Executar a sessao acima e registrar valores obtidos.  
+- Planejar automacao minima para `utils/` (IMC, EER, TMB/GET, %GC, MAMA).

@@ -1,24 +1,30 @@
-# Programação de Funcionalidades
+# Programacao de Funcionalidades
 
 ## Escopo entregue
 
-| Item | Descrição | Status |
+| Item | Descricao | Status |
 | ---- | --------- | ------ |
-| Formulário de dados | Campos de nome, peso (kg) e altura (cm) com teclado adequado e parse de vírgula/ponto | Concluído |
-| Validação e feedback | Mensagens imediatas para campos vazios ou valores não positivos | Concluído |
-| Cálculo e classificação | Funções em `utils/imc.js` que calculam IMC e retornam status e cor da faixa | Concluído |
-| Persistência local | Salvamento do último cálculo no `AsyncStorage` e recuperação automática na abertura | Concluído |
-| Visualizações | Gauge semicircular com faixas OMS e linha de evolução mockada para demonstração | Concluído |
-| Tema e componentes | Paleta centralizada e componentes reutilizáveis para futuras features | Concluído |
+| Menu de calculadoras | Grid responsivo com cards e gradiente de fundo | Concluido |
+| IMC | Peso/altura/nome, parse com virgula, status OMS, gauge e linha mockada, persistencia `imc:last` | Concluido |
+| EER | IOM adulto com fator de atividade por sexo, opcao gestante (bonus 8 kcal/sem + 180), persistencia `eer:last` | Concluido |
+| TMB/BMR | Harris-Benedict revisado por sexo; resultado em kcal/dia, persistencia `tmb:last` | Concluido |
+| GET | GEB (Harris-Benedict) x NAF selecionado, mostrando fator e descricao, persistencia `get:last` | Concluido |
+| % Gordura corporal | Protocolos Jackson & Pollock (3 ou 7 dobras + Siri) e US Navy (circunferencias), persistencia `gc:last` | Concluido |
+| MAMA | CB e PCT em mm ou cm, calcula CMB e area do braco, persistencia `mi:last` | Concluido |
+| Componentes e paleta | Cards, botoes, inputs, pills e ResultRow reutilizaveis; paleta em `theme/colors.js` | Concluido |
+| Placeholders futuros | RCQ, RCEst, Bio, NAF detalhado, Macros, Hidrica no menu (sem logica) | Pendente |
 
-## Detalhes de implementação
-- **HomeScreen** controla estado do formulário e resultado; usa `useEffect` para carregar dados salvos e `useMemo` para derivar cores/progressos.
-- **Utils** concentram cálculo (`calculateImc`), classificação (`statusFromImc`), cor (`colorFromImc`), clamp e parse de número com vírgula (`parseLocaleNumber`).
-- **Persistência**: chave `imc:last`; falhas de escrita/leitura são logadas via `console.warn`.
-- **Visualizações**: gauge animado com `Animated` e `react-native-svg`; linha usa dados mockados de seis meses para ilustrar tendência.
+## Detalhes de implementacao
+- **HomeScreen (IMC)**: valida campos, calcula IMC via `utils/imc`, colore badge e barra conforme faixa; gauge e linha usam dados mockados.  
+- **EerScreen**: coleta sesso, atividade (lista em `constants/eer`), gestacao opcional; `utils/eer` retorna base, bonus e total arredondados.  
+- **TmbScreen**: usa `utils/tmb` (Harris-Benedict) com sexo/idade/peso/altura.  
+- **GetScreen**: `utils/get` calcula GEB e multiplica pelo NAF (lista em `constants/get`).  
+- **GcScreen**: protocolos em `constants/gc`; `utils/gc` aplica Jackson & Pollock + Siri ou formula US Navy em cm; campos dinamicos por protocolo.  
+- **MiScreen**: `utils/mi` converte PCT mm->cm quando escolhido e calcula CMB/area.  
+- **Persistencia**: cada tela carrega ultimo resultado no `useEffect` inicial; erros de IO sao logados com `console.warn`.
 
-## Pendências planejadas (próximas iterações)
-- Histórico real de cálculos por usuário.
-- Exportação/compartilhamento do resultado.
-- Telemetria para medir conversão e erros de validação.
-- Internacionalização (pt-BR / en-US) e suporte a unidades imperiais, se necessário.
+## Pendencias/roadmap
+- Implementar logica dos cards futuros (RCQ, RCEst, Bioimpedancia, Macros, Hidrica, NAF detalhado).  
+- Historico completo de calculos por usuario.  
+- Compartilhamento/exportacao dos resultados.  
+- Internacionalizacao e unidades alternativas (imperial).

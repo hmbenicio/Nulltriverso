@@ -1,32 +1,35 @@
 # Metodologia
 
-## Abordagem de trabalho
-- **Iterações curtas (Kanban enxuto)**: backlog enxuto focado em IMC, priorizando fluxos completos antes de novas ideias.
-- **Definição de pronto**: cálculo validando entradas, feedback visual e persistência local funcionando em Android/iOS.
-- **Feedback rápido**: validação constante com usuária-alvo (Aline) e nutricionista (Bianca) para linguagem e cores.
+## Abordagem
+- **Iteracoes curtas em Kanban enxuto**: cada calculadora entregue de ponta a ponta (UI + validacao + persistencia).  
+- **Definicao de pronto**: entrada validada, calculo correto, feedback visual, ultimo resultado salvo e carregado.  
+- **Feedback rapido**: revisao com nutricionista/estudante para nomenclatura e fatores; ajustes de texto direto na tela.
 
 ## Ferramentas
-- **Código**: React Native + Expo 54; armazenamento local com `@react-native-async-storage/async-storage`; visualizações com `react-native-svg`.
-- **Controle de versão**: GitHub; branches curtas por feature; main sempre executável no Expo Go.
-- **Qualidade**: lint/format do Expo (quando habilitado), testes manuais guiados pelo Plano de Testes; logs no console para rastrear validação.
-- **Comunicação**: Issues/Projects no GitHub, compartilhamento de builds via Expo Go/QR.
+- **Codigo**: React Native + Expo 54; AsyncStorage; react-native-svg; expo-linear-gradient.  
+- **Versao**: GitHub; branches curtas por modulo; `main` sempre executavel no Expo Go.  
+- **Qualidade**: testes manuais guiados pelo plano; logs leves no console; lint/format padrao Expo quando aplicavel.  
+- **Comunicacao**: issues/projetos no GitHub, compartilhamento via QR do Expo Go.
 
-## Organização do repositório
-- `Nulltriverso/frontend`: app móvel (Expo). Estrutura por domínio: `components`, `constants`, `screens`, `theme`, `utils`.
-- `Docs`: documentação viva deste módulo e base para futuras expansões do Nulltriverso.
+## Organizacao do repositorio
+- `Nulltriverso/frontend`: app mobile. Pastas por dominio (`components`, `constants`, `screens`, `theme`, `utils`).  
+- `Docs`: documentacao viva (contexto, requisitos, arquitetura, testes, apresentacao).  
+- `Apresentacao`: materiais visuais.  
+- `Nulltriverso/backend`: reservado para futuras integracoes.
 
-## Controle de tarefas (exemplo de quadro)
-- **To Do**: ajuste de mensagens de erro, refino da paleta, preparo de testes.
-- **Doing**: implementação/ajuste de componentes e validações.
-- **Review**: testes em aparelho físico/Expo Go.
-- **Done**: merge em `main` com documentação atualizada.
+## Fluxo de trabalho
+- **To Do**: texto/UX, formulas, fatores de atividade/protocolo, mensagens de erro.  
+- **Doing**: implementacao em tela, validacao, salvamento local.  
+- **Review**: testes em aparelho/emulador, checagem de copys e cores.  
+- **Done**: merge com docs atualizados e chaves de storage definidas.
 
-## Riscos e mitigação
-- **Ausência de backend**: risco de perda de dados entre dispositivos → mantemos claro que o escopo é local; próxima fase deve introduzir sincronização.
-- **Perf em aparelhos básicos**: gauge SVG pode ser custoso → mantido tamanho e animação moderados; monitorar uso de memória.
-- **Mensagens pouco claras**: validado texto com nutricionista; revisar após cada rodada de feedback.
+## Riscos e mitigacao
+- **Ausencia de backend**: dados limitados ao dispositivo; comunicamos escopo local e planejamos sincronizacao futura.  
+- **Perf em aparelhos basicos**: componentes leves, sem animacoes pesadas; SVG em tamanho moderado.  
+- **Formula interpretada incorretamente**: textos trazem citacao de metodo (IOM, Harris-Benedict, Siri, US Navy); revisao com profissional.  
+- **Escalabilidade de UI**: uso de componentes e paleta centralizados; novos modulos reutilizam pills, cards e ResultRow.
 
-## Entregáveis desta fase
-- App Expo com cálculo de IMC, gauge e persistência local.
-- Documentação atualizada (contexto, requisitos, arquitetura, testes).
-- Plano para expansão do Nulltriverso (novos módulos plugáveis sobre a base de UI e padrões criados aqui).
+## Entregaveis desta fase
+- Menu com calculadoras IMC, EER, TMB, GET, %GC e MAMA funcionando offline.  
+- Documentacao atualizada (contexto, especificacao, arquitetura, testes, apresentacao).  
+- Plano de evolucao para modulos futuros (RCQ, RCEst, Bioimpedancia, Macros, Hidrica, NAF detalhado).

@@ -1,19 +1,16 @@
 # Registro de Testes de Usabilidade
 
-## Sessão planejada
-- **Status**: não executada (planejada para primeira semana pós-entrega deste módulo).
-- **Participantes previstos**: 3 usuários finais (dois iniciantes, um habitual) e 1 nutricionista.
-- **Cenários**: cálculo completo, interpretação de mensagens de erro, leitura do status e gauge, reabertura do app com resultado salvo.
+## Status
+- Nao executado apos expansao para multiplas calculadoras. Sessao piloto sera agendada com 3-5 usuarios e 1 nutricionista/estudante.
 
 ## Plano de coleta
-- Cronometrar tempo até conclusão do cálculo.
-- Anotar mensagens de erro exibidas por participante.
-- Perguntar clareza do status (Likert 1–5) e utilidade das visualizações.
+- Cronometrar tempo ate concluir IMC e outro modulo (EER ou %GC).  
+- Contar mensagens de erro exibidas.  
+- Perguntar clareza do menu e dos protocolos (Likert 1-5).  
+- Observar se encontram o ultimo resultado apos reabrir.
 
-## Próximos passos
-- Convidar participantes e enviar build via Expo Go.
-- Registrar resultados na tabela abaixo após execução:
+## Tabela de resultados (preencher)
 
-| Data | Participantes | Sucesso na 1ª tentativa | Clareza das mensagens | Observações |
-| ---- | ------------- | ----------------------- | --------------------- | ----------- |
-| — | — | — | — | — |
+| Data | Participantes | Sucesso na 1a tentativa | Clareza de mensagens | Observacoes |
+| ---- | ------------- | ----------------------- | ------------------- | ----------- |
+| - | - | - | - | - |

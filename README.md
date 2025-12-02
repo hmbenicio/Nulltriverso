@@ -1,33 +1,32 @@
-# Nulltriverso · Calculadora de IMC móvel
+# Nulltriverso - Suite de calculos nutricionais mobile
 
-Aplicação mobile de bem-estar que integra nutrição, tecnologia e visual de “multiverso”.  
-A primeira entrega do ecossistema Nulltriverso é um módulo completo de **IMC** desenvolvido em **React Native com Expo**, totalmente client-side: cálculo, classificação, persistência local e visualizações modernas — tudo no dispositivo, sem backend nesta versão.
+Aplicacao mobile de bem-estar que integra nutricao, tecnologia e visual de multiverso. Nesta entrega o app Expo traz um menu com calculadoras client-side, todas rodando no dispositivo e salvando o ultimo calculo localmente.
 
-## Principais funcionalidades
+## Funcionalidades hoje
 
-- Cálculo de IMC com **nome, peso (kg) e altura (cm)**, aceitando números com **ponto ou vírgula**.  
-- Classificação automática conforme **faixas da OMS**, com **cores unificadas na UI**.  
-- Persistência local via **AsyncStorage**, reabrindo o último cálculo automaticamente.  
-- Visualização do estado físico por meio de:
-  - **Gauge semicircular** (SVG).  
-  - **Linha de tendência mockada** (SVG).  
-- Interface com gradientes e identidade visual temática do Nulltriverso.
+- **IMC**: nome/peso/altura com parse de ponto ou virgula, classificacao OMS, gauge semicircular e linha de tendencia mockada.  
+- **EER** (Estimativa de Necessidade Energetica): equacao IOM para adultos, fator de atividade por sexo, bonus gestacional.  
+- **TMB/BMR**: Harris-Benedict revisado com sexo, idade, peso e altura.  
+- **GET**: usa GEB (Harris-Benedict) multiplicado por NAF selecionado.  
+- **% Gordura corporal**: protocolos Jackson & Pollock (3 ou 7 dobras + Siri) ou circunferencias US Navy.  
+- **Indice de muscularidade (MAMA)**: calcula CMB e area do braco com CB e PCT em mm ou cm.  
+- Persistencia local via AsyncStorage para IMC/EER/TMB/GET/%GC/MAMA; telas para RCQ/RCEst/Bio/NAF/Macros/Hidrica ja aparecem no menu como proximas evolucoes.
 
-## Fluxo atual da aplicação
+## Fluxo do app
 
-1. App inicia em `HomeIMCPage` (ou tela principal definida no projeto).  
-2. Usuário informa nome, peso e altura para gerar o resultado.  
-3. Gauge e linha de tendência atualizam com base no cálculo.  
-4. Último cálculo permanece salvo para consultas futuras.
+1. App abre no **Menu**, cada card leva a uma calculadora.  
+2. Cada calculadora valida entradas (aceita virgula ou ponto), executa o calculo e exibe resumo em `SectionCard`.  
+3. Ultimo resultado de cada calculadora e salvo e recarregado na reabertura.  
+4. Visuals: gradiente de fundo, paleta verde/ambar e componentes reutilizaveis (cards, botoes, inputs, badges).
 
-## Tecnologias utilizadas
+## Stack
 
-- **React Native 0.81 + Expo 54**  
-- **AsyncStorage** para armazenamento local  
-- **react-native-svg** para gauge e gráficos  
-- **expo-linear-gradient** para identidade visual  
+- React Native 0.81 + Expo 54  
+- AsyncStorage para armazenamento local  
+- react-native-svg para gauge e graficos  
+- expo-linear-gradient para identidade visual
 
-## Como executar o projeto
+## Como executar
 
 ```bash
 cd Nulltriverso/frontend
@@ -35,38 +34,32 @@ npm install
 npm start   # Expo menu (a = Android, i = iOS, w = Web)
 ```
 
-## Requisitos:
+Requisitos: Node.js 18+ e Expo Go instalado (fisico ou emulador).
 
-- Node.js 18+
-- App Expo Go instalado em dispositivo ou emulador
+## Estrutura
 
-## Estrutura do repositório
+- `Nulltriverso/frontend/src/components` - inputs, botoes, cards, gauge e linha IMC.  
+- `Nulltriverso/frontend/src/screens` - menu e calculadoras (IMC, EER, TMB, GET, GC, MAMA).  
+- `Nulltriverso/frontend/src/constants` - faixas, fatores, protocolos e chaves de storage.  
+- `Nulltriverso/frontend/src/utils` - funcoes de calculo e parse numerico.  
+- `Docs/` - documentacao funcional, tecnica e de testes.  
+- `Apresentacao/` - materiais visuais.  
+- `Nulltriverso/backend` - reservado para futuras integracoes (vazio nesta versao).
 
-- `Nulltriverso/` – projeto completo.
-  - `frontend/` – aplicação móvel (Expo/React Native).
-    - `frontend/src/pages/` – telas principais do app IMC.
-    - `frontend/src/components/` – componentes de interface reutilizáveis (inputs, cards, gauge).
-    - `frontend/src/constants/` – faixas da OMS, textos fixos e tabelas.
-    - `frontend/src/utils/` – cálculos, conversões e funções auxiliares.
-    - `frontend/src/theme/` – paleta, gradientes e estilos globais.
-  - `backend/` – reservado para futuras integrações (vazio nesta versão).
-- `Docs/` – documentação funcional, técnica e de testes.
-- `Apresentação/` – arquivos de apresentação e materiais visuais do projeto.
+## Documentacao
+- Docs/01-Documentacao de Contexto.md
+- Docs/02-Especificacao do Projeto.md
+- Docs/03-Metodologia.md
+- Docs/04-Projeto de Interface.md
+- Docs/05-Arquitetura da Solucao.md
+- Docs/06-Template Padrao da Aplicacao.md
+- Docs/07-Programacao de Funcionalidades.md
+- Docs/08-Plano de Testes de Software.md
+- Docs/09-Registro de Testes de Software.md
+- Docs/10-Plano de Testes de Usabilidade.md
+- Docs/11-Registro de Testes de Usabilidade.md
+- Docs/12-Apresentacao do Projeto.md
+- Docs/13-Referencias.md
 
-## Documentação
-- <a href="Docs/01-Documentação de Contexto.md">Documentação de Contexto</a>
-- <a href="Docs/02-Especificação do Projeto.md">Especificação do Projeto</a>
-- <a href="Docs/03-Metodologia.md">Metodologia</a>
-- <a href="Docs/04-Projeto de Interface.md">Projeto de Interface</a>
-- <a href="Docs/05-Arquitetura da Solução.md">Arquitetura da Solução</a>
-- <a href="Docs/06-Template Padrão da Aplicação.md">Template Padrão da Aplicação</a>
-- <a href="Docs/07-Programação de Funcionalidades.md">Programação de Funcionalidades</a>
-- <a href="Docs/08-Plano de Testes de Software.md">Plano de Testes de Software</a>
-- <a href="Docs/09-Registro de Testes de Software.md">Registro de Testes de Software</a>
-- <a href="Docs/10-Plano de Testes de Usabilidade.md">Plano de Testes de Usabilidade</a>
-- <a href="Docs/11-Registro de Testes de Usabilidade.md">Registro de Testes de Usabilidade</a>
-- <a href="Docs/12-Apresentação do Projeto.md">Apresentação do Projeto</a>
-- <a href="Docs/13-Referências.md">Referências</a>
-
-## Contatos e equipe
-Projeto desenvolvido para portfólio pessoal.
+## Contato
+Projeto de portfolio pessoal do Nulltriverso.

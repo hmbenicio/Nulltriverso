@@ -1,29 +1,32 @@
 # Projeto de Interface
 
-## Visão geral
-O app possui uma única tela (Home) que concentra entrada de dados e retorno do resultado. A hierarquia é curta para reduzir fricção: header com texto guia, cartão de formulário, cartão de resultado e duas visualizações (gauge e linha).
+## Visao geral
+O app abre em um **menu em grade** com cards ilustrados para cada calculadora. Cada tela usa a mesma base visual: gradiente de fundo, header com kicker/titulo/subtitulo, `SectionCard` para formulario e resultados, botoes primarios verdes e `ResultRow` para resumo. Layout scroll unico com `KeyboardAvoidingView`.
 
 ## Identidade visual
-- **Paleta**: verdes e tons terrosos (`#0f482f` primário, `#22c55e` sucesso, `#f59e0b` alerta, `#ef4444` crítico) com fundos claros (`#f7f4ef` / `#ebe2d9`) para legibilidade.
-- **Tipografia**: uso da família padrão do sistema com pesos fortes para títulos e contraste moderado para texto de apoio.
-- **Iconografia/ilustrações**: gauge semicircular com faixas coloridas e labels, mais linha evolutiva simulada.
+- **Paleta**: verdes e tons terrosos (`#0f482f` primario, `#22c55e` sucesso, `#f59e0b` alerta, `#ef4444` critico, fundos `#f7f4ef` / `#ebe2d9`).  
+- **Tipografia**: fontes do sistema com pesos fortes para titulos e contraste moderado para textos de apoio.  
+- **Iconografia**: cards do menu usam ilustracoes/cores unificadas; gauge semicircular no IMC e linha de tendencia mockada.
 
 ## Componentes-chave
-- **SectionCard**: cartão com padding e borda sutil, usado para formulário e resultados.
-- **TextField**: entrada com borda clara, suporte a teclado numérico/decimal e autocapitalização para nome.
-- **PrimaryButton**: botão verde com texto em alto contraste.
-- **ResultRow**: linha chave/valor para exibir dados calculados.
-- **ImcGauge**: velocímetro SVG animado mostrando a faixa do IMC.
-- **ImcLineChart**: linha de tendência usando dados mockados para ilustrar evolução.
+- **SectionCard**: contenedor com borda sutil; recebe `style` extra.  
+- **TextField**: input com borda clara, teclado decimal quando necessario, aceita virgula/ponto.  
+- **PrimaryButton**: botao verde, ocupa toda a largura do card.  
+- **Pills/tiles**: pressables para sexo, fatores, protocolos e unidades.  
+- **ResultRow**: linhas chave/valor para organizacao dos resultados.  
+- **ImcGauge / ImcLineChart**: visualizacoes SVG plugaveis.
 
-## Fluxo da tela
-1. **Header**: título “Calculadora de IMC” e subtítulo orientativo.
-2. **Dados do paciente**: campos de nome, peso (kg) e altura (cm); mensagem de erro logo abaixo se validação falhar; botão “Calcular IMC”.
-3. **Resultado**: badge de status colorido, barra de progresso proporcional ao IMC, valores formatados (1 casa para peso/altura e 2 para IMC).
-4. **Visualizações**: gauge semicircular com faixas de IMC e ponteiro animado; linha de evolução com pontos pré-definidos para demonstrar tendência.
+## Fluxos por tela
+- **Menu**: cards responsivos em 3 colunas; alguns cards sem acao estao marcados como futuros (RCQ, RCEst, Bio, NAF, Macros, Hidrica).  
+- **IMC**: campos de nome, peso (kg), altura (cm); erro proximo aos inputs; badge de status e progress bar; gauge e linha mockada.  
+- **EER**: idade/peso/altura, sexo, nivel de atividade (lista com descricao e fator por sexo), opcao gestante + semanas; resultado com total, base e bonus.  
+- **TMB**: idade/peso/altura, sexo; resultado com kcal/dia e dados informados.  
+- **GET**: idade/peso/altura, sexo e lista de NAF; resultado mostra GEB (Harris-Benedict), fator e total.  
+- **%GC**: escolha de protocolo (Jackson3, Jackson7, US Navy); campos dinamicos (soma das dobras ou pescoco/cintura/quadril); resultado exibe metodo e, se aplicavel, densidade corporal.  
+- **MAMA**: circunferencia do braco e PCT; pill de unidade mm/cm; resultado traz CMB e area do braco.
 
 ## Acessibilidade e UX
-- Campos usam teclado apropriado e validação imediata.
-- Cores refletem estados (azul/verde/âmbar/vermelho) e texto acompanha para não depender só de cor.
-- Layout em rolagem única, com `KeyboardAvoidingView` para evitar sobreposição do teclado.
-- Mensagens curtas e em português simples para facilitar entendimento pelo público amplo.
+- Teclados apropriados (decimal) e `KeyboardAvoidingView` em todas as telas.  
+- Cores acompanham texto para nao depender apenas de cor.  
+- Mensagens curtas e diretas; botoes com verbos de acao.  
+- Layouts com espaco entre elementos (`gap`) e padding consistente (24 px lateral).
