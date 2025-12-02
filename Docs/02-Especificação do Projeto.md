@@ -1,6 +1,6 @@
 # Especificacao do Projeto
 
-Esta entrega cobre o menu de calculadoras do Nulltriverso (IMC, EER, TMB, GET, %GC e MAMA), todas client-side com persistencia local.
+Esta entrega cobre o menu de calculadoras do Nulltriverso (IMC, EER, TMB, GET, %GC, MAMA e peso estimado de acamados), todas client-side com persistencia local.
 
 ## Personas
 
@@ -19,11 +19,12 @@ Esta entrega cobre o menu de calculadoras do Nulltriverso (IMC, EER, TMB, GET, %
 | Estudante | Calcular TMB/GET com NAF | Comparar efeitos de atividade no gasto total |
 | Avaliador fisico | Calcular %GC por dobras ou circunferencias | Escolher metodo mais pratico no momento |
 | Nutricionista | Registrar MAMA com CB e PCT em mm ou cm | Avaliar muscularidade do braco |
+| Enfermeira | Estimar peso acamado sem balanca | Dosar dietas ou medicamentos com base em medidas antropometricas |
 | Usuario recorrente | Reabrir e ver ultimo calculo de cada modulo | Nao precisar digitar tudo de novo |
 
 ## Modelagem resumida
 
-1. Menu lista calculadoras com card e cor de acento.  
+1. Menu lista calculadoras com card e cor de acento; placeholders de futuras calculadoras permanecem clicaveis apenas quando implementados.  
 2. Cada tela valida entradas (idade/peso/altura/medidas) e mostra erro imediato.  
 3. Funcoes de util calculam valores conforme protocolo selecionado.  
 4. Resultado e salvo em AsyncStorage (chaves especificas) e exibido em card com linhas chave/valor e destaques.  
@@ -44,7 +45,7 @@ Esta entrega cobre o menu de calculadoras do Nulltriverso (IMC, EER, TMB, GET, %
 
 | ID | Descricao | Prioridade |
 | -- | --------- | ---------- |
-| RF-01 | Menu com cards para IMC, EER, TMB, GET, %GC, MAMA e placeholders futuros | Alta |
+| RF-01 | Menu com cards para IMC, EER, TMB, GET, %GC, MAMA, Peso acamado e placeholders futuros | Alta |
 | RF-02 | Validar campos obrigatorios e numeros positivos (aceita virgula ou ponto) | Alta |
 | RF-03 | Calcular IMC e classificar segundo faixas OMS; mostrar gauge e linha mockada | Alta |
 | RF-04 | Calcular EER adulto (IOM) com fator de atividade por sexo e bonus gestacional | Alta |
@@ -52,7 +53,8 @@ Esta entrega cobre o menu de calculadoras do Nulltriverso (IMC, EER, TMB, GET, %
 | RF-06 | Calcular GET = GEB x NAF, listando fatores e descricoes | Alta |
 | RF-07 | Calcular %GC por Jackson & Pollock (3 ou 7 dobras) + Siri ou circunferencias US Navy | Alta |
 | RF-08 | Calcular MAMA com CB e PCT (mm ou cm), exibindo CMB e area | Alta |
-| RF-09 | Persistir ultimo calculo de cada modulo em AsyncStorage e recarregar na abertura | Alta |
+| RF-09 | Calcular peso estimado de acamados (Chumlea) com CPA, AJ, CB e dobra subescapular | Alta |
+| RF-10 | Persistir ultimo calculo de cada modulo em AsyncStorage e recarregar na abertura | Alta |
 
 ### Nao funcionais
 
@@ -80,6 +82,7 @@ Esta entrega cobre o menu de calculadoras do Nulltriverso (IMC, EER, TMB, GET, %
 - **Calcular TMB/GET**: usuario insere dados, escolhe sexo e NAF -> calcula Harris-Benedict e GET -> salva.  
 - **Calcular %GC**: usuario escolhe protocolo -> preenche dobras ou circunferencias -> calcula Siri ou US Navy -> salva.  
 - **Calcular MAMA**: usuario insere CB e PCT -> app converte unidades se necessario -> calcula CMB/area -> salva.  
+- **Calcular peso acamado**: usuario informa CPA, altura do joelho, CB e dobra subescapular -> app aplica equacao de Chumlea por sexo -> salva.  
 - **Reabrir app**: carrega ultimo resultado de cada modulo, se existir.
 
 ## Matriz de rastreabilidade (trecho)
@@ -91,4 +94,5 @@ Esta entrega cobre o menu de calculadoras do Nulltriverso (IMC, EER, TMB, GET, %
 | TMB e GET | RF-02, RF-05, RF-06 | TS-TMB-01, TS-GET-01 |
 | %GC por protocolo | RF-02, RF-07 | TS-GC-01, TS-GC-02 |
 | MAMA com unidade PCT | RF-02, RF-08 | TS-MI-01 |
-| Persistencia local | RF-09, RNF-02 | TS-PER-01 |
+| Peso acamado | RF-02, RF-09 | TS-PESO-01 |
+| Persistencia local | RF-10, RNF-02 | TS-PER-01 |

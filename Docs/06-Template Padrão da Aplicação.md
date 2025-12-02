@@ -13,7 +13,8 @@ Guia de padroes visuais e de codigo que sustentam todas as calculadoras do Nullt
 - **PrimaryButton**: botao principal verde ocupando toda a largura do card.  
 - **Pills/tiles**: seletores de sexo, nivel de atividade, protocolo ou unidade; mudam cor de borda e fundo quando ativos.  
 - **ResultRow**: pares chave/valor alinhados para resumos.  
-- **ImcGauge/ImcLineChart**: visualizacoes SVG plugaveis, desacopladas do estado global.
+- **ImcGauge/ImcLineChart**: visualizacoes SVG plugaveis, desacopladas do estado global.  
+- **BottomBar**: barra fixa com botoes de menu/perfil/sair (acoes de perfil e sair ainda stubs).
 
 ## Paleta e tokens
 - Centralizada em `src/theme/colors.js`; evitar hardcode de cores.  
@@ -33,4 +34,5 @@ Guia de padroes visuais e de codigo que sustentam todas as calculadoras do Nullt
 - Separar constantes (faixas, fatores, protocolos) de logica (utils) e apresentacao (screens/components).  
 - Funcoes de calculo puras, sem efeitos colaterais; AsyncStorage apenas na tela.  
 - Evitar duplicacao: reaproveitar `parseLocaleNumber` para inputs com ponto/virgula.  
-- Manter mensagens e rotulos na propria tela para facilitar revisao de UX.
+- Manter mensagens e rotulos na propria tela para facilitar revisao de UX.  
+- Usar as chaves de storage definidas em `constants` para manter compatibilidade ao evoluir os modulos.

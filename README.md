@@ -10,14 +10,16 @@ Aplicacao mobile de bem-estar que integra nutricao, tecnologia e visual de multi
 - **GET**: usa GEB (Harris-Benedict) multiplicado por NAF selecionado.  
 - **% Gordura corporal**: protocolos Jackson & Pollock (3 ou 7 dobras + Siri) ou circunferencias US Navy.  
 - **Indice de muscularidade (MAMA)**: calcula CMB e area do braco com CB e PCT em mm ou cm.  
-- Persistencia local via AsyncStorage para IMC/EER/TMB/GET/%GC/MAMA; telas para RCQ/RCEst/Bio/NAF/Macros/Hidrica ja aparecem no menu como proximas evolucoes.
+- **Peso acamado (Chumlea)**: estimativa com circunferencia de panturrilha/joelho/braco e dobra subescapular.  
+- Persistencia local via AsyncStorage para IMC/EER/TMB/GET/%GC/MAMA/Peso acamado; cards RCQ/RCEst/Bio/NAF/Macros/Hidrica continuam como placeholders.
 
 ## Fluxo do app
 
 1. App abre no **Menu**, cada card leva a uma calculadora.  
 2. Cada calculadora valida entradas (aceita virgula ou ponto), executa o calculo e exibe resumo em `SectionCard`.  
 3. Ultimo resultado de cada calculadora e salvo e recarregado na reabertura.  
-4. Visuals: gradiente de fundo, paleta verde/ambar e componentes reutilizaveis (cards, botoes, inputs, badges).
+4. Visuals: gradiente de fundo, paleta verde/ambar e componentes reutilizaveis (cards, botoes, inputs, badges).  
+5. Placeholders futuros ficam no menu em cards ilustrados, sem acao.
 
 ## Stack
 
@@ -34,12 +36,13 @@ npm install
 npm start   # Expo menu (a = Android, i = iOS, w = Web)
 ```
 
-Requisitos: Node.js 18+ e Expo Go instalado (fisico ou emulador).
+Requisitos: Node.js 18+ e Expo Go instalado (fisico ou emulador).  
+Recomendado testar em aparelho real para validar entradas decimais e animacoes do menu.
 
 ## Estrutura
 
 - `Nulltriverso/frontend/src/components` - inputs, botoes, cards, gauge e linha IMC.  
-- `Nulltriverso/frontend/src/screens` - menu e calculadoras (IMC, EER, TMB, GET, GC, MAMA).  
+- `Nulltriverso/frontend/src/screens` - menu e calculadoras (IMC, EER, TMB, GET, GC, MAMA, Peso acamado).  
 - `Nulltriverso/frontend/src/constants` - faixas, fatores, protocolos e chaves de storage.  
 - `Nulltriverso/frontend/src/utils` - funcoes de calculo e parse numerico.  
 - `Docs/` - documentacao funcional, tecnica e de testes.  

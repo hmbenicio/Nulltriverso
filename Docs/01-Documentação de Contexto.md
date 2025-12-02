@@ -1,6 +1,6 @@
 # Introducao
 
-Nulltriverso e um ecossistema de bem-estar que une nutricao, tecnologia e a ideia de multiplos universos de saude. A versao atual entrega um app mobile Expo com varias calculadoras offline: IMC, EER, TMB, GET, percentual de gordura corporal e indice de muscularidade do braco (MAMA). Cada calculadora roda localmente, com feedback claro, cores consistentes e salvando o ultimo resultado no aparelho.
+Nulltriverso e um ecossistema de bem-estar que une nutricao, tecnologia e a ideia de multiplos universos de saude. A versao atual entrega um app mobile Expo com varias calculadoras offline: IMC, EER, TMB, GET, percentual de gordura corporal, indice de muscularidade do braco (MAMA) e peso estimado para pacientes acamados. Cada calculadora roda localmente, com feedback claro, cores consistentes e salvando o ultimo resultado no aparelho.
 
 # Problema
 
@@ -12,14 +12,15 @@ Profissionais e estudantes de nutricao precisam validar medidas basicas (peso, a
 
 **Objetivos especificos**
 - Validar fluxos curtos de entrada de dados e mensagens de erro em portugues simples.
-- Disponibilizar calculos principais: IMC, EER (IOM adulto), TMB (Harris-Benedict), GET (GEB x NAF), %GC (Jackson & Pollock/Siri e US Navy) e MAMA.
+- Disponibilizar calculos principais: IMC, EER (IOM adulto), TMB (Harris-Benedict), GET (GEB x NAF), %GC (Jackson & Pollock/Siri e US Navy), MAMA e estimativa de peso acamado (Chumlea).
 - Persistir o ultimo calculo de cada modulo com AsyncStorage para consulta rapida.
 - Reutilizar componentes (cards, botoes, inputs, pills, badges) e paleta unificada para acelerar novos modulos.
+- Manter placeholders visuais para futuras calculadoras (RCQ, RCEst, Bioimpedancia, Macros, Hidrica, NAF detalhado) sem quebrar a navegacao atual.
 
 # Publico-alvo
 
 1. **Pessoa usuaria final (bem-estar)** - quer um app sem cadastro para saber IMC, gasto e tendencia geral.  
-2. **Nutricionistas e educadores fisicos** - precisam de referencia rapida em consultas, com formulas explicitas para auditoria.  
+2. **Nutricionistas e educadores fisicos** - precisam de referencia rapida em consultas, com formulas explicitas para auditoria, incluindo peso estimado em pacientes acamados.  
 3. **Estudantes de nutricao/EF** - usam o app como apoio de estudo e para comparar protocolos.  
 4. **Time de produto/engenharia** - valida a base de UI, persistencia local e navegacao em varias calculadoras.
 
