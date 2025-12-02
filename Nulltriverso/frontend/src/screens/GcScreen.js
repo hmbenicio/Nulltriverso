@@ -32,10 +32,16 @@ const initialForm = {
   height: "",
   sex: "female",
   protocol: "jackson3",
-  sumFolds: "",
   neck: "",
   waist: "",
   hip: "",
+  chest: "",
+  abdominal: "",
+  thigh: "",
+  triceps: "",
+  suprailiac: "",
+  midaxillary: "",
+  subscapular: "",
 };
 
 const GcScreen = ({ onMenu, onProfile, onExit }) => {
@@ -63,6 +69,14 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
     [form.protocol]
   );
 
+  const activeProtocolFields = useMemo(
+    () =>
+      selectedProtocol.fields.filter(
+        (field) => !field.forSex || field.forSex === form.sex
+      ),
+    [selectedProtocol, form.sex]
+  );
+
   const handleCalculate = useCallback(async () => {
     Keyboard.dismiss();
     setError("");
@@ -74,23 +88,24 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
     if (!height || height <= 0) return setError("Altura invalida.");
 
     if (selectedProtocol.key === "us_navy") {
-      const neck = parseLocaleNumber(form.neck);
-      const waist = parseLocaleNumber(form.waist);
-      const hip = parseLocaleNumber(form.hip);
-
-      if (!neck || neck <= 0) return setError("Pescoco invalido.");
-      if (!waist || waist <= 0) return setError("Cintura invalida.");
-      if (form.sex === "female" && (!hip || hip <= 0))
-        return setError("Quadril invalido.");
+      const parsedCirc = {};
+      for (const field of activeProtocolFields) {
+        const value = parseLocaleNumber(form[field.key]);
+        if (!value || value <= 0) {
+          setError(`${field.label} invalida.`);
+          return;
+        }
+        parsedCirc[field.key] = value;
+      }
 
       const calculation = calculateBodyFat({
         protocolKey: selectedProtocol.key,
         ageYears: age,
         sex: form.sex,
         heightCm: height,
-        neckCm: neck,
-        waistCm: waist,
-        hipCm: form.sex === "female" ? hip : 0,
+        neckCm: parsedCirc.neck,
+        waistCm: parsedCirc.waist,
+        hipCm: form.sex === "female" ? parsedCirc.hip : 0,
       });
 
       const payload = {
@@ -98,9 +113,9 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
         age,
         height,
         sex: form.sex,
-        neck,
-        waist,
-        hip: form.sex === "female" ? hip : null,
+        neck: parsedCirc.neck,
+        waist: parsedCirc.waist,
+        hip: form.sex === "female" ? parsedCirc.hip : null,
         protocolKey: selectedProtocol.key,
         updatedAt: new Date().toISOString(),
       };
@@ -114,8 +129,19 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
       return;
     }
 
-    const sumFolds = parseLocaleNumber(form.sumFolds);
-    if (!sumFolds || sumFolds <= 0) return setError("Soma das dobras invalida.");
+    const parsedFolds = {};
+    for (const field of activeProtocolFields) {
+      const value = parseLocaleNumber(form[field.key]);
+      if (!value || value <= 0) {
+        setError(`${field.label} invalida.`);
+        return;
+      }
+      parsedFolds[field.key] = value;
+    }
+    const sumFolds = Object.values(parsedFolds).reduce(
+      (acc, val) => acc + val,
+      0
+    );
 
     const calculation = calculateBodyFat({
       protocolKey: selectedProtocol.key,
@@ -131,6 +157,7 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
       height,
       sex: form.sex,
       sumFolds,
+      folds: parsedFolds,
       protocolKey: selectedProtocol.key,
       updatedAt: new Date().toISOString(),
     };
@@ -141,7 +168,7 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
     } catch (err) {
       console.warn("Erro ao salvar %GC", err);
     }
-  }, [form, selectedProtocol]);
+  }, [form, selectedProtocol, activeProtocolFields]);
 
   return (
     <LinearGradient colors={[colors.backgroundLight, colors.background]} style={styles.screen}>
@@ -234,18 +261,15 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
             </View>
 
             <View style={styles.dynamicFields}>
-              {selectedProtocol.fields.map((field) => {
-                if (field.key === "hip" && form.sex !== "female") return null;
-                return (
-                  <TextField
-                    key={field.key}
-                    placeholder={field.label}
-                    keyboardType="decimal-pad"
-                    value={form[field.key] || ""}
-                    onChangeText={handleFieldChange(field.key)}
-                  />
-                );
-              })}
+              {activeProtocolFields.map((field) => (
+                <TextField
+                  key={field.key}
+                  placeholder={field.placeholder || field.label}
+                  keyboardType="decimal-pad"
+                  value={form[field.key] || ""}
+                  onChangeText={handleFieldChange(field.key)}
+                />
+              ))}
             </View>
 
             {error ? <Text style={styles.error}>{error}</Text> : null}
