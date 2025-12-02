@@ -6,6 +6,7 @@ import TmbScreen from "./src/screens/TmbScreen";
 import GetScreen from "./src/screens/GetScreen";
 import GcScreen from "./src/screens/GcScreen";
 import MiScreen from "./src/screens/MiScreen";
+import BedriddenWeightScreen from "./src/screens/BedriddenWeightScreen";
 
 export default function App() {
   const [screen, setScreen] = useState("menu");
@@ -34,6 +35,10 @@ export default function App() {
     return <MiScreen onBack={() => setScreen("menu")} />;
   }
 
+  if (screen === "peso") {
+    return <BedriddenWeightScreen onBack={() => setScreen("menu")} />;
+  }
+
   return (
     <MenuScreen
       onOpenImc={() => setScreen("imc")}
@@ -42,6 +47,7 @@ export default function App() {
       onOpenGet={() => setScreen("get")}
       onOpenGc={() => setScreen("gc")}
       onOpenMi={() => setScreen("mi")}
+      onOpenPeso={() => setScreen("peso")}
     />
   );
 }

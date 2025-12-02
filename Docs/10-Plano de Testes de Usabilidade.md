@@ -1,33 +1,37 @@
 # Plano de Testes de Usabilidade
 
 ## Objetivos
-- Verificar se o fluxo de cálculo de IMC é entendido sem instruções adicionais.
-- Avaliar clareza das mensagens de erro e da nomenclatura das faixas.
-- Medir percepção das visualizações (gauge e linha) como suporte à compreensão.
+- Avaliar se o menu e os nomes das calculadoras sao compreendidos sem instrucao.  
+- Verificar clareza de mensagens de erro e dos textos que explicam cada formula/protocolo.  
+- Entender se badges/cores ajudam a interpretar resultados (IMC, GET, %GC, MAMA).
 
 ## Perfil dos participantes
-- 3 a 5 usuários finais (mix de iniciantes e habituados a apps de saúde).
-- 1 profissional de saúde (nutricionista) para validar vocabulário.
+- 3 a 5 usuarios finais (mix iniciante/experiente em apps de saude).  
+- 1 nutricionista ou estudante de nutricao/EF.  
+- Dispositivos Android e iOS.
 
-## Roteiro proposto
-1. Pedir ao participante para calcular o próprio IMC (ou um valor fictício) sem ajuda.
-2. Observar reação às mensagens de validação ao introduzir um erro proposital.
-3. Solicitar interpretação do status e da cor exibidos.
-4. Perguntar o que entende do gauge e se percebe utilidade na linha de evolução.
-5. Reabrir o app e pedir que encontre o resultado anterior.
+## Roteiro
+1. Pedir para abrir o app e escolher uma calculadora que queiram usar.  
+2. Pedir para completar um calculo (IMC ou GET) sem ajuda.  
+3. Solicitar um segundo calculo que envolva selecao (EER com atividade, %GC com protocolo ou MAMA com unidade).  
+4. Introduzir um erro proposital (campo vazio ou 0) e observar entendimento da mensagem.  
+5. Reabrir o app e verificar se encontram o ultimo resultado.  
+6. Perguntar o que entendem das cores/badges e dos textos de apoio.
 
-## Métricas
-- Taxa de sucesso na primeira tentativa de cálculo.
-- Tempo até completar o cálculo.
-- Número de mensagens de erro exibidas por sessão.
-- Clareza percebida (escala Likert 1–5) sobre status e faixas.
+## Metricas
+- Sucesso na primeira tentativa de calculo (por tela).  
+- Tempo ate concluir cada calculo.  
+- Numero de mensagens de erro exibidas por sessao.  
+- Clareza percebida (Likert 1-5) sobre significado das cores e protocolos.  
+- Compreensao dos nomes/acronimos das calculadoras (menu).
 
-## Critérios de aceite
-- ≥ 80% completam o cálculo sem instruções adicionais.
-- Mensagens de erro compreendidas por ≥ 90% dos participantes.
-- Pelo menos 70% consideram o gauge útil para entender a faixa.
+## Criterios de aceite
+- >= 80% completam IMC ou GET sem ajuda.  
+- >= 90% compreendem mensagens de erro.  
+- Pelo menos 70% avaliam que cores/badges ajudam na interpretacao.  
+- Participantes entendem, sem consulta externa, para que servem os cards principais (IMC, EER, TMB, GET, %GC, MAMA).
 
 ## Instrumentos
-- Registro em vídeo (opcional) no Expo Go.
-- Anotações rápidas de comentários espontâneos.
-- Questionário curto pós-teste (3 perguntas).
+- Expo Go com gravacao de tela opcional.  
+- Roteiro impresso ou digital para anotacoes.  
+- Questionario curto pos-teste (3-5 perguntas).

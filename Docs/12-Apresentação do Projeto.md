@@ -1,20 +1,24 @@
-# Apresentação do Projeto
+# Apresentacao do Projeto
 
 ## Narrativa
-Nulltriverso une a precisão do “Null” da programação com a nutrição e a ideia de multiverso: diferentes jornadas de saúde que partem de uma base tecnológica comum. O primeiro portal desse universo é o módulo de IMC, um app móvel que calcula o índice, classifica faixas com cores intuitivas e guarda o último resultado no próprio dispositivo.
+Nulltriverso combina a precisao do "Null" da programacao com a pratica da nutricao, criando um multiverso de calculadoras rapidas e offline. A versao atual entrega um menu mobile com IMC, EER, TMB, GET, %GC e MAMA, reutilizando a mesma identidade visual e persistindo o ultimo resultado de cada modulo.
 
-## Destaques da solução
-- Formulário enxuto (nome, peso, altura) com validação imediata.
-- Cálculo e classificação conforme faixas OMS, com badge de status e barra proporcional.
-- Gauge animado e linha evolutiva simulada para facilitar interpretação.
-- Persistência local via `AsyncStorage` para reabrir o app já com dados.
-- Base em React Native + Expo, pensada para crescer com novos módulos do Nulltriverso.
+## Destaques da solucao
+- Menu ilustrado com cards tematicos e gradiente.
+- Formulario enxuto em cada calculadora, com validacao imediata e suporte a virgula/ponto.
+- Resultados com badge/cores, linhas chave-valor e, no IMC, gauge + linha mockada.
+- Equacoes explicitas: IOM, Harris-Benedict, Siri, US Navy, MAMA (CB/PCT).
+- Persistencia local por modulo (AsyncStorage) para retomar a sessao rapidamente.
 
-## Demonstração em vídeo
-- Gravar e publicar um walkthrough curto (até 2 minutos) mostrando: preenchimento do formulário, validações, resultado colorido, gauge e reabertura carregando o último cálculo.
-- Link sugerido: `https://youtu.be/<id-do-video>` (atualizar após upload).
+## Roteiro de demonstracao
+1) Abrir o menu e acessar IMC; mostrar validacao e gauge.  
+2) Ir para EER, escolher atividade e (opcional) gestacao; destacar bonus aplicado.  
+3) Calcular TMB e depois GET com um NAF diferente; observar resumo.  
+4) Mostrar %GC escolhendo protocolo Jackson & Pollock e, depois, US Navy.  
+5) Calcular MAMA com PCT em mm e converter automaticamente.  
+6) Reabrir o app e exibir ultimos resultados carregados.
 
-## Próximas entregas
-- Histórico real de medições e compartilhamento dos resultados.
-- Introdução de metas e acompanhamento nutricional dentro do mesmo padrão visual.
-- Integração com backend e analytics para medir uso e impacto.
+## Proximas entregas
+- Implementar logica dos cards RCQ, RCEst, Bioimpedancia, Macros, Hidrica, NAF detalhado.  
+- Historico completo de calculos e compartilhamento/exportacao.  
+- Analytics e sincronizacao com backend para multiplos dispositivos.

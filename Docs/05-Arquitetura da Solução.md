@@ -1,32 +1,34 @@
-# Arquitetura da Solução
+# Arquitetura da Solucao
 
-## Visão macro
-- **Cliente móvel**: app React Native com Expo 54.
-- **Persistência local**: `@react-native-async-storage/async-storage` guarda o último cálculo.
-- **Visualizações**: `react-native-svg` para gauge e linha.
-- **Backend**: inexistente nesta fase; toda lógica ocorre no dispositivo.
+## Visao macro
+- **Cliente mobile**: React Native 0.81 com Expo 54.  
+- **Persistencia local**: `@react-native-async-storage/async-storage` salva o ultimo calculo de cada modulo.  
+- **Visualizacoes**: `react-native-svg` para gauge e linha do IMC.  
+- **Backend**: inexistente nesta fase; todo processamento ocorre no dispositivo.
 
 ## Camadas e responsabilidades
-- **Tela (`screens/HomeScreen.js`)**: orquestra o fluxo, gerencia estado do formulário/resultado, controla interação com teclado e rolagem.
-- **Componentes (`components/`)**: cartões, botões, inputs e visualizações isoladas para reuso em módulos futuros.
-- **Constantes (`constants/imc.js`)**: faixas de IMC, cores e dados mockados de evolução.
-- **Utilidades (`utils/imc.js`)**: cálculo, classificação, clamp de valores e parsing de números com vírgula/ponto.
-- **Tema (`theme/colors.js`)**: paleta centralizada para manter consistência visual.
+- **Navegacao**: `App.js` troca telas manualmente entre menu e calculadoras.  
+- **Telas (`src/screens/`)**: `MenuScreen`, `HomeScreen` (IMC), `EerScreen`, `TmbScreen`, `GetScreen`, `GcScreen`, `MiScreen`. Cada tela orquestra formulario, valida entradas e chama utilidades de calculo.  
+- **Componentes (`src/components/`)**: cards, botoes, inputs, rows de resultado, gauge e grafico reutilizaveis.  
+- **Constantes (`src/constants/`)**: faixas de IMC, fatores de atividade, NAFs, protocolos de gordura corporal, chaves de storage.  
+- **Utilidades (`src/utils/`)**: funcoes puras para calculos (IMC, EER, TMB/GET, %GC, MAMA) e parse numerico.  
+- **Tema (`src/theme/colors.js`)**: paleta centralizada.
 
-## Fluxo de dados
-1. Usuário preenche campos → `HomeScreen` valida e normaliza números (`parseLocaleNumber`).
-2. Lógica de negócio (`calculateImc`, `statusFromImc`, `colorFromImc`) calcula e classifica.
-3. Resultado é armazenado no estado local e salvo no `AsyncStorage` usando a chave `imc:last`.
-4. Na abertura, `HomeScreen` lê a chave e popula o painel de resultados, mantendo a experiência consistente.
-5. Componentes visuais recebem apenas os dados necessários (IMC atual, status, faixas) para permanecerem desacoplados.
+## Fluxo de dados (exemplos)
+- **IMC**: tela recebe peso/altura -> `utils/imc` calcula IMC/status/cor -> resultado salvo com chave `imc:last` -> carregado no `useEffect` inicial.  
+- **EER**: tela coleta sexo/idade/peso/altura/atividade/gestacao -> `utils/eer` aplica IOM + fator + bonus gestacional -> grava em `eer:last`.  
+- **TMB/GET**: `utils/tmb` calcula Harris-Benedict; `utils/get` calcula GEB e multiplica pelo NAF -> chaves `tmb:last` e `get:last`.  
+- **%GC**: protocolo escolhido em `constants/gc`; `utils/gc` aplica Jackson & Pollock + Siri ou US Navy -> salva em `gc:last`.  
+- **MAMA**: `utils/mi` calcula CMB e area a partir de CB e PCT (convertendo mm para cm) -> salva em `mi:last`.
 
-## Decisões técnicas
-- **Sem backend nesta fase** para acelerar validação de UX; facilita testes offline e reduz custo de manutenção.
-- **Expo** para build rápida e distribuição via QR Code; reduz atrito para testes em diferentes dispositivos.
-- **SVG para gauge** pela precisão e controle de faixas; animação moderada para não penalizar aparelhos básicos.
+## Decisoes tecnicas
+- **Sem backend** para permitir uso offline e entrega rapida; futuras versoes podem sincronizar historico real.  
+- **Funcoes puras de calculo** para facilitar testes e reuso em outros projetos (ex.: backend futuro).  
+- **Chaves de storage separadas** evitam colisao e permitem carregar cada modulo de forma independente.  
+- **Cards e pills reutilizaveis** reduzem variacao visual entre calculadoras e aceleram novas telas.
 
-## Evoluções previstas do Nulltriverso
-- Sincronização com backend para histórico real de medidas.
-- Criação de módulos de metas, cardápios e gamificação reutilizando componentes atuais.
-- Telemetria/analytics para medir conversão e tempo de resposta.
-- Testes automatizados (unitários para utilidades de IMC e testes de UI via Detox/Expo E2E).
+## Evolucoes previstas
+- Implementar logica para RCQ, RCEst, Bioimpedancia, Macros, Hidrica e NAF detalhado (cards ja presentes no menu).  
+- Testes automatizados para utilidades de calculo.  
+- Persistencia de historico completo e sincronizacao com backend.  
+- Telemetria/analytics para medir conversao e uso por modulo.

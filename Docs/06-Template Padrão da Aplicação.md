@@ -1,33 +1,36 @@
-# Template Padrão da Aplicação
+# Template Padrao da Aplicacao
 
-Este template define padrões visuais e de código que serão reaproveitados nos demais módulos do Nulltriverso.
+Guia de padroes visuais e de codigo que sustentam todas as calculadoras do Nulltriverso.
 
-## Layout e espaçamentos
-- Margens horizontais de 24 px na Home; cartões com padding interno generoso para respirabilidade.
-- Estrutura em rolagem única; `KeyboardAvoidingView` para manter inputs visíveis.
-- Cards empilhados com `gap` consistente; textos de seção usam peso 800.
+## Layout e espacamentos
+- Padding horizontal de 24 px; cards com padding generoso e `gap` entre elementos.  
+- Scroll unico por tela com `KeyboardAvoidingView` para manter inputs visiveis.  
+- Headers com kicker maiusculo, titulo curto e subtitulo explicativo.
 
-## Componentização
-- **SectionCard**: contêiner padrão para blocos de conteúdo; aceita `style` extra.
-- **TextField**: entrada com borda clara, teclado configurável e suporte a `onChangeText`.
-- **PrimaryButton**: botão principal verde; sempre com verbos de ação curtos.
-- **ResultRow**: pares chave/valor para resumos.
-- **ImcGauge/ImcLineChart**: visualizações plugáveis, recebem apenas dados e estilos, sem dependência de estado global.
+## Componentizacao
+- **SectionCard**: contenedor base para formularios, resultados e dicas; aceita `style` extra.  
+- **TextField**: input com borda suave, teclado decimal, aceita virgula/ponto.  
+- **PrimaryButton**: botao principal verde ocupando toda a largura do card.  
+- **Pills/tiles**: seletores de sexo, nivel de atividade, protocolo ou unidade; mudam cor de borda e fundo quando ativos.  
+- **ResultRow**: pares chave/valor alinhados para resumos.  
+- **ImcGauge/ImcLineChart**: visualizacoes SVG plugaveis, desacopladas do estado global.
 
 ## Paleta e tokens
-- Paleta em `src/theme/colors.js`; nunca hardcode cores fora do arquivo.
-- Bordas e superfícies usam `border` e `surfaceMuted`; texto principal usa `ink` e variações.
+- Centralizada em `src/theme/colors.js`; evitar hardcode de cores.  
+- Bordas e fundos usam `border` e `surfaceMuted`; texto usa `ink`, `inkMuted`, `inkSoft`; badges usam `primary` ou `warn`.
 
 ## Mensagens e textos
-- Linguagem direta em português; mensagens de erro no formato “Informe seu nome.”, “Peso inválido.”.
-- Títulos curtos (máx. 3 palavras) e subtítulos explicativos com verbos ativos.
+- Linguagem direta e curta: "Peso invalido.", "Preencha para ver o resultado."  
+- Titulo das calculadoras com nome e sigla explicita (ex.: "EER - Necessidade Energetica").  
+- Dicas de rodape listam formulas/metodos usados.
 
 ## Estados e feedback
-- Erros exibidos próximos aos campos; badge de status colorido seguindo as faixas de IMC.
-- Progress bar e gauge animado reforçam o status visual.
-- Valores numéricos formatados com 1 casa (peso/altura) e 2 casas (IMC).
+- Erros proximo aos inputs; pills mudam cor quando selecionadas.  
+- Badges e barras usam a mesma cor da faixa/status quando aplicavel (IMC).  
+- Resultados exibem valores com formatacao minima (1 casa para peso/altura, 2 para IMC, 0-1 casa para kcal quando arredondado).
 
-## Boas práticas de código
-- Separar dados (constantes) de lógica (utils) e de apresentação (components/screens).
-- Evitar acoplamento: componentes recebem props simples e não acessam armazenamento diretamente.
-- Manter validações e parse em utilidades reutilizáveis (`utils/imc.js`).
+## Boas praticas de codigo
+- Separar constantes (faixas, fatores, protocolos) de logica (utils) e apresentacao (screens/components).  
+- Funcoes de calculo puras, sem efeitos colaterais; AsyncStorage apenas na tela.  
+- Evitar duplicacao: reaproveitar `parseLocaleNumber` para inputs com ponto/virgula.  
+- Manter mensagens e rotulos na propria tela para facilitar revisao de UX.

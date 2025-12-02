@@ -19,6 +19,7 @@ const MenuScreen = ({
   onOpenGet,
   onOpenGc,
   onOpenMi,
+  onOpenPeso,
 }) => {
   const cardSize = useMemo(() => {
     const { width } = Dimensions.get("window");
@@ -95,10 +96,11 @@ const MenuScreen = ({
         image: require("../../assets/10_Icone_NAF.png"),
       },
       {
-        key: "macros",
-        title: "Macros",
-        accent: "#efad83",
-        image: require("../../assets/11_Icone_MACRO.png"),
+        key: "peso",
+        title: "Peso est.",
+        accent: "#f7c18f",
+        image: require("../../assets/11_Icone_PESO.png"),
+        onPress: onOpenPeso,
       },
       {
         key: "hidrica",

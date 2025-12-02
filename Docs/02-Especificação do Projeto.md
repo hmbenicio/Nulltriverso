@@ -1,85 +1,94 @@
-# Especificação do Projeto
+# Especificacao do Projeto
 
-O módulo de IMC do Nulltriverso valida dados básicos de um paciente e retorna seu status nutricional de forma rápida, offline e visualmente clara. A seguir estão as personas, histórias de usuário, requisitos e restrições que guiam a primeira entrega.
+Esta entrega cobre o menu de calculadoras do Nulltriverso (IMC, EER, TMB, GET, %GC e MAMA), todas client-side com persistencia local.
 
 ## Personas
 
-- **Aline (32, dev em home office)**: usa o app entre reuniões, prefere preencher poucos campos e quer respostas claras para discutir com a nutricionista. Dói ler mensagens técnicas ou ter de criar conta.
-- **Carlos (45, professor)**: consulta o IMC eventualmente; precisa de fonte legível, cores objetivas e lembrar o último cálculo sem depender de internet.
-- **Dra. Bianca (nutricionista)**: avalia se as faixas de IMC estão corretas e se o vocabulário evita alarmismo; quer uma visualização rápida para explicar ao paciente.
+- **Aline (32, dev em home office)**: quer respostas rapidas sem login; usa IMC e GET para conversar com a nutricionista.  
+- **Carlos (45, professor)**: consulta TMB/GET e %GC sem internet; precisa de fontes legiveis e avisos claros.  
+- **Dra. Bianca (nutricionista)**: confere se formulas e faixas estao corretas; utiliza %GC por dobras/circunferencias no atendimento.  
+- **Lucas (estudante de EF)**: usa MAMA e protocolos Jackson & Pollock para estudos; precisa saber qual equacao foi aplicada.
 
-## Histórias de Usuário
+## Historias de usuario
 
 | EU COMO | QUERO | PARA |
-| ------ | ----- | ---- |
-| Usuário de primeira viagem | Calcular IMC apenas com nome, peso (kg) e altura (cm) | Saber rapidamente meu status e próxima ação |
-| Usuário recorrente | Ver o último resultado ao abrir o app | Comparar com medidas anteriores sem recálculo |
-| Usuário visual | Enxergar o status com cores e gauge | Entender em que faixa estou sem ler muito texto |
-| Dra. Bianca | Validar se o cálculo segue a tabela OMS | Garantir que a recomendação ao paciente é segura |
-| Time de produto | Reaproveitar componentes e constantes de IMC | Evoluir para novos módulos sem refazer UI |
+| ------- | ----- | ---- |
+| Usuaria nova | Calcular IMC com peso/altura e ver status colorido | Entender rapidamente minha faixa |
+| Profissional | Estimar EER com sexo, idade, altura, peso e fator de atividade | Definir plano calorico inicial |
+| Gestante | Incluir semanas de gestacao | Obter bonus energetico no EER |
+| Estudante | Calcular TMB/GET com NAF | Comparar efeitos de atividade no gasto total |
+| Avaliador fisico | Calcular %GC por dobras ou circunferencias | Escolher metodo mais pratico no momento |
+| Nutricionista | Registrar MAMA com CB e PCT em mm ou cm | Avaliar muscularidade do braco |
+| Usuario recorrente | Reabrir e ver ultimo calculo de cada modulo | Nao precisar digitar tudo de novo |
 
-## Modelagem do Processo de Negócio
+## Modelagem resumida
 
-**Estado atual**: cálculo feito manualmente ou em sites que pedem cadastro e não guardam o histórico.
+1. Menu lista calculadoras com card e cor de acento.  
+2. Cada tela valida entradas (idade/peso/altura/medidas) e mostra erro imediato.  
+3. Funcoes de util calculam valores conforme protocolo selecionado.  
+4. Resultado e salvo em AsyncStorage (chaves especificas) e exibido em card com linhas chave/valor e destaques.  
+5. Ao reabrir, ultimo resultado e carregado automaticamente.
 
-**Proposta**:
-1) Usuário insere nome, peso (kg) e altura (cm).  
-2) App valida formato/valores; exibe erro imediato se algo estiver vazio ou inválido.  
-3) App calcula IMC, determina status (abaixo, normal, sobrepeso, obesidades 1-3).  
-4) Resultado é salvo no armazenamento local (`AsyncStorage`) e exibido com gauge e linha evolutiva simulada.  
-5) Na reabertura, o último resultado é carregado automaticamente.
+## Indicadores de desempenho
 
-## Indicadores de Desempenho
-
-| Indicador | Objetivo | Cálculo/Fonte |
-| --------- | -------- | ------------- |
-| Conversão de cálculo | 90% dos usuários que começam o formulário completam o cálculo | Nº cálculos / Nº sessões que interagem com inputs |
-| Erro de validação | < 5% de tentativas com erros repetidos | Nº erros exibidos / Nº cliques em “Calcular IMC” |
-| Tempo de resposta | < 200 ms do clique até exibir resultado | Medido via logs locais/perf de render |
-| Retenção do último cálculo | 100% de persistência local em reabertura | Nº sessões com resgate de dados / Nº sessões com cálculo prévio |
+| Indicador | Objetivo | Fonte |
+| --------- | -------- | ----- |
+| Conversao de calculo | >= 90% dos formularios iniciados concluidos | Eventos de clique no futuro analytics |
+| Reuso de calculadoras | >= 2 modulos usados por sessao | Telemetria futura |
+| Erros de validacao | < 5% de tentativas com erro repetido | Logs locais/analytics futuro |
+| Persistencia local | 100% dos ultimos calculos recarregados | Testes manuais/automatizados |
 
 ## Requisitos
 
 ### Funcionais
 
-| ID | Descrição | Prioridade |
+| ID | Descricao | Prioridade |
 | -- | --------- | ---------- |
-| RF-01 | Permitir entrada de nome, peso em kg e altura em cm com máscara decimal simples | Alta |
-| RF-02 | Validar campos obrigatórios e valores positivos, exibindo mensagem de erro contextual | Alta |
-| RF-03 | Calcular IMC usando peso/(altura²) e classificar conforme faixas OMS (abaixo, normal, sobrepeso, obesidades 1-3) | Alta |
-| RF-04 | Salvar o último cálculo no dispositivo e recarregar automaticamente na abertura | Alta |
-| RF-05 | Exibir resultado numérico, status colorido, gauge semicircular e linha evolutiva simulada | Média |
-| RF-06 | Funcionar offline após instalado | Alta |
+| RF-01 | Menu com cards para IMC, EER, TMB, GET, %GC, MAMA e placeholders futuros | Alta |
+| RF-02 | Validar campos obrigatorios e numeros positivos (aceita virgula ou ponto) | Alta |
+| RF-03 | Calcular IMC e classificar segundo faixas OMS; mostrar gauge e linha mockada | Alta |
+| RF-04 | Calcular EER adulto (IOM) com fator de atividade por sexo e bonus gestacional | Alta |
+| RF-05 | Calcular TMB (Harris-Benedict revisado) com sexo, idade, peso, altura | Alta |
+| RF-06 | Calcular GET = GEB x NAF, listando fatores e descricoes | Alta |
+| RF-07 | Calcular %GC por Jackson & Pollock (3 ou 7 dobras) + Siri ou circunferencias US Navy | Alta |
+| RF-08 | Calcular MAMA com CB e PCT (mm ou cm), exibindo CMB e area | Alta |
+| RF-09 | Persistir ultimo calculo de cada modulo em AsyncStorage e recarregar na abertura | Alta |
 
-### Não Funcionais
+### Nao funcionais
 
-| ID | Descrição | Prioridade |
+| ID | Descricao | Prioridade |
 | --- | --------- | ---------- |
-| RNF-01 | App em React Native com Expo 54 e compatibilidade Android/iOS | Alta |
-| RNF-02 | Operar sem backend; dados restritos ao armazenamento local | Alta |
-| RNF-03 | Interface responsiva, com contraste adequado e fontes legíveis | Média |
-| RNF-04 | Código modular (componentes, constantes, utilidades separadas) | Alta |
-| RNF-05 | Tempo de render do resultado abaixo de 200 ms em aparelhos medianos | Média |
+| RNF-01 | App em React Native 0.81 + Expo 54, Android/iOS | Alta |
+| RNF-02 | Operacao 100% offline, sem backend | Alta |
+| RNF-03 | Interface responsiva, paleta centralizada em `src/theme/colors.js` | Media |
+| RNF-04 | Componentes e utils desacoplados para reuso entre calculadoras | Alta |
+| RNF-05 | Feedback em menos de 200 ms apos toque em calcular (dispositivo medio) | Media |
 
-## Restrições
+## Restricoes
 
-| ID | Restrição |
+| ID | Restricao |
 | -- | --------- |
-| R-01 | Não há backend; nenhuma informação sai do dispositivo nesta versão. |
-| R-02 | Apenas cálculo de IMC está no escopo inicial; demais módulos (metas, cardápio, agenda) ficam para fases futuras. |
-| R-03 | Uso de dependências aprovadas do Expo; sem libs nativas fora do ecossistema suportado. |
+| R-01 | Nao ha backend; nenhum dado sai do dispositivo nesta versao. |
+| R-02 | Resultados sao estimativas; nao substituem avaliacao clinica. |
+| R-03 | Placeholders RCQ/RCEst/Bio/NAF/Macros/Hidrica ainda sem logica. |
+| R-04 | Apenas bibliotecas suportadas pelo Expo 54 (sem nativos adicionais). |
 
-## Casos de Uso (visão textual)
+## Casos de uso (texto)
 
-- **Calcular IMC**: ator Usuário fornece nome, peso, altura → sistema valida → calcula IMC → exibe status e visualizações → persiste resultado.
-- **Reabrir app**: ator Usuário abre app → sistema lê `AsyncStorage` → popula painel de resultados.
+- **Calcular IMC**: usuario informa nome/peso/altura -> sistema valida -> calcula -> mostra status/gauge/linha -> salva.  
+- **Calcular EER**: usuario escolhe sexo, idade, peso, altura, nivel de atividade (e gestacao opcional) -> calcula IOM + bonus -> salva.  
+- **Calcular TMB/GET**: usuario insere dados, escolhe sexo e NAF -> calcula Harris-Benedict e GET -> salva.  
+- **Calcular %GC**: usuario escolhe protocolo -> preenche dobras ou circunferencias -> calcula Siri ou US Navy -> salva.  
+- **Calcular MAMA**: usuario insere CB e PCT -> app converte unidades se necessario -> calcula CMB/area -> salva.  
+- **Reabrir app**: carrega ultimo resultado de cada modulo, se existir.
 
-## Matriz de Rastreabilidade (trecho)
+## Matriz de rastreabilidade (trecho)
 
-| História | RF/RNF associados | Testes previstos |
-| -------- | ----------------- | ---------------- |
-| Calcular IMC com 3 campos | RF-01, RF-02, RF-03 | TS-01 Validação; TS-02 Cálculo correto |
-| Reabrir com último resultado | RF-04, RNF-02 | TS-03 Persistência local |
-| Visualizar gauge e linha | RF-05, RNF-03 | TS-04 Renderização das visualizações |
-
-Essa base será expandida conforme novos módulos do Nulltriverso forem adicionados.
+| Historia | RF/RNF | Teste previsto |
+| -------- | ------ | -------------- |
+| Calcular IMC | RF-02, RF-03, RNF-02 | TS-IMC-01, TS-IMC-02 |
+| EER com fator e gestacao | RF-02, RF-04, RNF-02 | TS-EER-01, TS-EER-02 |
+| TMB e GET | RF-02, RF-05, RF-06 | TS-TMB-01, TS-GET-01 |
+| %GC por protocolo | RF-02, RF-07 | TS-GC-01, TS-GC-02 |
+| MAMA com unidade PCT | RF-02, RF-08 | TS-MI-01 |
+| Persistencia local | RF-09, RNF-02 | TS-PER-01 |
