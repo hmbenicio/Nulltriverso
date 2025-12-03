@@ -6,7 +6,6 @@ import {
   FlatList,
   Pressable,
   StyleSheet,
-  Text,
   View,
   Image,
 } from "react-native";
@@ -18,6 +17,7 @@ import BottomBar from "../components/BottomBar";
 const MENU_COLUMNS = 3;
 const H_PADDING = 24;
 const GAP = 14;
+const gradientColors = ["#1A3B32", "#2F5A42", "#CE8D55", "#EAD0AE"];
 
 const MenuScreen = ({
   onOpenImc,
@@ -125,15 +125,57 @@ const MenuScreen = ({
     <MenuCard item={item} cardSize={cardSize} index={index} />
   );
 
+  const stars = useMemo(
+    () =>
+      Array.from({ length: 120 }, (_, i) => ({
+        id: `star-${i}`,
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        size: 0.8 + Math.random() * 2.6,
+        opacity: 0.3 + Math.random() * 0.45,
+        color: i % 3 === 0 ? "#ffe9c5" : "#fff7e3",
+      })),
+    []
+  );
+
   return (
-    <LinearGradient colors={[colors.backgroundLight, colors.background]} style={styles.screen}>
+    <LinearGradient
+      colors={gradientColors}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.screen}
+    >
+      <View style={styles.starField} pointerEvents="none">
+        {stars.map((star) => (
+          <View
+            key={star.id}
+            style={[
+              styles.star,
+              {
+                top: `${star.top}%`,
+                left: `${star.left}%`,
+                width: star.size,
+                height: star.size,
+                opacity: star.opacity,
+                backgroundColor: star.color,
+              },
+            ]}
+          />
+        ))}
+      </View>
       <StatusBar style="dark" />
       <View style={styles.header}>
-        <Text style={styles.kicker}>Seu universo de saude</Text>
-        <Text style={styles.title}>Menu de projetos</Text>
-        <Text style={styles.subtitle}>
-          Explore ferramentas pensadas para nutricao, habitos e bem-estar.
-        </Text>
+        <View style={styles.logoWrapper}>
+          <Image
+            source={require("../../assets/Logo_00_WS_1.png")}
+            style={[styles.headerLogo, styles.headerLogoGlow]}
+            blurRadius={22}
+          />
+          <Image
+            source={require("../../assets/Logo_00_WS_1.png")}
+            style={styles.headerLogo}
+          />
+        </View>
       </View>
       <FlatList
         data={menuItems}
@@ -202,7 +244,9 @@ const MenuCard = ({ item, cardSize, index }) => {
   };
 
   return (
-    <Animated.View style={[styles.cardWrapper, { width: cardSize }, animatedStyle]}>
+    <Animated.View
+      style={[styles.cardWrapper, { width: cardSize }, animatedStyle]}
+    >
       <Pressable
         style={({ pressed }) => [
           item.image ? styles.cardImage : styles.card,
@@ -232,7 +276,10 @@ const MenuCard = ({ item, cardSize, index }) => {
             <>
               <Image
                 source={item.image}
-                style={[styles.fullImage, { width: cardSize, height: cardSize }]}
+                style={[
+                  styles.fullImage,
+                  { width: cardSize, height: cardSize },
+                ]}
               />
               <View
                 style={[
@@ -261,11 +308,9 @@ const MenuCard = ({ item, cardSize, index }) => {
           )}
         </View>
       </Pressable>
-      <Text style={styles.cardTitle}>{item.title}</Text>
     </Animated.View>
   );
 };
-
 
 const styles = StyleSheet.create({
   screen: {
@@ -273,26 +318,44 @@ const styles = StyleSheet.create({
     paddingHorizontal: H_PADDING,
     paddingTop: 48,
     paddingBottom: 32,
+    position: "relative",
+  },
+  starField: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  star: {
+    position: "absolute",
+    borderRadius: 50,
   },
   header: {
-    gap: 6,
     marginBottom: 18,
+    alignItems: "center",
   },
-  kicker: {
-    color: colors.ink,
-    fontWeight: "700",
-    letterSpacing: 1,
-    textTransform: "uppercase",
+  logoWrapper: {
+    width: "100%",
+    height: 120,
+    position: "relative",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  title: {
-    color: colors.ink,
-    fontSize: 30,
-    fontWeight: "800",
-    letterSpacing: -0.3,
+  headerLogo: {
+    width: "100%",
+    height: 120,
+    resizeMode: "contain",
+    borderRadius: 16,
   },
-  subtitle: {
-    color: colors.inkMuted,
-    lineHeight: 20,
+  headerLogoGlow: {
+    position: "absolute",
+    opacity: 0.9,
+    transform: [{ scale: 1.02 }],
+    shadowColor: "#ffe5b8",
+    shadowOpacity: 0.5,
+    shadowRadius: 24,
+    shadowOffset: { width: 0, height: 6 },
   },
   grid: {
     paddingBottom: 120,
@@ -363,11 +426,6 @@ const styles = StyleSheet.create({
   fullImage: {
     resizeMode: "cover",
     borderRadius: 18,
-  },
-  cardTitle: {
-    color: colors.ink,
-    fontSize: 16,
-    fontWeight: "800",
   },
   cardSubtitle: {
     color: colors.inkMuted,
