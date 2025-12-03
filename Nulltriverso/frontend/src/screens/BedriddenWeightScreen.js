@@ -105,7 +105,7 @@ const BedriddenWeightScreen = ({ onMenu, onProfile, onExit }) => {
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
-            <Text style={styles.kicker}>Paciente acamado</Text>
+            <Text style={styles.kicker}>ANTROPOMETRIA & MEDIDAS</Text>
             <Text style={styles.title}>Peso estimado (Chumlea)</Text>
             <Text style={styles.subtitle}>
               Usa equacoes preditivas (Chumlea 1988) com circunferencia da panturrilha (CPA),
@@ -196,7 +196,7 @@ const BedriddenWeightScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.legendTitle}>Observações</Text>
             <Text style={styles.helperText}>
               • Equacoes de Chumlea et al. (1988) especificas para sexo.
             </Text>
@@ -209,7 +209,7 @@ const BedriddenWeightScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias bibliograficas</Text>
+            <Text style={styles.legendTitle}>Referências Bibliográficas</Text>
             <Text style={styles.helperText}>
               • Chumlea WC, Roche AF, Steinbaugh ML. Estimating stature and weight of the elderly from knee height. J Am Geriatr Soc. 1985.
             </Text>
@@ -276,12 +276,15 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   pill: {
+    flex: 1,
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.surfaceMuted,
+    alignItems: "center",
+    justifyContent: "center",
   },
   pillSelected: {
     backgroundColor: `${colors.primary}12`,
@@ -290,6 +293,7 @@ const styles = StyleSheet.create({
   pillText: {
     color: colors.inkMuted,
     fontWeight: "700",
+    textAlign: "center",
   },
   pillTextSelected: {
     color: colors.primary,
@@ -302,9 +306,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   resultsHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 6,
   },
   badge: {
     paddingHorizontal: 12,

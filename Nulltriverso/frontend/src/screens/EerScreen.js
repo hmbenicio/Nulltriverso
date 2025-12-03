@@ -124,7 +124,7 @@ const EerScreen = ({ onMenu, onProfile, onExit }) => {
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
-            <Text style={styles.kicker}>Nutricionistas e pacientes</Text>
+            <Text style={styles.kicker}>ENERGIA & METABOLISMO</Text>
             <Text style={styles.title}>EER · Necessidade Energetica</Text>
             <Text style={styles.subtitle}>
               Calcule a estimativa diaria (kcal/dia) baseada em sexo, idade, peso,
@@ -292,7 +292,7 @@ const EerScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias rapidas</Text>
+            <Text style={styles.legendTitle}>Observações</Text>
             <Text style={styles.helperText}>
               • Adultos: equacao IOM com fator de atividade (PA) por sexo.
             </Text>
@@ -305,7 +305,7 @@ const EerScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.legendTitle}>Referências Bibliográficas</Text>
             <Text style={styles.helperText}>
               • Institute of Medicine (2005). Dietary Reference Intakes for Energy, Carbohydrate, Fiber, Fat, Fatty Acids, Cholesterol, Protein, and Amino Acids.
             </Text>
@@ -378,12 +378,15 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   pill: {
+    flex: 1,
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.surfaceMuted,
+    alignItems: "center",
+    justifyContent: "center",
   },
   pillSelected: {
     backgroundColor: `${colors.primary}12`,
@@ -392,6 +395,7 @@ const styles = StyleSheet.create({
   pillText: {
     color: colors.inkMuted,
     fontWeight: "700",
+    textAlign: "center",
   },
   pillTextSelected: {
     color: colors.primary,
@@ -439,9 +443,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   resultsHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 6,
   },
   badge: {
     paddingHorizontal: 12,

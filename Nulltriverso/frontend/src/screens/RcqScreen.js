@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
+  Pressable,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
@@ -18,22 +18,22 @@ import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
 import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
-import { MI_STORAGE_KEY } from "../constants/mi";
-import { calculateMama } from "../utils/mi";
+import { RCQ_STORAGE_KEY } from "../constants/rcq";
+import { calculateRcq, statusFromRcq } from "../utils/rcq";
 import { parseLocaleNumber } from "../utils/number";
 
-const UNIT_OPTIONS = [
-  { key: "mm", label: "PCT em mm" },
-  { key: "cm", label: "PCT em cm" },
+const SEX_OPTIONS = [
+  { key: "female", label: "Feminino" },
+  { key: "male", label: "Masculino" },
 ];
 
 const initialForm = {
-  armCircumference: "",
-  tricepsFold: "",
-  tricepsUnit: "mm",
+  waist: "",
+  hip: "",
+  sex: "female",
 };
 
-const MiScreen = ({ onMenu, onProfile, onExit }) => {
+const RcqScreen = ({ onMenu, onProfile, onExit }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -41,10 +41,10 @@ const MiScreen = ({ onMenu, onProfile, onExit }) => {
   useEffect(() => {
     const load = async () => {
       try {
-        const stored = await AsyncStorage.getItem(MI_STORAGE_KEY);
+        const stored = await AsyncStorage.getItem(RCQ_STORAGE_KEY);
         if (stored) setResult(JSON.parse(stored));
       } catch (err) {
-        console.warn("Erro ao carregar MAMA", err);
+        console.warn("Erro ao carregar RCQ", err);
       }
     };
     load();
@@ -53,38 +53,36 @@ const MiScreen = ({ onMenu, onProfile, onExit }) => {
   const handleFieldChange = (field) => (value) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
+  const badgeColor = useMemo(
+    () => (result ? result.segment.color : colors.badge),
+    [result]
+  );
+
   const handleCalculate = useCallback(async () => {
-    Keyboard.dismiss();
     setError("");
+    const waist = parseLocaleNumber(form.waist);
+    const hip = parseLocaleNumber(form.hip);
 
-    const cb = parseLocaleNumber(form.armCircumference);
-    const pctRaw = parseLocaleNumber(form.tricepsFold);
+    if (!waist || waist <= 0) return setError("Cintura invalida.");
+    if (!hip || hip <= 0) return setError("Quadril invalido.");
 
-    if (!cb || cb <= 0) return setError("Circunferencia do braco invalida.");
-    if (!pctRaw || pctRaw <= 0) return setError("Prega tricipital invalida.");
-
-    const pctCm = form.tricepsUnit === "mm" ? pctRaw / 10 : pctRaw;
-
-    const { cmb, area } = calculateMama({
-      armCircumferenceCm: cb,
-      tricepsFoldCm: pctCm,
-    });
+    const rcq = calculateRcq({ waistCm: waist, hipCm: hip });
+    const segment = statusFromRcq(rcq, form.sex);
 
     const payload = {
-      cb,
-      pct: pctRaw,
-      pctCm,
-      cmb,
-      area,
-      tricepsUnit: form.tricepsUnit,
+      waist,
+      hip,
+      rcq,
+      segment,
+      sex: form.sex,
       updatedAt: new Date().toISOString(),
     };
 
     setResult(payload);
     try {
-      await AsyncStorage.setItem(MI_STORAGE_KEY, JSON.stringify(payload));
+      await AsyncStorage.setItem(RCQ_STORAGE_KEY, JSON.stringify(payload));
     } catch (err) {
-      console.warn("Erro ao salvar MAMA", err);
+      console.warn("Erro ao salvar RCQ", err);
     }
   }, [form]);
 
@@ -98,108 +96,104 @@ const MiScreen = ({ onMenu, onProfile, onExit }) => {
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
-            <Text style={styles.kicker}>COMPOSIÇÃO CORPORAL</Text>
-            <Text style={styles.title}>Indice de Muscularidade (MAMA)</Text>
+            <Text style={styles.kicker}>Gordura abdominal</Text>
+            <Text style={styles.title}>RCQ · Cintura / Quadril</Text>
             <Text style={styles.subtitle}>
-              Calcula a area muscular do braco (cm²) usando circunferencia do braco (CB) e prega tricipital (PCT).
-              Se medir PCT em mm, escolha a unidade para converter automaticamente.
+              Relacao simples para risco cardiometabolico. Medidas em centimetros, fita nivelada.
             </Text>
           </View>
 
           <SectionCard>
             <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Medidas</Text>
-            </View>
-            <TextField
-              placeholder="Circunferencia do braco (cm)"
-              keyboardType="decimal-pad"
-              value={form.armCircumference}
-              onChangeText={handleFieldChange("armCircumference")}
-            />
-            <View style={styles.row}>
-              <TextField
-                placeholder="Prega tricipital"
-                keyboardType="decimal-pad"
-                value={form.tricepsFold}
-                onChangeText={handleFieldChange("tricepsFold")}
-                style={styles.half}
-              />
-              <View style={[styles.optionsRow, styles.half]}>
-                {UNIT_OPTIONS.map((opt) => (
-                  <Pressable
-                    key={opt.key}
-                    style={[
-                      styles.pill,
-                      form.tricepsUnit === opt.key && styles.pillSelected,
-                    ]}
-                    onPress={() => setForm((prev) => ({ ...prev, tricepsUnit: opt.key }))}
-                  >
-                    <Text
-                      style={[
-                        styles.pillText,
-                        form.tricepsUnit === opt.key && styles.pillTextSelected,
-                      ]}
-                    >
-                      {opt.label}
-                    </Text>
-                  </Pressable>
-                ))}
-              </View>
+              <Text style={styles.cardTitle}>Dados do calculo</Text>
             </View>
 
+            <Text style={styles.label}>Sexo</Text>
+            <View style={styles.optionsRow}>
+              {SEX_OPTIONS.map((opt) => (
+                <Pressable
+                  key={opt.key}
+                  style={[
+                    styles.pill,
+                    form.sex === opt.key && styles.pillSelected,
+                  ]}
+                  onPress={() => setForm((prev) => ({ ...prev, sex: opt.key }))}
+                >
+                  <Text
+                    style={[
+                      styles.pillText,
+                      form.sex === opt.key && styles.pillTextSelected,
+                    ]}
+                  >
+                    {opt.label}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+
+            <TextField
+              placeholder="Circunferencia da cintura (cm)"
+              keyboardType="decimal-pad"
+              value={form.waist}
+              onChangeText={handleFieldChange("waist")}
+            />
+            <TextField
+              placeholder="Circunferencia do quadril (cm)"
+              keyboardType="decimal-pad"
+              value={form.hip}
+              onChangeText={handleFieldChange("hip")}
+            />
             {error ? <Text style={styles.error}>{error}</Text> : null}
-            <PrimaryButton label="Calcular MAMA" onPress={handleCalculate} />
+            <PrimaryButton label="Calcular RCQ" onPress={handleCalculate} />
           </SectionCard>
 
           <SectionCard style={styles.resultsCard}>
             <View style={styles.resultsHeader}>
               <Text style={styles.cardTitle}>Resultado</Text>
+              <View style={[styles.badge, { backgroundColor: badgeColor }]}>
+                <Text style={styles.badgeText}>
+                  {result ? result.segment.label : "Sem calculo"}
+                </Text>
+              </View>
             </View>
             {result ? (
               <View style={styles.resultBody}>
-                <Text style={styles.highlightValue}>{result.area.toFixed(2)} cm²</Text>
-                <Text style={styles.highlightLabel}>Area muscular do braco (MAMA)</Text>
-                <ResultRow label="CMB (CB - π x PCT)" value={`${result.cmb.toFixed(2)} cm`} />
+                <Text style={styles.highlightValue}>{result.rcq.toFixed(3)}</Text>
+                <Text style={styles.highlightLabel}>Relacao Cintura/Quadril</Text>
+                <ResultRow label="Cintura" value={`${result.waist.toFixed(1)} cm`} />
+                <ResultRow label="Quadril" value={`${result.hip.toFixed(1)} cm`} />
                 <ResultRow
-                  label="Circunferencia do braco"
-                  value={`${result.cb.toFixed(1)} cm`}
-                />
-                <ResultRow
-                  label="Prega tricipital"
-                  value={
-                    result.tricepsUnit === "mm"
-                      ? `${result.pct.toFixed(1)} mm (${result.pctCm.toFixed(2)} cm)`
-                      : `${result.pct.toFixed(2)} cm`
-                  }
+                  label="Faixa de risco"
+                  value={`${result.segment.label} (${result.segment.range})`}
                 />
               </View>
             ) : (
               <Text style={styles.placeholder}>
-                Informe CB e PCT para calcular a MAMA.
+                Preencha as medidas para ver o RCQ.
               </Text>
             )}
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Observações</Text>
+            <Text style={styles.legendTitle}>Referencias rapidas</Text>
             <Text style={styles.helperText}>
-              • Formula: MAMA = [CB - (π × PCT)]² / (4π), unidades em centimetros.
+              • RCQ = cintura / quadril (mesma unidade). Medir com fita nivelada.
             </Text>
             <Text style={styles.helperText}>
-              • PCT em mm? Selecione "PCT em mm" para converter automaticamente (divide por 10).
+              • OMS: risco elevado a partir de 0,85 (mulheres) e 0,90 (homens); muito elevado &gt; 1,0.
             </Text>
             <Text style={styles.helperText}>
-              • Compare com tabelas de referencia por idade/sexo para interpretar o indice de muscularidade.
+              • Complementa IMC e WHtR para avaliar distribuicao de gordura abdominal.
             </Text>
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referências Bibliográficas</Text>
+            <Text style={styles.legendTitle}>Referencias</Text>
             <Text style={styles.helperText}>
-              • Heymsfield SB et al. Anthropometric measurement of muscle mass: revised equations for calculating midarm muscle area. Am J Clin Nutr. 1982.
+              • WHO. Waist circumference and waist-hip ratio: report of a WHO expert consultation. 2008.
             </Text>
             <Text style={styles.helperText}>
-              • Frisancho AR. Anthropometric Standards for the Assessment of Growth and Nutritional Status. Univ. of Michigan Press, 1990.
+              • Yusuf S et al. Obesity and the risk of myocardial infarction in 27,000 participants. Lancet. 2005.
             </Text>
           </SectionCard>
         </ScrollView>
@@ -251,27 +245,25 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: "800",
   },
-  row: {
-    flexDirection: "row",
-    gap: 12,
-  },
-  half: {
-    flex: 1,
+  label: {
+    color: colors.ink,
+    fontWeight: "700",
   },
   optionsRow: {
     flexDirection: "row",
-    gap: 8,
-    flexWrap: "wrap",
+    gap: 10,
+    marginBottom: 6,
   },
   pill: {
-    paddingHorizontal: 12,
+    flex: 1,
+    paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.surfaceMuted,
-    flex: 1,
     alignItems: "center",
+    justifyContent: "center",
   },
   pillSelected: {
     backgroundColor: `${colors.primary}12`,
@@ -296,6 +288,18 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-start",
     gap: 6,
+  },
+  badge: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.primary,
+  },
+  badgeText: {
+    color: colors.surface,
+    fontWeight: "700",
   },
   resultBody: {
     gap: 4,
@@ -326,4 +330,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MiScreen;
+export default RcqScreen;

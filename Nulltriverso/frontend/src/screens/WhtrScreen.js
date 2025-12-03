@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,23 +17,16 @@ import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
 import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
-import { TMB_STORAGE_KEY } from "../constants/tmb";
-import { calculateTmb } from "../utils/tmb";
+import { WHTR_STORAGE_KEY } from "../constants/wht";
+import { calculateWhtr, statusFromWhtr } from "../utils/wht";
 import { parseLocaleNumber } from "../utils/number";
 
-const SEX_OPTIONS = [
-  { key: "female", label: "Feminino" },
-  { key: "male", label: "Masculino" },
-];
-
 const initialForm = {
-  age: "",
-  weight: "",
+  waist: "",
   height: "",
-  sex: "female",
 };
 
-const TmbScreen = ({ onMenu, onProfile, onExit }) => {
+const WhtrScreen = ({ onMenu, onProfile, onExit }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -42,10 +34,10 @@ const TmbScreen = ({ onMenu, onProfile, onExit }) => {
   useEffect(() => {
     const load = async () => {
       try {
-        const stored = await AsyncStorage.getItem(TMB_STORAGE_KEY);
+        const stored = await AsyncStorage.getItem(WHTR_STORAGE_KEY);
         if (stored) setResult(JSON.parse(stored));
       } catch (err) {
-        console.warn("Erro ao carregar TMB", err);
+        console.warn("Erro ao carregar WHtR", err);
       }
     };
     load();
@@ -54,39 +46,34 @@ const TmbScreen = ({ onMenu, onProfile, onExit }) => {
   const handleFieldChange = (field) => (value) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
-  const handleCalculate = useCallback(async () => {
-    Keyboard.dismiss();
-    setError("");
+  const badgeColor = useMemo(
+    () => (result ? result.segment.color : colors.badge),
+    [result]
+  );
 
-    const age = parseLocaleNumber(form.age);
-    const weight = parseLocaleNumber(form.weight);
+  const handleCalculate = useCallback(async () => {
+    setError("");
+    const waist = parseLocaleNumber(form.waist);
     const height = parseLocaleNumber(form.height);
 
-    if (!age || age <= 0) return setError("Idade invalida.");
-    if (!weight || weight <= 0) return setError("Peso invalido.");
+    if (!waist || waist <= 0) return setError("Cintura invalida.");
     if (!height || height <= 0) return setError("Altura invalida.");
 
-    const tmb = calculateTmb({
-      ageYears: age,
-      weightKg: weight,
-      heightCm: height,
-      sex: form.sex,
-    });
+    const whtr = calculateWhtr({ waistCm: waist, heightCm: height });
+    const segment = statusFromWhtr(whtr);
 
     const payload = {
-      tmb,
-      age,
-      weight,
+      waist,
       height,
-      sex: form.sex,
+      whtr,
+      segment,
       updatedAt: new Date().toISOString(),
     };
-
     setResult(payload);
     try {
-      await AsyncStorage.setItem(TMB_STORAGE_KEY, JSON.stringify(payload));
+      await AsyncStorage.setItem(WHTR_STORAGE_KEY, JSON.stringify(payload));
     } catch (err) {
-      console.warn("Erro ao salvar TMB", err);
+      console.warn("Erro ao salvar WHtR", err);
     }
   }, [form]);
 
@@ -100,11 +87,10 @@ const TmbScreen = ({ onMenu, onProfile, onExit }) => {
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
-            <Text style={styles.kicker}>ENERGIA & METABOLISMO</Text>
-            <Text style={styles.title}>TMB · Taxa Metabolica Basal</Text>
+            <Text style={styles.kicker}>Risco cardiometabolico</Text>
+            <Text style={styles.title}>Razao Cintura/Estatura (WHtR)</Text>
             <Text style={styles.subtitle}>
-              Estime o gasto energetico em repouso com Harris-Benedict (sexo, idade, peso, altura).
-              A TMB e a fundacao para calcular o GET multiplicando por um fator de atividade.
+              Cintura/altura em centimetros. Alerta quando a cintura ultrapassa metade da altura (WHtR ≥ 0,5).
             </Text>
           </View>
 
@@ -112,104 +98,66 @@ const TmbScreen = ({ onMenu, onProfile, onExit }) => {
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>Dados do calculo</Text>
             </View>
-            <View style={styles.row}>
-              <TextField
-                placeholder="Idade (anos)"
-                keyboardType="decimal-pad"
-                value={form.age}
-                onChangeText={handleFieldChange("age")}
-                style={styles.half}
-              />
-              <TextField
-                placeholder="Peso (kg)"
-                keyboardType="decimal-pad"
-                value={form.weight}
-                onChangeText={handleFieldChange("weight")}
-                style={styles.half}
-              />
-            </View>
+            <TextField
+              placeholder="Circunferencia da cintura (cm)"
+              keyboardType="decimal-pad"
+              value={form.waist}
+              onChangeText={handleFieldChange("waist")}
+            />
             <TextField
               placeholder="Altura (cm)"
               keyboardType="decimal-pad"
               value={form.height}
               onChangeText={handleFieldChange("height")}
             />
-
-            <Text style={styles.label}>Sexo</Text>
-            <View style={styles.optionsRow}>
-              {SEX_OPTIONS.map((opt) => (
-                <Pressable
-                  key={opt.key}
-                  style={[
-                    styles.pill,
-                    form.sex === opt.key && styles.pillSelected,
-                  ]}
-                  onPress={() => setForm((prev) => ({ ...prev, sex: opt.key }))}
-                >
-                  <Text
-                    style={[
-                      styles.pillText,
-                      form.sex === opt.key && styles.pillTextSelected,
-                    ]}
-                  >
-                    {opt.label}
-                  </Text>
-                </Pressable>
-              ))}
-            </View>
-
             {error ? <Text style={styles.error}>{error}</Text> : null}
-            <PrimaryButton label="Calcular TMB" onPress={handleCalculate} />
+            <PrimaryButton label="Calcular WHtR" onPress={handleCalculate} />
           </SectionCard>
 
           <SectionCard style={styles.resultsCard}>
             <View style={styles.resultsHeader}>
               <Text style={styles.cardTitle}>Resultado</Text>
-              <View style={styles.badge}>
+              <View style={[styles.badge, { backgroundColor: badgeColor }]}>
                 <Text style={styles.badgeText}>
-                  {form.sex === "female" ? "Feminino" : "Masculino"}
+                  {result ? result.segment.label : "Sem calculo"}
                 </Text>
               </View>
             </View>
             {result ? (
               <View style={styles.resultBody}>
-                <Text style={styles.highlightValue}>{result.tmb} kcal/dia</Text>
-                <Text style={styles.highlightLabel}>Energia em repouso</Text>
-                <ResultRow label="Idade" value={`${result.age} anos`} />
-                <ResultRow label="Peso" value={`${result.weight.toFixed(1)} kg`} />
+                <Text style={styles.highlightValue}>{result.whtr.toFixed(3)}</Text>
+                <Text style={styles.highlightLabel}>Razao Cintura/Estatura</Text>
+                <ResultRow label="Cintura" value={`${result.waist.toFixed(1)} cm`} />
                 <ResultRow label="Altura" value={`${result.height.toFixed(1)} cm`} />
-                <ResultRow
-                  label="Sexo"
-                  value={result.sex === "female" ? "Feminino" : "Masculino"}
-                />
+                <ResultRow label="Faixa de risco" value={`${result.segment.label} (${result.segment.range})`} />
               </View>
             ) : (
               <Text style={styles.placeholder}>
-                Insira os dados e calcule para ver a TMB.
+                Preencha os campos e calcule para ver o WHtR.
               </Text>
             )}
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Observações</Text>
+            <Text style={styles.legendTitle}>Referencias e uso</Text>
             <Text style={styles.helperText}>
-              • Harris-Benedict (revisado) diferencia sexo, idade, peso e altura.
+              • WHtR = cintura / altura (mesma unidade). Ideal manter abaixo de 0,50.
             </Text>
             <Text style={styles.helperText}>
-              • Para obter o GET diario, multiplique a TMB pelo fator de atividade (sedentario ate muito ativo).
+              • Faixas indicativas: &lt;0,40 muito baixo; 0,40-0,50 saudavel; 0,50-0,60 risco aumentado; &gt;0,60 risco muito alto.
             </Text>
             <Text style={styles.helperText}>
-              • TMB e uma estimativa: bioimpedancia ou calorimetria podem refinar o valor real.
+              • Indicador simples e mais sensivel que o IMC para gordura abdominal e risco cardiometabolico.
             </Text>
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referências Bibliográficas</Text>
+            <Text style={styles.legendTitle}>Referencias</Text>
             <Text style={styles.helperText}>
-              • Harris JA, Benedict FG. A biometric study of human basal metabolism. Proc Natl Acad Sci. 1918.
+              • Ashwell M, Hsieh SD. Six reasons why the waist-to-height ratio is a rapid and effective global indicator for health risks. Int J Food Sci Nutr. 2005.
             </Text>
             <Text style={styles.helperText}>
-              • Roza AM, Shizgal HM. The Harris-Benedict equation reevaluated. Am J Clin Nutr. 1984.
+              • Browning LM et al. A systematic review of waist-to-height ratio as a screening tool. Nutr Res Rev. 2010.
             </Text>
           </SectionCard>
         </ScrollView>
@@ -261,44 +209,6 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: "800",
   },
-  row: {
-    flexDirection: "row",
-    gap: 12,
-  },
-  half: {
-    flex: 1,
-  },
-  label: {
-    color: colors.ink,
-    fontWeight: "700",
-  },
-  optionsRow: {
-    flexDirection: "row",
-    gap: 10,
-  },
-  pill: {
-    flex: 1,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surfaceMuted,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  pillSelected: {
-    backgroundColor: `${colors.primary}12`,
-    borderColor: `${colors.primary}66`,
-  },
-  pillText: {
-    color: colors.inkMuted,
-    fontWeight: "700",
-    textAlign: "center",
-  },
-  pillTextSelected: {
-    color: colors.primary,
-  },
   error: {
     color: colors.error,
     fontWeight: "600",
@@ -317,7 +227,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     borderWidth: 1,
     borderColor: colors.border,
-    backgroundColor: colors.warn,
+    backgroundColor: colors.primary,
   },
   badgeText: {
     color: colors.surface,
@@ -352,4 +262,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TmbScreen;
+export default WhtrScreen;

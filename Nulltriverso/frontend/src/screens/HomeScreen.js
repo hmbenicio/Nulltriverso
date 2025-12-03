@@ -25,11 +25,9 @@ import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
 import ImcGauge from "../components/ImcGauge";
-import ImcLineChart from "../components/ImcLineChart";
 import BottomBar from "../components/BottomBar";
 
 const initialForm = {
-  name: "",
   weight: "",
   height: "",
 };
@@ -71,9 +69,7 @@ const HomeScreen = ({ onMenu, onProfile, onExit }) => {
 
     const parsedWeight = parseLocaleNumber(form.weight);
     const parsedHeight = parseLocaleNumber(form.height);
-    const trimmedName = form.name.trim();
 
-    if (!trimmedName) return setError("Informe seu nome.");
     if (!parsedWeight || parsedWeight <= 0)
       return setError("Peso invalido.");
     if (!parsedHeight || parsedHeight <= 0)
@@ -85,7 +81,6 @@ const HomeScreen = ({ onMenu, onProfile, onExit }) => {
     });
 
     const payload = {
-      name: trimmedName,
       weight: parsedWeight,
       height: parsedHeight,
       imc: imcValue,
@@ -111,10 +106,10 @@ const HomeScreen = ({ onMenu, onProfile, onExit }) => {
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
-            <Text style={styles.kicker}>Saude em segundos</Text>
+            <Text style={styles.kicker}>ANTROPOMETRIA & MEDIDAS</Text>
             <Text style={styles.title}>Calculadora de IMC</Text>
             <Text style={styles.subtitle}>
-              Insira seus dados e acompanhe seu status em diferentes aparelhos.
+              IMC usa a mesma formula para homens e mulheres: peso dividido pela altura em metros ao quadrado.
             </Text>
           </View>
 
@@ -122,13 +117,6 @@ const HomeScreen = ({ onMenu, onProfile, onExit }) => {
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>Dados do paciente</Text>
             </View>
-            <TextField
-              placeholder="Nome"
-              value={form.name}
-              onChangeText={handleFieldChange("name")}
-              autoCapitalize="words"
-              blurOnSubmit
-            />
             <View style={styles.row}>
               <TextField
                 placeholder="Peso (kg)"
@@ -178,7 +166,6 @@ const HomeScreen = ({ onMenu, onProfile, onExit }) => {
                     ]}
                   />
                 </View>
-                <ResultRow label="Nome" value={result.name} />
                 <ResultRow
                   label="Peso"
                   value={`${result.weight.toFixed(1)} kg`}
@@ -205,21 +192,19 @@ const HomeScreen = ({ onMenu, onProfile, onExit }) => {
             <ImcGauge currentImc={result?.imc} />
           </SectionCard>
 
-          <SectionCard style={styles.chartCard}>
-            <Text style={styles.legendTitle}>Evolucao do IMC</Text>
-            <Text style={styles.chartSubtitle}>
-              Dados mocados para visualizacao de tendencia.
-            </Text>
-            <ImcLineChart />
-          </SectionCard>
-
           <SectionCard style={styles.referenceCard}>
-            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.legendTitle}>Observações</Text>
             <Text style={styles.referenceText}>
-              • WHO. Obesity: preventing and managing the global epidemic. WHO Technical Report Series 894, 2000.
+              IMC = peso (kg) / altura (m)^2. Exemplo: 70 kg e 1,60 m -> 70/2,56 = 27,3.
             </Text>
             <Text style={styles.referenceText}>
-              • WHO. BMI classification (adult). Geneva: World Health Organization.
+              A formula e a mesma para homens e mulheres; a interpretacao pode considerar composicao corporal media de cada sexo.
+            </Text>
+            <Text style={styles.referenceText}>
+              Classificacao OMS: abaixo 18,5 (abaixo do peso); 18,5-24,9 (normal); 25-29,9 (sobrepeso); 30-34,9 (obesidade I); 35-39,9 (obesidade II); acima 40 (obesidade III).
+            </Text>
+            <Text style={styles.referenceText}>
+              Para avaliacao completa, procure medico ou nutricionista que considere fatores como massa magra, gordura e idade.
             </Text>
           </SectionCard>
         </ScrollView>
@@ -286,9 +271,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   resultsHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 6,
   },
   placeholder: {
     color: colors.inkSoft,

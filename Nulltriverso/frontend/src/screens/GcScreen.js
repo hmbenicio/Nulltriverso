@@ -180,7 +180,7 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
-            <Text style={styles.kicker}>Composicao corporal</Text>
+            <Text style={styles.kicker}>COMPOSIÇÃO CORPORAL</Text>
             <Text style={styles.title}>% Gordura Corporal</Text>
             <Text style={styles.subtitle}>
               Estime o %GC por dobras (Jackson & Pollock + Siri) ou circunferencias (US Navy).
@@ -316,7 +316,7 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias e notas</Text>
+            <Text style={styles.legendTitle}>Observações</Text>
             <Text style={styles.helperText}>
               • Dobras: Jackson & Pollock (3 ou 7) + Siri para converter DC em %GC.
             </Text>
@@ -329,7 +329,7 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.legendTitle}>Referências Bibliográficas</Text>
             <Text style={styles.helperText}>
               • Jackson AS, Pollock ML. Generalized equations for predicting body density of men. Br J Nutr. 1978.
             </Text>
@@ -408,12 +408,15 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   pill: {
+    flex: 1,
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.surfaceMuted,
+    alignItems: "center",
+    justifyContent: "center",
   },
   pillSelected: {
     backgroundColor: `${colors.primary}12`,
@@ -422,6 +425,7 @@ const styles = StyleSheet.create({
   pillText: {
     color: colors.inkMuted,
     fontWeight: "700",
+    textAlign: "center",
   },
   pillTextSelected: {
     color: colors.primary,
@@ -463,9 +467,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   resultsHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 6,
   },
   badge: {
     paddingHorizontal: 12,
