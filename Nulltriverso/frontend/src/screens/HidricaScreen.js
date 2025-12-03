@@ -106,7 +106,7 @@ const HidricaScreen = ({ onMenu, onProfile, onExit }) => {
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
-            <Text style={styles.kicker}>Hidratacao diaria</Text>
+            <Text style={styles.kicker}>DIETA & HIDRATAÇÃO</Text>
             <Text style={styles.title}>Necessidade hidrica</Text>
             <Text style={styles.subtitle}>
               Estime a ingestao diaria com 30-35 ml/kg, 1 ml/kcal ou Holliday-Segar (pediatrico).
@@ -290,9 +290,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   resultsHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 6,
   },
   badge: {
     paddingHorizontal: 12,

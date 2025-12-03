@@ -12,6 +12,7 @@ import RcqScreen from "./src/screens/RcqScreen";
 import RceScreen from "./src/screens/RceScreen";
 import NafScreen from "./src/screens/NafScreen";
 import HidricaScreen from "./src/screens/HidricaScreen";
+import MacroScreen from "./src/screens/MacroScreen";
 import { Alert } from "react-native";
 
 export default function App() {
@@ -145,6 +146,16 @@ export default function App() {
     );
   }
 
+  if (screen === "macro") {
+    return (
+      <MacroScreen
+        onMenu={() => setScreen("menu")}
+        onProfile={handleProfile}
+        onExit={handleExit}
+      />
+    );
+  }
+
   return (
     <MenuScreen
       onOpenImc={() => setScreen("imc")}
@@ -159,6 +170,7 @@ export default function App() {
       onOpenRcest={() => setScreen("rcest")}
       onOpenNaf={() => setScreen("naf")}
       onOpenHidrica={() => setScreen("hidrica")}
+      onOpenMacro={() => setScreen("macro")}
       onProfile={handleProfile}
       onExit={handleExit}
     />

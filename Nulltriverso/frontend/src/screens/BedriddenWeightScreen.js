@@ -276,12 +276,15 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   pill: {
+    flex: 1,
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.surfaceMuted,
+    alignItems: "center",
+    justifyContent: "center",
   },
   pillSelected: {
     backgroundColor: `${colors.primary}12`,
@@ -290,6 +293,7 @@ const styles = StyleSheet.create({
   pillText: {
     color: colors.inkMuted,
     fontWeight: "700",
+    textAlign: "center",
   },
   pillTextSelected: {
     color: colors.primary,
@@ -302,9 +306,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   resultsHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 6,
   },
   badge: {
     paddingHorizontal: 12,

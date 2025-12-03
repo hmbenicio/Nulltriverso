@@ -34,6 +34,7 @@ const MenuScreen = ({
   onOpenRcest,
   onOpenNaf,
   onOpenHidrica,
+  onOpenMacro,
 }) => {
   const cardSize = useMemo(() => {
     const { width } = Dimensions.get("window");
@@ -114,10 +115,11 @@ const MenuScreen = ({
         onPress: onOpenMi,
       },
       {
-        key: "bio",
-        title: "Bioimp.",
+        key: "macro",
+        title: "Macro",
         accent: "#bb4be7",
-        image: require("../../assets/11_Icone_TMBIO.png"),
+        image: require("../../assets/11_Icone_MACRO.png"),
+        onPress: onOpenMacro,
       },
       {
         key: "hidrica",
