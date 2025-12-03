@@ -3,36 +3,39 @@
 Guia de padroes visuais e de codigo que sustentam todas as calculadoras do Nulltriverso.
 
 ## Layout e espacamentos
-- Padding horizontal de 24 px; cards com padding generoso e `gap` entre elementos.  
-- Scroll unico por tela com `KeyboardAvoidingView` para manter inputs visiveis.  
-- Headers com kicker maiusculo, titulo curto e subtitulo explicativo.
+- Padding horizontal de 24 px, cards com padding generoso e `gap` consistente.  
+- Scroll unico por tela com `KeyboardAvoidingView` para manter inputs visiveis com o teclado aberto.  
+- Headers com kicker maiusculo, titulo curto e subtitulo que cita a logica da tela.
 
 ## Componentizacao
-- **SectionCard**: contenedor base para formularios, resultados e dicas; aceita `style` extra.  
-- **TextField**: input com borda suave, teclado decimal, aceita virgula/ponto.  
-- **PrimaryButton**: botao principal verde ocupando toda a largura do card.  
-- **Pills/tiles**: seletores de sexo, nivel de atividade, protocolo ou unidade; mudam cor de borda e fundo quando ativos.  
-- **ResultRow**: pares chave/valor alinhados para resumos.  
-- **ImcGauge/ImcLineChart**: visualizacoes SVG plugaveis, desacopladas do estado global.  
-- **BottomBar**: barra fixa com botoes de menu/perfil/sair (acoes de perfil e sair ainda stubs).
+- **SectionCard** para formularios, resultados e dicas; aceita `style` extra.  
+- **TextField** com borda suave, teclado decimal e suporte a virgula/ponto.  
+- **PrimaryButton** verde ocupando toda a largura do card.  
+- **Pills/tiles** para sexo, fator de atividade, protocolo, metodo ou unidade; alteram borda/fundo quando ativos.  
+- **ResultRow** para pares chave/valor nos resumos.  
+- **ImcGauge/ImcLineChart** plugaveis e desacoplados do estado global.  
+- **BottomBar** fixa com botoes de menu, perfil (stub) e sair (stub).  
+- **Cards ilustrados** do menu usam assets locais `assets/0X_Icone_*.png`.
 
 ## Paleta e tokens
 - Centralizada em `src/theme/colors.js`; evitar hardcode de cores.  
-- Bordas e fundos usam `border` e `surfaceMuted`; texto usa `ink`, `inkMuted`, `inkSoft`; badges usam `primary` ou `warn`.
+- Fundos e bordas: `background`, `backgroundLight`, `surfaceMuted`, `border`.  
+- Texto: `ink`, `inkMuted`, `inkSoft`; estados: `primary`, `warn`, `error`.  
+- Badges herdando a cor da faixa (IMC/RCQ/WHtR) quando aplicavel.
 
 ## Mensagens e textos
-- Linguagem direta e curta: "Peso invalido.", "Preencha para ver o resultado."  
-- Titulo das calculadoras com nome e sigla explicita (ex.: "EER - Necessidade Energetica").  
-- Dicas de rodape listam formulas/metodos usados.
+- Linguagem direta: "Peso invalido.", "As porcentagens devem somar 100%.".  
+- Titulos trazem nome + sigla (ex.: "NAF - Nivel de Atividade Fisica").  
+- Dicas de rodape sempre citam o metodo usado (IOM, Harris-Benedict, Siri, US Navy, Chumlea, Holliday-Segar etc.).
 
 ## Estados e feedback
-- Erros proximo aos inputs; pills mudam cor quando selecionadas.  
-- Badges e barras usam a mesma cor da faixa/status quando aplicavel (IMC).  
-- Resultados exibem valores com formatacao minima (1 casa para peso/altura, 2 para IMC, 0-1 casa para kcal quando arredondado).
+- Erros proximos aos inputs; pills mudam cor quando selecionadas.  
+- Badge/cores acompanham a faixa de risco (IMC/RCQ/WHtR) e metodos (hidrica, macros).  
+- Valores arredondados conforme contexto: 2 casas para IMC/razoes, 0-1 casa para kcal/ml/gramas.
 
 ## Boas praticas de codigo
-- Separar constantes (faixas, fatores, protocolos) de logica (utils) e apresentacao (screens/components).  
-- Funcoes de calculo puras, sem efeitos colaterais; AsyncStorage apenas na tela.  
-- Evitar duplicacao: reaproveitar `parseLocaleNumber` para inputs com ponto/virgula.  
-- Manter mensagens e rotulos na propria tela para facilitar revisao de UX.  
-- Usar as chaves de storage definidas em `constants` para manter compatibilidade ao evoluir os modulos.
+- Separar constantes (faixas, fatores, protocolos) de logica (`utils`) e apresentacao (`screens`/`components`).  
+- Funcoes de calculo puras; AsyncStorage apenas na camada de tela.  
+- Reutilizar `parseLocaleNumber` para entradas numericas.  
+- Manter chaves de storage em `constants` para compatibilidade de evolucao.  
+- Documentar referencias na tela e repetir nos arquivos de docs para auditoria.

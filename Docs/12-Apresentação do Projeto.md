@@ -1,25 +1,29 @@
 # Apresentacao do Projeto
 
 ## Narrativa
-Nulltriverso combina a precisao do "Null" da programacao com a pratica da nutricao, criando um multiverso de calculadoras rapidas e offline. A versao atual entrega um menu mobile com IMC, EER, TMB, GET, %GC, MAMA e peso acamado, reutilizando a mesma identidade visual e persistindo o ultimo resultado de cada modulo.
+Nulltriverso combina o "Null" da programacao com um universo de calculos nutricionais. Esta entrega final traz 12 calculadoras offline (IMC, RCEst, RCQ, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macros, Hidrica), identidade visual autoral e transparencia de formulas. Projeto pessoal de Helbert Miranda Benicio (Analista/Dev e Nutricionista CRN9 21602 - CFN) para portfolio profissional.
 
 ## Destaques da solucao
-- Menu ilustrado com cards tematicos e gradiente.
-- Formulario enxuto em cada calculadora, com validacao imediata e suporte a virgula/ponto.
-- Resultados com badge/cores, linhas chave-valor e, no IMC, gauge + linha mockada.
-- Equacoes explicitas: IOM, Harris-Benedict, Siri, US Navy, MAMA (CB/PCT) e Chumlea para acamados.
+- Menu ilustrado com 12 logos proprias e animacao de entrada.  
+- Formularios curtos, validacao imediata e suporte a virgula/ponto.  
+- Resultados com badges/cores e resumos em `ResultRow`; IMC inclui gauge semicircular e linha mockada.  
+- Equacoes explicitas: OMS, WHO/ASHWELL para RCQ/RCEst, Harris-Benedict, IOM, Siri, US Navy, Chumlea, Holliday-Segar e faixas de macros/NAF recomendadas.  
 - Persistencia local por modulo (AsyncStorage) para retomar a sessao rapidamente.
 
 ## Roteiro de demonstracao
-1) Abrir o menu e acessar IMC; mostrar validacao e gauge.  
-2) Ir para EER, escolher atividade e (opcional) gestacao; destacar bonus aplicado.  
-3) Calcular TMB e depois GET com um NAF diferente; observar resumo.  
-4) Mostrar %GC escolhendo protocolo Jackson & Pollock e, depois, US Navy.  
-5) Calcular MAMA com PCT em mm e converter automaticamente.  
-6) Calcular peso acamado com medidas antropometricas e exibir resumo.  
-7) Reabrir o app e exibir ultimos resultados carregados.
+1) Abrir o menu para mostrar identidade e animacao.  
+2) IMC: validar campos, mostrar gauge/linha e faixa.  
+3) RCEst e RCQ: inserir medidas e comparar faixas de risco.  
+4) Peso acamado: selecionar sexo e preencher medidas; destacar equacao de Chumlea.  
+5) TMB -> GET: calcular Harris-Benedict e aplicar NAF; comentar diferencas para EER.  
+6) EER: escolher atividade e (opcional) gestacao para mostrar bonus.  
+7) NAF: selecionar nivel e inserir TMB para ver intervalo de GET.  
+8) %GC: executar Jackson & Pollock (dobras) e US Navy (circunferencias) para comparar.  
+9) MI: usar CB + PCT em mm para mostrar conversao e area.  
+10) Macros e Hidrica: demonstrar validacao de faixas e resultado em gramas/ml.  
+11) Fechar e reabrir o app mostrando resultados carregados.
 
 ## Proximas entregas
-- Implementar logica dos cards RCQ, RCEst, Bioimpedancia, Macros, Hidrica, NAF detalhado.  
-- Historico completo de calculos e compartilhamento/exportacao.  
-- Analytics e sincronizacao com backend para multiplos dispositivos.
+- Bioimpedancia e historico completo de calculos.  
+- Exportacao/compartilhamento de resultados e analytics opt-in.  
+- Internacionalizacao (ingles/espanhol) e unidades imperiais.

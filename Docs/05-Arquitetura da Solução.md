@@ -4,32 +4,35 @@
 - **Cliente mobile**: React Native 0.81 com Expo 54.  
 - **Persistencia local**: `@react-native-async-storage/async-storage` salva o ultimo calculo de cada modulo.  
 - **Visualizacoes**: `react-native-svg` para gauge e linha do IMC.  
-- **Backend**: inexistente nesta fase; todo processamento ocorre no dispositivo.
+- **Backend**: inexistente nesta fase; todo o processamento ocorre no dispositivo.
 
 ## Camadas e responsabilidades
-- **Navegacao**: `App.js` troca telas manualmente entre menu e calculadoras; `BottomBar` padroniza botoes de menu/perfil/sair.  
-- **Telas (`src/screens/`)**: `MenuScreen`, `HomeScreen` (IMC), `EerScreen`, `TmbScreen`, `GetScreen`, `GcScreen`, `MiScreen`, `BedriddenWeightScreen`. Cada tela orquestra formulario, valida entradas e chama utilidades de calculo.  
-- **Componentes (`src/components/`)**: cards, botoes, inputs, rows de resultado, gauge e grafico reutilizaveis.  
-- **Constantes (`src/constants/`)**: faixas de IMC, fatores de atividade, NAFs, protocolos de gordura corporal, equacoes de peso acamado e chaves de storage.  
-- **Utilidades (`src/utils/`)**: funcoes puras para calculos (IMC, EER, TMB/GET, %GC, MAMA, peso acamado) e parse numerico.  
-- **Tema (`src/theme/colors.js`)**: paleta centralizada.
+- **Navegacao**: `App.js` controla a troca entre Menu e calculadoras; `BottomBar` padroniza menu/perfil/sair.  
+- **Telas (`src/screens/`)**: Menu + 11 calculadoras (`HomeScreen`, `RceScreen`, `WhtrScreen`, `RcqScreen`, `BedriddenWeightScreen`, `TmbScreen`, `EerScreen`, `GetScreen`, `NafScreen`, `GcScreen`, `MiScreen`, `MacroScreen`, `HidricaScreen`). Cada tela valida inputs, chama `utils/` e monta o resumo.  
+- **Componentes (`src/components/`)**: cards, botoes, inputs, ResultRow, gauge, grafico de linha e barra inferior reutilizaveis.  
+- **Constantes (`src/constants/`)**: faixas/cores de IMC, RCQ, WHtR, fatores de atividade, NAFs, protocolos de %GC, metodos de hidratacao/macros e chaves de storage.  
+- **Utilidades (`src/utils/`)**: funcoes puras para IMC, WHtR/RCQ, peso acamado, TMB/GET, EER, %GC, MAMA, macros, hidratacao e parse numerico.  
+- **Tema (`src/theme/colors.js`)**: tokens centralizados para fundo, texto, borda e estados.
 
 ## Fluxo de dados (exemplos)
-- **IMC**: tela recebe peso/altura -> `utils/imc` calcula IMC/status/cor -> resultado salvo com chave `imc:last` -> carregado no `useEffect` inicial.  
-- **EER**: tela coleta sexo/idade/peso/altura/atividade/gestacao -> `utils/eer` aplica IOM + fator + bonus gestacional -> grava em `eer:last`.  
-- **TMB/GET**: `utils/tmb` calcula Harris-Benedict; `utils/get` calcula GEB e multiplica pelo NAF -> chaves `tmb:last` e `get:last`.  
-- **%GC**: protocolo escolhido em `constants/gc`; `utils/gc` aplica Jackson & Pollock + Siri ou US Navy -> salva em `gc:last`.  
-- **MAMA**: `utils/mi` calcula CMB e area a partir de CB e PCT (convertendo mm para cm) -> salva em `mi:last`.  
-- **Peso acamado**: `utils/bedridden` aplica equacoes de Chumlea por sexo com CPA/AJ/CB/DCSE -> salva em `bed:last`.
+- **IMC**: inputs -> `utils/imc` (IMC + cor/status) -> salva em `imc:last` -> recarrega no `useEffect`.  
+- **RCEst/RCQ**: cintura + altura/quadril -> `utils/wht` ou `utils/rcq` -> faixa de risco -> salva em `whtr:last` ou `rcq:last`.  
+- **Peso acamado**: sexo + CPA + AJ + CB + DCSE -> `utils/bedridden` (Chumlea) -> salva em `bed:last`.  
+- **TMB/EER/GET**: dados basicos -> `utils/tmb`, `utils/eer` (IOM + gestacao) e `utils/get` (GEB x NAF) -> chaves `tmb:last`, `eer:last`, `get:last`.  
+- **NAF**: nivel selecionado + TMB opcional -> intervalo GET min/max -> `naf:last`.  
+- **%GC**: protocolo em `constants/gc` -> `utils/gc` aplica Jackson & Pollock + Siri ou US Navy -> `gc:last`.  
+- **MAMA**: CB + PCT (mm/cm) -> `utils/mi` calcula CMB/area -> `mi:last`.  
+- **Macros**: kcal + % -> valida faixas -> gramas/dia -> `@nulltriverso/macros`.  
+- **Hidrica**: peso (+ GET se 1 ml/kcal) -> `hidrica:last`.
 
 ## Decisoes tecnicas
-- **Sem backend** para permitir uso offline e entrega rapida; futuras versoes podem sincronizar historico real.  
-- **Funcoes puras de calculo** para facilitar testes e reuso em outros projetos (ex.: backend futuro).  
-- **Chaves de storage separadas** evitam colisao e permitem carregar cada modulo de forma independente.  
-- **Cards e pills reutilizaveis** reduzem variacao visual entre calculadoras e aceleram novas telas.
+- **Funcoes puras** e desacopladas para facilitar testes e reuso futuro (backend/web).  
+- **Chaves de storage separadas** evitam colisao e permitem carregar cada modulo isoladamente.  
+- **Assets locais** garantem operacao offline e identidade controlada.  
+- **Animacoes leves** (Animated) para manter performance em aparelhos de entrada.
 
 ## Evolucoes previstas
-- Implementar logica para RCQ, RCEst, Bioimpedancia, Macros, Hidrica e NAF detalhado (cards ja presentes no menu).  
-- Testes automatizados para utilidades de calculo.  
-- Persistencia de historico completo e sincronizacao com backend.  
-- Telemetria/analytics para medir conversao e uso por modulo.
+- Historico completo e sincronizacao opcional com backend.  
+- Testes automatizados das funcoes em `utils/`.  
+- Bioimpedancia, compartilhamento/exportacao e analytics de uso.  
+- Internacionalizacao e unidades imperiais conforme necessidade.

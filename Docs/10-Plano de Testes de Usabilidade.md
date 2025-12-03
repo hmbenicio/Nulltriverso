@@ -1,37 +1,40 @@
 # Plano de Testes de Usabilidade
 
 ## Objetivos
-- Avaliar se o menu e os nomes das calculadoras sao compreendidos sem instrucao.  
-- Verificar clareza de mensagens de erro e dos textos que explicam cada formula/protocolo.  
-- Entender se badges/cores ajudam a interpretar resultados (IMC, GET, %GC, MAMA, Peso acamado).
+- Verificar se o menu com 12 cards e compreendido sem instrucao.  
+- Avaliar clareza de mensagens de erro, textos de formula e faixas de risco (IMC/RCQ/RCEst/%GC).  
+- Entender se cores/badges e o resumo em `ResultRow` ajudam na interpretacao.  
+- Garantir que usuarios encontrem os ultimos resultados salvos ao reabrir.
 
 ## Perfil dos participantes
-- 3 a 5 usuarios finais (mix iniciante/experiente em apps de saude).  
+- 3 a 5 usuarios finais (iniciante e habituado a apps de saude).  
 - 1 nutricionista ou estudante de nutricao/EF.  
-- Dispositivos Android e iOS.
+- Android e iOS.
 
 ## Roteiro
-1. Pedir para abrir o app e escolher uma calculadora que queiram usar.  
-2. Pedir para completar um calculo (IMC ou GET) sem ajuda.  
-3. Solicitar um segundo calculo que envolva selecao (EER com atividade, %GC com protocolo, MAMA com unidade ou Peso acamado com sexo).  
-4. Introduzir um erro proposital (campo vazio ou 0) e observar entendimento da mensagem.  
-5. Reabrir o app e verificar se encontram o ultimo resultado.  
-6. Perguntar o que entendem das cores/badges e dos textos de apoio.
+1. Abrir o app e pedir para escolher qualquer calculadora do menu (observando compreensao dos nomes).  
+2. Concluir um calculo simples (IMC ou RCEst) sem ajuda.  
+3. Concluir um calculo com selecao (EER com atividade, %GC escolhendo protocolo, MAMA trocando unidade ou Peso acamado escolhendo sexo).  
+4. Induzir erro (campo vazio ou zero) e observar entendimento da mensagem.  
+5. Calcular macros ou hidrica para avaliar textos de apoio e limites de faixa.  
+6. Fechar/reabrir e pedir para localizar o ultimo resultado salvo.  
+7. Perguntar o significado das cores/badges exibidas.
 
 ## Metricas
-- Sucesso na primeira tentativa de calculo (por tela).  
-- Tempo ate concluir cada calculo.  
-- Numero de mensagens de erro exibidas por sessao.  
-- Clareza percebida (Likert 1-5) sobre significado das cores e protocolos.  
-- Compreensao dos nomes/acronimos das calculadoras (menu).
+- Taxa de sucesso na primeira tentativa por calculadora.  
+- Tempo ate completar cada fluxo (cronometro).  
+- Numero de mensagens de erro exibidas.  
+- Clareza percebida (Likert 1-5) para cores/faixas e textos de formula.  
+- Compreensao do menu (identificacao correta da funcao de cada card).
 
 ## Criterios de aceite
-- >= 80% completam IMC ou GET sem ajuda.  
-- >= 90% compreendem mensagens de erro.  
-- Pelo menos 70% avaliam que cores/badges ajudam na interpretacao.  
-- Participantes entendem, sem consulta externa, para que servem os cards principais (IMC, EER, TMB, GET, %GC, MAMA, Peso acamado).
+- >= 80% completam IMC ou RCEst sem ajuda.  
+- >= 90% entendem mensagens de erro.  
+- >= 70% avaliam que cores/badges ajudam na leitura do resultado.  
+- Participantes identificam para que servem os principais cards (IMC, RCQ, RCEst, EER, TMB, GET, %GC, MAMA, Peso acamado, Macros, Hidrica).
 
 ## Instrumentos
 - Expo Go com gravacao de tela opcional.  
-- Roteiro impresso ou digital para anotacoes.  
-- Questionario curto pos-teste (3-5 perguntas).
+- Roteiro impresso/digital para notas.  
+- Questionario curto pos-teste (3-5 perguntas).  
+- Planilha para consolidar tempos, erros e percepcoes.

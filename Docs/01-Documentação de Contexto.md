@@ -1,35 +1,34 @@
 # Introducao
 
-Nulltriverso e um ecossistema de bem-estar que une nutricao, tecnologia e a ideia de multiplos universos de saude. A versao atual entrega um app mobile Expo com varias calculadoras offline: IMC, EER, TMB, GET, percentual de gordura corporal, indice de muscularidade do braco (MAMA) e peso estimado para pacientes acamados. Cada calculadora roda localmente, com feedback claro, cores consistentes e salvando o ultimo resultado no aparelho.
+Nulltriverso e um ecossistema pessoal de calculos nutricionais, criado por Helbert Miranda Benicio (Analista/Dev e Nutricionista CRN9 21602 - CFN). O conceito une o "Null" da programacao com um universo de possibilidades da nutricao: varias calculadoras offline, identidade visual unica e transparencia sobre cada formula aplicada.
 
 # Problema
 
-Profissionais e estudantes de nutricao precisam validar medidas basicas (peso, altura, dobras, circunferencias, fatores de atividade) de forma rapida e sem depender de internet. Apps existentes costumam exigir login, nao explicam as formulas ou nao guardam o ultimo calculo. Para o time do Nulltriverso isso impede testar fluxos, identidade visual e componentes que serao a base de futuros modulos (cardapios, metas, agenda).
+Profissionais e estudantes precisam validar rapidamente indicadores como IMC, RCEst/RCQ, gordura corporal, TMB/GET, NAF, macros e hidratacao sem depender de conexao, cadastros ou telas confusas. Apps existentes costumam esconder as equacoes, nao guardam o ultimo resultado e misturam estilos, o que dificulta uso em consulta e estudo.
 
 # Objetivos
 
-**Objetivo geral:** entregar um conjunto de calculadoras nutricionais mobile, offline e coerentes entre si, servindo como prova de conceito do ecossistema Nulltriverso.
+**Objetivo geral:** entregar um multiverso de calculadoras nutricionais mobile, offline e coerentes, com referencias cientificas claras e prontas para portfolio profissional.
 
 **Objetivos especificos**
-- Validar fluxos curtos de entrada de dados e mensagens de erro em portugues simples.
-- Disponibilizar calculos principais: IMC, EER (IOM adulto), TMB (Harris-Benedict), GET (GEB x NAF), %GC (Jackson & Pollock/Siri e US Navy), MAMA e estimativa de peso acamado (Chumlea).
-- Persistir o ultimo calculo de cada modulo com AsyncStorage para consulta rapida.
-- Reutilizar componentes (cards, botoes, inputs, pills, badges) e paleta unificada para acelerar novos modulos.
-- Manter placeholders visuais para futuras calculadoras (RCQ, RCEst, Bioimpedancia, Macros, Hidrica, NAF detalhado) sem quebrar a navegacao atual.
+- Garantir fluxos curtos com validacao imediata e mensagens diretas em portugues.
+- Disponibilizar calculos-chave: IMC (OMS), RCEst/WHtR, RCQ, peso estimado de acamados (Chumlea), TMB (Harris-Benedict), EER (IOM + gestacao), GET (GEB x NAF), NAF detalhado, %GC (Jackson & Pollock + Siri / US Navy), MAMA, distribuicao de macronutrientes e necessidade hidrica.
+- Persistir o ultimo calculo de cada modulo com AsyncStorage para consulta instantanea.
+- Reutilizar componentes e paleta unificada para acelerar futuras expansoes (bioimpedancia, historico, agenda).
+- Documentar todo o contexto, formulas e referencias para auditoria e aprendizado.
 
 # Publico-alvo
 
-1. **Pessoa usuaria final (bem-estar)** - quer um app sem cadastro para saber IMC, gasto e tendencia geral.  
-2. **Nutricionistas e educadores fisicos** - precisam de referencia rapida em consultas, com formulas explicitas para auditoria, incluindo peso estimado em pacientes acamados.  
-3. **Estudantes de nutricao/EF** - usam o app como apoio de estudo e para comparar protocolos.  
-4. **Time de produto/engenharia** - valida a base de UI, persistencia local e navegacao em varias calculadoras.
+1. **Nutricionistas e estudantes** - apoio rapido em consulta ou estudo, com equacao explicita e faixa de risco.  
+2. **Pessoas interessadas em bem-estar** - querem medir IMC, gasto, macros e hidratacao sem login.  
+3. **Educadores fisicos e enfermeiros** - precisam de calculos de composicao corporal, NAF e peso acamado para conduta imediata.  
+4. **Time de produto/engenharia** - valida base tecnica e visual reutilizavel em novos modulos.
 
-Principais stakeholders e expectativas:
+Stakeholders e expectativas:
 
 | Stakeholder | Interesse | Expectativa |
 | ----------- | --------- | ----------- |
-| Usuarios finais | Rapidez e clareza | Fluxo curto, mensagens simples, sem login |
-| Profissionais de saude | Confiabilidade das formulas | Equacoes citadas e faixas corretas |
-| Engenharia | Base escalavel | Componentes e utils desacoplados, sem backend |
-| Produto/UX | Identidade consistente | Mesma paleta, navegacao fluida entre calculadoras |
-| Marketing | Narrativa Nulltriverso | Mostra do conceito de multiverso de saude |
+| Usuarios finais | Usabilidade e rapidez | Fluxo curto, teclado adequado e feedback colorido |
+| Profissionais de saude | Confiabilidade | Formulas citadas, faixas OMS/WHO/IOM e referencias visiveis |
+| Engenharia | Reuso e clareza | Utils puros, chaves de storage por modulo, sem backend |
+| Portfolio | Narrativa Nulltriverso | Mostrar identidade autoral e relacao Null + nutricao |
