@@ -105,7 +105,7 @@ const GetScreen = ({ onMenu, onProfile, onExit }) => {
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
-            <Text style={styles.kicker}>Energia total do dia</Text>
+            <Text style={styles.kicker}>ENERGIA & METABOLISMO</Text>
             <Text style={styles.title}>GET · Gasto Energetico Total</Text>
             <Text style={styles.subtitle}>
               Usa GEB (Harris-Benedict), multiplica pelo NAF e ja inclui o efeito termico dos alimentos
@@ -224,7 +224,7 @@ const GetScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias rapidas</Text>
+            <Text style={styles.legendTitle}>Observações</Text>
             <Text style={styles.helperText}>
               • GEB via Harris-Benedict (peso, altura, idade, sexo).
             </Text>
@@ -237,7 +237,7 @@ const GetScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.legendTitle}>Referências Bibliográficas</Text>
             <Text style={styles.helperText}>
               • FAO/WHO/UNU Expert Consultation. Human energy requirements. Rome, 2004.
             </Text>

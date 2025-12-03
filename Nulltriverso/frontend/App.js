@@ -7,6 +7,11 @@ import GetScreen from "./src/screens/GetScreen";
 import GcScreen from "./src/screens/GcScreen";
 import MiScreen from "./src/screens/MiScreen";
 import BedriddenWeightScreen from "./src/screens/BedriddenWeightScreen";
+import WhtrScreen from "./src/screens/WhtrScreen";
+import RcqScreen from "./src/screens/RcqScreen";
+import RceScreen from "./src/screens/RceScreen";
+import NafScreen from "./src/screens/NafScreen";
+import HidricaScreen from "./src/screens/HidricaScreen";
 import { Alert } from "react-native";
 
 export default function App() {
@@ -90,6 +95,56 @@ export default function App() {
     );
   }
 
+  if (screen === "whtr") {
+    return (
+      <WhtrScreen
+        onMenu={() => setScreen("menu")}
+        onProfile={handleProfile}
+        onExit={handleExit}
+      />
+    );
+  }
+
+  if (screen === "rcq") {
+    return (
+      <RcqScreen
+        onMenu={() => setScreen("menu")}
+        onProfile={handleProfile}
+        onExit={handleExit}
+      />
+    );
+  }
+
+  if (screen === "rcest") {
+    return (
+      <RceScreen
+        onMenu={() => setScreen("menu")}
+        onProfile={handleProfile}
+        onExit={handleExit}
+      />
+    );
+  }
+
+  if (screen === "naf") {
+    return (
+      <NafScreen
+        onMenu={() => setScreen("menu")}
+        onProfile={handleProfile}
+        onExit={handleExit}
+      />
+    );
+  }
+
+  if (screen === "hidrica") {
+    return (
+      <HidricaScreen
+        onMenu={() => setScreen("menu")}
+        onProfile={handleProfile}
+        onExit={handleExit}
+      />
+    );
+  }
+
   return (
     <MenuScreen
       onOpenImc={() => setScreen("imc")}
@@ -99,6 +154,11 @@ export default function App() {
       onOpenGc={() => setScreen("gc")}
       onOpenMi={() => setScreen("mi")}
       onOpenPeso={() => setScreen("peso")}
+      onOpenWhtr={() => setScreen("whtr")}
+      onOpenRcq={() => setScreen("rcq")}
+      onOpenRcest={() => setScreen("rcest")}
+      onOpenNaf={() => setScreen("naf")}
+      onOpenHidrica={() => setScreen("hidrica")}
       onProfile={handleProfile}
       onExit={handleExit}
     />

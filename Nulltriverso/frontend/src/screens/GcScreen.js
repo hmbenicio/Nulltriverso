@@ -180,7 +180,7 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
-            <Text style={styles.kicker}>Composicao corporal</Text>
+            <Text style={styles.kicker}>COMPOSIÇÃO CORPORAL</Text>
             <Text style={styles.title}>% Gordura Corporal</Text>
             <Text style={styles.subtitle}>
               Estime o %GC por dobras (Jackson & Pollock + Siri) ou circunferencias (US Navy).
@@ -316,7 +316,7 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias e notas</Text>
+            <Text style={styles.legendTitle}>Observações</Text>
             <Text style={styles.helperText}>
               • Dobras: Jackson & Pollock (3 ou 7) + Siri para converter DC em %GC.
             </Text>
@@ -329,7 +329,7 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.legendTitle}>Referências Bibliográficas</Text>
             <Text style={styles.helperText}>
               • Jackson AS, Pollock ML. Generalized equations for predicting body density of men. Br J Nutr. 1978.
             </Text>

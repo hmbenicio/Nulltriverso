@@ -98,7 +98,7 @@ const MiScreen = ({ onMenu, onProfile, onExit }) => {
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
-            <Text style={styles.kicker}>Massa muscular</Text>
+            <Text style={styles.kicker}>COMPOSIÇÃO CORPORAL</Text>
             <Text style={styles.title}>Indice de Muscularidade (MAMA)</Text>
             <Text style={styles.subtitle}>
               Calcula a area muscular do braco (cm²) usando circunferencia do braco (CB) e prega tricipital (PCT).
@@ -181,7 +181,7 @@ const MiScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.legendTitle}>Observações</Text>
             <Text style={styles.helperText}>
               • Formula: MAMA = [CB - (π × PCT)]² / (4π), unidades em centimetros.
             </Text>
@@ -194,7 +194,7 @@ const MiScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias bibliograficas</Text>
+            <Text style={styles.legendTitle}>Referências Bibliográficas</Text>
             <Text style={styles.helperText}>
               • Heymsfield SB et al. Anthropometric measurement of muscle mass: revised equations for calculating midarm muscle area. Am J Clin Nutr. 1982.
             </Text>

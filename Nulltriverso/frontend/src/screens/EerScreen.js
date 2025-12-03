@@ -124,7 +124,7 @@ const EerScreen = ({ onMenu, onProfile, onExit }) => {
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
-            <Text style={styles.kicker}>Nutricionistas e pacientes</Text>
+            <Text style={styles.kicker}>ENERGIA & METABOLISMO</Text>
             <Text style={styles.title}>EER · Necessidade Energetica</Text>
             <Text style={styles.subtitle}>
               Calcule a estimativa diaria (kcal/dia) baseada em sexo, idade, peso,
@@ -292,7 +292,7 @@ const EerScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias rapidas</Text>
+            <Text style={styles.legendTitle}>Observações</Text>
             <Text style={styles.helperText}>
               • Adultos: equacao IOM com fator de atividade (PA) por sexo.
             </Text>
@@ -305,7 +305,7 @@ const EerScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.helperCard}>
-            <Text style={styles.legendTitle}>Referencias</Text>
+            <Text style={styles.legendTitle}>Referências Bibliográficas</Text>
             <Text style={styles.helperText}>
               • Institute of Medicine (2005). Dietary Reference Intakes for Energy, Carbohydrate, Fiber, Fat, Fatty Acids, Cholesterol, Protein, and Amino Acids.
             </Text>
