@@ -1,43 +1,44 @@
 # Especificacao do Projeto
 
-Esta entrega cobre o menu de calculadoras do Nulltriverso (IMC, EER, TMB, GET, %GC, MAMA e peso estimado de acamados), todas client-side com persistencia local.
+Esta versao entrega o menu completo de calculadoras do Nulltriverso (12 cards) com logica client-side e persistencia local. Todas as formulas sao exibidas nos textos de apoio e referenciadas na documentacao.
 
 ## Personas
 
-- **Aline (32, dev em home office)**: quer respostas rapidas sem login; usa IMC e GET para conversar com a nutricionista.  
-- **Carlos (45, professor)**: consulta TMB/GET e %GC sem internet; precisa de fontes legiveis e avisos claros.  
-- **Dra. Bianca (nutricionista)**: confere se formulas e faixas estao corretas; utiliza %GC por dobras/circunferencias no atendimento.  
-- **Lucas (estudante de EF)**: usa MAMA e protocolos Jackson & Pollock para estudos; precisa saber qual equacao foi aplicada.
+- **Helena (30, nutricionista clinica)**: precisa de IMC, RCQ/RCEst, %GC e peso acamado em consulta rapida, sem login.  
+- **Carlos (45, professor ativo)**: quer saber TMB, GET e macros para planejar treinos e dieta, validando se valores fazem sentido.  
+- **Lia (26, estudante de nutricao)**: usa protocolos Jackson & Pollock, US Navy e MAMA para estudo; confere de onde vem cada formula.  
+- **Joao (52, cuidando da mae acamada)**: estima peso com fita e dobra subescapular para ajustar medicamentos e dieta domiciliar.
 
 ## Historias de usuario
 
 | EU COMO | QUERO | PARA |
 | ------- | ----- | ---- |
-| Usuaria nova | Calcular IMC com peso/altura e ver status colorido | Entender rapidamente minha faixa |
-| Profissional | Estimar EER com sexo, idade, altura, peso e fator de atividade | Definir plano calorico inicial |
-| Gestante | Incluir semanas de gestacao | Obter bonus energetico no EER |
-| Estudante | Calcular TMB/GET com NAF | Comparar efeitos de atividade no gasto total |
-| Avaliador fisico | Calcular %GC por dobras ou circunferencias | Escolher metodo mais pratico no momento |
-| Nutricionista | Registrar MAMA com CB e PCT em mm ou cm | Avaliar muscularidade do braco |
-| Enfermeira | Estimar peso acamado sem balanca | Dosar dietas ou medicamentos com base em medidas antropometricas |
-| Usuario recorrente | Reabrir e ver ultimo calculo de cada modulo | Nao precisar digitar tudo de novo |
+| Pessoa usuaria | Calcular IMC com feedback visual | Entender minha faixa rapidamente |
+| Profissional | Medir RCEst/RCQ e ver faixa de risco | Avaliar gordura abdominal de forma simples |
+| Estudante | Selecionar protocolo de %GC | Comparar metodos (dobras x circunferencias) |
+| Nutricionista | Estimar peso acamado (Chumlea) | Dosar dieta/medicacao sem balanca |
+| Gestante | Aplicar bonus no EER por semana | Ajustar plano energetico |
+| Pessoa ativa | Classificar NAF e estimar GET a partir da TMB | Planejar treino e dieta |
+| Paciente | Converter kcal em gramas de macros | Seguir plano alimentar mais tangivel |
+| Familia/cuidador | Estimar hidratacao diaria | Evitar hipo/hiper-hidratacao |
+| Usuario recorrente | Reabrir e ver ultimo resultado | Nao redigitar dados |
 
 ## Modelagem resumida
 
-1. Menu lista calculadoras com card e cor de acento; placeholders de futuras calculadoras permanecem clicaveis apenas quando implementados.  
-2. Cada tela valida entradas (idade/peso/altura/medidas) e mostra erro imediato.  
-3. Funcoes de util calculam valores conforme protocolo selecionado.  
-4. Resultado e salvo em AsyncStorage (chaves especificas) e exibido em card com linhas chave/valor e destaques.  
-5. Ao reabrir, ultimo resultado e carregado automaticamente.
+1. Menu em grade com 3 colunas, logos autorais e animacao de entrada.  
+2. Formularios validam numeros (ponto ou virgula), campos obrigatorios e unidades quando aplicavel.  
+3. Funcoes puras em `utils/` executam cada equacao com constantes separadas em `constants/`.  
+4. Resultado aparece em `SectionCard` com `ResultRow`, badge/cores e dicas do metodo.  
+5. Ultimo calculo de cada tela e salvo em AsyncStorage e carregado no `useEffect` inicial.
 
 ## Indicadores de desempenho
 
 | Indicador | Objetivo | Fonte |
 | --------- | -------- | ----- |
-| Conversao de calculo | >= 90% dos formularios iniciados concluidos | Eventos de clique no futuro analytics |
-| Reuso de calculadoras | >= 2 modulos usados por sessao | Telemetria futura |
-| Erros de validacao | < 5% de tentativas com erro repetido | Logs locais/analytics futuro |
-| Persistencia local | 100% dos ultimos calculos recarregados | Testes manuais/automatizados |
+| Conversao de calculo por tela | >= 90% dos formularios iniciados concluidos | Telemetria futura |
+| Reuso no menu | >= 2 calculadoras por sessao | Telemetria futura |
+| Persistencia local | 100% dos ultimos calculos recarregados sem erro | Testes manuais |
+| Mensagens claras | < 5% de erros repetidos apos validacao | Observacao em usabilidade |
 
 ## Requisitos
 
@@ -45,54 +46,60 @@ Esta entrega cobre o menu de calculadoras do Nulltriverso (IMC, EER, TMB, GET, %
 
 | ID | Descricao | Prioridade |
 | -- | --------- | ---------- |
-| RF-01 | Menu com cards para IMC, EER, TMB, GET, %GC, MAMA, Peso acamado e placeholders futuros | Alta |
-| RF-02 | Validar campos obrigatorios e numeros positivos (aceita virgula ou ponto) | Alta |
-| RF-03 | Calcular IMC e classificar segundo faixas OMS; mostrar gauge e linha mockada | Alta |
-| RF-04 | Calcular EER adulto (IOM) com fator de atividade por sexo e bonus gestacional | Alta |
-| RF-05 | Calcular TMB (Harris-Benedict revisado) com sexo, idade, peso, altura | Alta |
-| RF-06 | Calcular GET = GEB x NAF, listando fatores e descricoes | Alta |
-| RF-07 | Calcular %GC por Jackson & Pollock (3 ou 7 dobras) + Siri ou circunferencias US Navy | Alta |
-| RF-08 | Calcular MAMA com CB e PCT (mm ou cm), exibindo CMB e area | Alta |
-| RF-09 | Calcular peso estimado de acamados (Chumlea) com CPA, AJ, CB e dobra subescapular | Alta |
-| RF-10 | Persistir ultimo calculo de cada modulo em AsyncStorage e recarregar na abertura | Alta |
+| RF-01 | Menu com 12 cards (IMC, RCEst, RCQ, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macro, Hidrica) | Alta |
+| RF-02 | Validar campos obrigatorios e numeros positivos; aceitar ponto ou virgula | Alta |
+| RF-03 | IMC com faixas OMS, gauge e linha | Alta |
+| RF-04 | RCEst (WHtR) e RCQ com classificacao por sexo/faixa | Alta |
+| RF-05 | Peso acamado por Chumlea (equacoes por sexo) | Alta |
+| RF-06 | TMB (Harris-Benedict), EER (IOM + gestacao) e GET (GEB x NAF) | Alta |
+| RF-07 | NAF detalhado com intervalo de GET a partir da TMB informada | Alta |
+| RF-08 | %GC por Jackson & Pollock (3/7 dobras + Siri) ou US Navy | Alta |
+| RF-09 | MAMA com CB + PCT (mm ou cm), exibindo CMB e area | Alta |
+| RF-10 | Distribuicao de macros (kcal -> gramas) dentro de faixas recomendadas | Media |
+| RF-11 | Necessidade hidrica por 30-35 ml/kg, 1 ml/kcal ou Holliday-Segar | Media |
+| RF-12 | Persistir ultimo resultado de cada modulo em AsyncStorage | Alta |
 
 ### Nao funcionais
 
 | ID | Descricao | Prioridade |
 | --- | --------- | ---------- |
 | RNF-01 | App em React Native 0.81 + Expo 54, Android/iOS | Alta |
-| RNF-02 | Operacao 100% offline, sem backend | Alta |
-| RNF-03 | Interface responsiva, paleta centralizada em `src/theme/colors.js` | Media |
-| RNF-04 | Componentes e utils desacoplados para reuso entre calculadoras | Alta |
-| RNF-05 | Feedback em menos de 200 ms apos toque em calcular (dispositivo medio) | Media |
+| RNF-02 | Operacao offline; nenhum dado enviado para servidor | Alta |
+| RNF-03 | Paleta centralizada em `src/theme/colors.js` e componentes reutilizaveis | Media |
+| RNF-04 | Funcoes de calculo puras separadas das telas | Alta |
+| RNF-05 | Resposta de calculo em < 200 ms em aparelho medio | Media |
 
 ## Restricoes
 
 | ID | Restricao |
 | -- | --------- |
-| R-01 | Nao ha backend; nenhum dado sai do dispositivo nesta versao. |
-| R-02 | Resultados sao estimativas; nao substituem avaliacao clinica. |
-| R-03 | Placeholders RCQ/RCEst/Bio/NAF/Macros/Hidrica ainda sem logica. |
-| R-04 | Apenas bibliotecas suportadas pelo Expo 54 (sem nativos adicionais). |
+| R-01 | Sem backend nesta versao; somente armazenamento local. |
+| R-02 | Resultados sao estimativas e nao substituem avaliacao clinica. |
+| R-03 | Somente dependencias suportadas pelo Expo 54 (sem nativos adicionais). |
+| R-04 | Icones e imagens locais (sem download em tempo de execucao). |
 
 ## Casos de uso (texto)
 
-- **Calcular IMC**: usuario informa nome/peso/altura -> sistema valida -> calcula -> mostra status/gauge/linha -> salva.  
-- **Calcular EER**: usuario escolhe sexo, idade, peso, altura, nivel de atividade (e gestacao opcional) -> calcula IOM + bonus -> salva.  
-- **Calcular TMB/GET**: usuario insere dados, escolhe sexo e NAF -> calcula Harris-Benedict e GET -> salva.  
-- **Calcular %GC**: usuario escolhe protocolo -> preenche dobras ou circunferencias -> calcula Siri ou US Navy -> salva.  
-- **Calcular MAMA**: usuario insere CB e PCT -> app converte unidades se necessario -> calcula CMB/area -> salva.  
-- **Calcular peso acamado**: usuario informa CPA, altura do joelho, CB e dobra subescapular -> app aplica equacao de Chumlea por sexo -> salva.  
-- **Reabrir app**: carrega ultimo resultado de cada modulo, se existir.
+- **IMC**: preencher nome/peso/altura -> validar -> calcular -> mostrar faixa, gauge e linha -> salvar.  
+- **RCEst/RCQ**: preencher medidas -> calcular razao -> mostrar faixa de risco e salvar.  
+- **Peso acamado**: selecionar sexo -> informar CPA/AJ/CB/dobra -> aplicar Chumlea -> salvar.  
+- **TMB/EER/GET**: preencher idade/peso/altura/sexo (e semanas gestacionais) -> calcular -> salvar.  
+- **NAF**: escolher nivel e opcionalmente TMB -> exibir fator e intervalo de GET -> salvar.  
+- **%GC**: escolher protocolo -> preencher dobras ou circunferencias -> calcular Siri ou US Navy -> salvar.  
+- **MAMA**: informar CB + PCT (mm ou cm) -> calcular CMB e area -> salvar.  
+- **Macros**: inserir kcal e percentuais -> validar faixas -> converter para g/dia -> salvar.  
+- **Hidrica**: escolher metodo -> preencher peso (e GET, se preciso) -> estimar ml/dia -> salvar.
 
 ## Matriz de rastreabilidade (trecho)
 
 | Historia | RF/RNF | Teste previsto |
 | -------- | ------ | -------------- |
 | Calcular IMC | RF-02, RF-03, RNF-02 | TS-IMC-01, TS-IMC-02 |
-| EER com fator e gestacao | RF-02, RF-04, RNF-02 | TS-EER-01, TS-EER-02 |
-| TMB e GET | RF-02, RF-05, RF-06 | TS-TMB-01, TS-GET-01 |
-| %GC por protocolo | RF-02, RF-07 | TS-GC-01, TS-GC-02 |
-| MAMA com unidade PCT | RF-02, RF-08 | TS-MI-01 |
-| Peso acamado | RF-02, RF-09 | TS-PESO-01 |
-| Persistencia local | RF-10, RNF-02 | TS-PER-01 |
+| Avaliar RCEst/RCQ | RF-02, RF-04, RNF-02 | TS-RCE-01, TS-RCQ-01 |
+| Estimar peso acamado | RF-02, RF-05 | TS-PESO-01 |
+| TMB/EER/GET | RF-02, RF-06 | TS-TMB-01, TS-EER-01, TS-GET-01 |
+| Classificar NAF | RF-02, RF-07 | TS-NAF-01 |
+| %GC por protocolo | RF-02, RF-08 | TS-GC-01, TS-GC-02 |
+| MAMA | RF-02, RF-09 | TS-MI-01 |
+| Macros e Hidrica | RF-02, RF-10, RF-11 | TS-MACRO-01, TS-HIDR-01 |
+| Persistencia local | RF-12, RNF-02 | TS-PER-01 |

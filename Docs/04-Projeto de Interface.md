@@ -1,34 +1,54 @@
 # Projeto de Interface
 
 ## Visao geral
-O app abre em um **menu em grade** com cards ilustrados para cada calculadora. Cada tela usa a mesma base visual: gradiente de fundo, header com kicker/titulo/subtitulo, `SectionCard` para formulario e resultados, botoes primarios verdes e `ResultRow` para resumo. Layout scroll unico com `KeyboardAvoidingView`.
+O app abre em um **menu em grade** com 3 colunas, gradiente de fundo e campo de estrelas. Cada card tem ilustracao autoral e leva a uma calculadora. Todas as telas usam o mesmo esqueleto: header com kicker/titulo/subtitulo, `SectionCard` para formulario/resultado, `PrimaryButton` para acao e `ResultRow` para resumo. Layout unico com `KeyboardAvoidingView` para manter inputs visiveis.
 
 ## Identidade visual
-- **Paleta**: verdes e tons terrosos (`#0f482f` primario, `#22c55e` sucesso, `#f59e0b` alerta, `#ef4444` critico, fundos `#f7f4ef` / `#ebe2d9`).  
-- **Tipografia**: fontes do sistema com pesos fortes para titulos e contraste moderado para textos de apoio.  
-- **Iconografia**: cards do menu usam ilustracoes/cores unificadas; gauge semicircular no IMC e linha de tendencia mockada.
+- **Paleta**: verdes e tons terrosos (primario `#0f482f`, sucesso `#22c55e`, alerta `#f59e0b`, critico `#ef4444`, fundos `#f7f4ef`/`#ebe2d9`).  
+- **Tipografia**: fontes do sistema com pesos fortes em titulos e contraste moderado no corpo.  
+- **Iconografia**: 12 logos autorais nos cards do menu; gauge semicircular e linha mockada na tela de IMC.
 
 ## Componentes-chave
-- **SectionCard**: contenedor com borda sutil; recebe `style` extra.  
-- **TextField**: input com borda clara, teclado decimal quando necessario, aceita virgula/ponto.  
-- **PrimaryButton**: botao verde, ocupa toda a largura do card.  
-- **Pills/tiles**: pressables para sexo, fatores, protocolos e unidades.  
-- **ResultRow**: linhas chave/valor para organizacao dos resultados.  
-- **ImcGauge / ImcLineChart**: visualizacoes SVG plugaveis.
+- **SectionCard**: container com borda suave para formularios, resultados e dicas.  
+- **TextField**: input com borda clara, teclado decimal, aceita virgula/ponto.  
+- **PrimaryButton**: botao verde em largura total do card.  
+- **Pills/tiles**: seletores de sexo, fator de atividade, protocolo, metodo ou unidade (mudam borda/fundo quando ativos).  
+- **ResultRow**: linha chave/valor para organizar o resumo.  
+- **ImcGauge / ImcLineChart**: componentes SVG plugaveis usados no IMC.  
+- **BottomBar**: barra fixa para menu, perfil (stub) e sair (stub).
 
-## Fluxos por tela
-- **Menu**: cards responsivos em 3 colunas; alguns cards sem acao estao marcados como futuros (RCQ, RCEst, Bio, NAF, Macros, Hidrica).  
-- **IMC**: campos de nome, peso (kg), altura (cm); erro proximo aos inputs; badge de status e progress bar; gauge e linha mockada.  
-- **EER**: idade/peso/altura, sexo, nivel de atividade (lista com descricao e fator por sexo), opcao gestante + semanas; resultado com total, base e bonus.  
-- **TMB**: idade/peso/altura, sexo; resultado com kcal/dia e dados informados.  
-- **GET**: idade/peso/altura, sexo e lista de NAF; resultado mostra GEB (Harris-Benedict), fator e total.  
-- **%GC**: escolha de protocolo (Jackson3, Jackson7, US Navy); campos dinamicos (soma das dobras ou pescoco/cintura/quadril); resultado exibe metodo e, se aplicavel, densidade corporal.  
-- **MAMA**: circunferencia do braco e PCT; pill de unidade mm/cm; resultado traz CMB e area do braco.  
-- **Peso acamado**: pills de sexo e campos para CPA, altura do joelho, CB e dobra subescapular; resultado destaca peso estimado e repete medidas usadas.
+## Fluxos por tela e formulas resumidas
+- **IMC**: peso/altura -> IMC = peso / altura² (m) -> faixa OMS, gauge e linha de tendencia mockada.  
+- **RCEst / WHtR**: cintura/altura em cm -> razao -> faixas de risco (<0,4 muito baixo, 0,4-0,5 saudavel, 0,5-0,6 aumentado, >0,6 muito alto).  
+- **RCQ**: cintura/quadril em cm -> razao -> faixas por sexo (OMS/WHO).  
+- **Peso acamado**: Chumlea por sexo usando CPA, altura do joelho, CB e dobra subescapular (mm).  
+- **TMB**: Harris-Benedict revisado com sexo, idade, peso, altura.  
+- **EER**: IOM adulto com fator de atividade por sexo + bonus gestacional (8 kcal/sem + 180).  
+- **GET**: GEB (Harris-Benedict) multiplicado pelo NAF escolhido.  
+- **NAF**: escala OMS (1,0-1,39 ate 1,9-2,5) com opcao de informar TMB para ver GET minimo/maximo.  
+- **% Gordura corporal**: Jackson & Pollock 3/7 dobras + Siri ou circunferencias US Navy (pescoco/cintura/quadril/altura).  
+- **Massa muscular do braco (MAMA)**: CMB = CB - pi*PCT, area = (CMB²)/(4*pi), aceita PCT em mm ou cm.  
+- **Macros**: kcal diario + % de carbo/proteina/gordura (faixas 45-60 / 15-25 / 20-35) -> gramas/dia (4/4/9 kcal/g).  
+- **Hidrica**: 30-35 ml/kg, 1 ml/kcal ou Holliday-Segar (100/50/20 ml/kg).
+
+## Imagens por tela
+![Menu / Logo](../Nulltriverso/frontend/assets/Logo_00_WS_1.png)  
+![IMC](../Nulltriverso/frontend/assets/01_Icone_IMC.png)  
+![RCEst / WHtR](../Nulltriverso/frontend/assets/02_Icone_RCE.png)  
+![RCQ](../Nulltriverso/frontend/assets/03_Icone_RCQ.png)  
+![Peso acamado](../Nulltriverso/frontend/assets/04_Icone_PESO.png)  
+![TMB](../Nulltriverso/frontend/assets/05_Icone_TMB.png)  
+![EER](../Nulltriverso/frontend/assets/06_Icone_EER.png)  
+![GET](../Nulltriverso/frontend/assets/07_Icone_GET.png)  
+![NAF](../Nulltriverso/frontend/assets/08_Icone_NAF.png)  
+![Percentual de gordura](../Nulltriverso/frontend/assets/09_Icone_GC.png)  
+![Massa muscular (MI)](../Nulltriverso/frontend/assets/10_Icone_MI.png)  
+![Macros](../Nulltriverso/frontend/assets/11_Icone_MACRO.png)  
+![Hidrica](../Nulltriverso/frontend/assets/12_Icone_HIDRO.png)
 
 ## Acessibilidade e UX
-- Teclados apropriados (decimal) e `KeyboardAvoidingView` em todas as telas.  
-- Cores acompanham texto para nao depender apenas de cor.  
-- Mensagens curtas e diretas; botoes com verbos de acao.  
-- Layouts com espaco entre elementos (`gap`) e padding consistente (24 px lateral).  
-- Barra inferior fixa com botoes de menu, perfil (stub) e sair (stub) para consistencia de navegacao.
+- Teclados decimais e `KeyboardAvoidingView` em todas as telas.  
+- Mensagens curtas ("Peso invalido.", "As porcentagens devem somar 100%.").  
+- Cores sempre acompanhadas de texto para nao depender apenas de cor.  
+- Padding lateral de 24 px, espacamento consistente entre elementos e cards largos para leitura.  
+- Animacao suave de entrada nos cards do menu e feedback de press (spring).

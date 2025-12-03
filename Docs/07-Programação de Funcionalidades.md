@@ -4,29 +4,36 @@
 
 | Item | Descricao | Status |
 | ---- | --------- | ------ |
-| Menu de calculadoras | Grid responsivo com cards e gradiente de fundo | Concluido |
-| IMC | Peso/altura/nome, parse com virgula, status OMS, gauge e linha mockada, persistencia `imc:last` | Concluido |
-| EER | IOM adulto com fator de atividade por sexo, opcao gestante (bonus 8 kcal/sem + 180), persistencia `eer:last` | Concluido |
-| TMB/BMR | Harris-Benedict revisado por sexo; resultado em kcal/dia, persistencia `tmb:last` | Concluido |
-| GET | GEB (Harris-Benedict) x NAF selecionado, mostrando fator e descricao, persistencia `get:last` | Concluido |
-| % Gordura corporal | Protocolos Jackson & Pollock (3 ou 7 dobras + Siri) e US Navy (circunferencias), persistencia `gc:last` | Concluido |
-| MAMA | CB e PCT em mm ou cm, calcula CMB e area do braco, persistencia `mi:last` | Concluido |
-| Peso acamado | Equacoes de Chumlea por sexo com CPA/AJ/CB/DCSE, persistencia `bed:last` | Concluido |
-| Componentes e paleta | Cards, botoes, inputs, pills e ResultRow reutilizaveis; paleta em `theme/colors.js` | Concluido |
-| Placeholders futuros | RCQ, RCEst, Bio, NAF detalhado, Macros, Hidrica no menu (sem logica) | Pendente |
+| Menu de calculadoras | Grid 3 colunas com 12 cards ilustrados e animacao de entrada | Concluido |
+| IMC | Peso/altura/nome, gauge e linha mockada, faixas OMS, persistencia `imc:last` | Concluido |
+| RCEst / WHtR | Cintura/estatura, faixas <0,4 ate >0,6, persistencia `whtr:last` | Concluido |
+| RCQ | Cintura/quadril com faixas por sexo (WHO), persistencia `rcq:last` | Concluido |
+| Peso acamado | Equacoes de Chumlea por sexo (CPA, AJ, CB, DCSE), persistencia `bed:last` | Concluido |
+| TMB | Harris-Benedict revisado, persistencia `tmb:last` | Concluido |
+| EER | IOM adulto + bonus gestacional (8 kcal/sem + 180), persistencia `eer:last` | Concluido |
+| GET | GEB (Harris-Benedict) x NAF, persistencia `get:last` | Concluido |
+| NAF | Escala OMS (1,0-2,5) com intervalo GET baseado na TMB informada, persistencia `naf:last` | Concluido |
+| % Gordura corporal | Jackson & Pollock 3/7 dobras + Siri ou US Navy (circunferencias), persistencia `gc:last` | Concluido |
+| Massa muscular (MAMA) | CB + PCT em mm/cm -> CMB e area do braco, persistencia `mi:last` | Concluido |
+| Macros | Distribuicao kcal -> g/dia respeitando faixas (45-60/15-25/20-35), persistencia `@nulltriverso/macros` | Concluido |
+| Hidrica | 30-35 ml/kg, 1 ml/kcal ou Holliday-Segar, persistencia `hidrica:last` | Concluido |
 
 ## Detalhes de implementacao
-- **HomeScreen (IMC)**: valida campos, calcula IMC via `utils/imc`, colore badge e barra conforme faixa; gauge e linha usam dados mockados.  
-- **EerScreen**: coleta sesso, atividade (lista em `constants/eer`), gestacao opcional; `utils/eer` retorna base, bonus e total arredondados.  
-- **TmbScreen**: usa `utils/tmb` (Harris-Benedict) com sexo/idade/peso/altura.  
-- **GetScreen**: `utils/get` calcula GEB e multiplica pelo NAF (lista em `constants/get`).  
-- **GcScreen**: protocolos em `constants/gc`; `utils/gc` aplica Jackson & Pollock + Siri ou formula US Navy em cm; campos dinamicos por protocolo.  
-- **MiScreen**: `utils/mi` converte PCT mm->cm quando escolhido e calcula CMB/area.  
-- **BedriddenWeightScreen**: `utils/bedridden` aplica Chumlea por sexo com CPA/AJ/CB/DCSE e guarda resultado.  
-- **Persistencia**: cada tela carrega ultimo resultado no `useEffect` inicial; erros de IO sao logados com `console.warn`.
+- **HomeScreen (IMC)**: `utils/imc` calcula IMC/status/cor; gauge/linha com dados mockados; salva e recarrega automaticamente.  
+- **RceScreen/WhtrScreen**: `utils/wht` calcula razao cintura/estatura e `statusFromWhtr` define cor/faixa.  
+- **RcqScreen**: `utils/rcq` calcula razao cintura/quadril; `statusFromRcq` aplica thresholds por sexo.  
+- **BedriddenWeightScreen**: `utils/bedridden` aplica Chumlea por sexo; resume medidas usadas.  
+- **TmbScreen/GetScreen/EerScreen**: usam `utils/tmb`, `utils/get` e `utils/eer`; fatores em `constants/*`.  
+- **NafScreen**: lista `constants/naf`; intervalo GET e salvamento mesmo sem TMB (mantem fator).  
+- **GcScreen**: protocolos em `constants/gc`; campos dinamicos por metodo (dobras ou circunferencias).  
+- **MiScreen**: converte PCT mm->cm quando necessario; mostra CMB e area.  
+- **MacroScreen**: valida soma 100% e faixas recomendadas antes de converter kcal -> g/dia.  
+- **HidricaScreen**: tres metodos; ml_min/max calculados conforme peso ou kcal.  
+- **Persistencia**: `useEffect` em cada tela carrega ultimo resultado; falhas de IO geram `console.warn`.
 
 ## Pendencias/roadmap
-- Implementar logica dos cards futuros (RCQ, RCEst, Bioimpedancia, Macros, Hidrica, NAF detalhado).  
-- Historico completo de calculos por usuario.  
-- Compartilhamento/exportacao dos resultados.  
-- Internacionalizacao e unidades alternativas (imperial).
+- Bioimpedancia e historico completo de calculos por usuario.  
+- Compartilhamento/exportacao de resultados (PDF/link).  
+- Testes automatizados de `utils/` e pipeline de CI.  
+- Internacionalizacao e unidades imperiais (lb/in, fl oz).  
+- Analytics opcional para medir uso por calculadora.
