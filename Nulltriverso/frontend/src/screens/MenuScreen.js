@@ -8,17 +8,19 @@ import {
   StyleSheet,
   View,
   Image,
+  Text,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../theme/colors";
 import { menuGradient } from "../theme/gradients";
-import BottomBar from "../components/BottomBar";
 import StarField from "../components/StarField";
 
 const MENU_COLUMNS = 3;
 const H_PADDING = 24;
 const GAP = 14;
+const PANEL_PADDING = 12;
 
 const MenuScreen = ({
   onOpenImc,
@@ -30,6 +32,7 @@ const MenuScreen = ({
   onOpenPeso,
   onProfile,
   onExit,
+  onMenu,
   onOpenWhtr,
   onOpenRcq,
   onOpenRcest,
@@ -39,7 +42,8 @@ const MenuScreen = ({
 }) => {
   const cardSize = useMemo(() => {
     const { width } = Dimensions.get("window");
-    const availableWidth = width - H_PADDING * 2 - GAP * (MENU_COLUMNS - 1);
+    const availableWidth =
+      width - H_PADDING * 2 - GAP * (MENU_COLUMNS - 1) - PANEL_PADDING * 2;
     return availableWidth / MENU_COLUMNS;
   }, []);
 
@@ -149,27 +153,42 @@ const MenuScreen = ({
       <View style={styles.header}>
         <View style={styles.logoWrapper}>
           <Image
-            source={require("../../assets/logos_ws/Logo_04_WS_1.png")}
+            source={require("../../assets/logos_ws/Logo_02_WS_1.png")}
             style={[styles.headerLogo, styles.headerLogoGlow]}
             blurRadius={22}
           />
           <Image
-            source={require("../../assets/logos_ws/Logo_04_WS_1.png")}
+            source={require("../../assets/logos_ws/Logo_02_WS_1.png")}
             style={styles.headerLogo}
           />
         </View>
       </View>
-      <FlatList
-        data={menuItems}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.key}
-        numColumns={MENU_COLUMNS}
-        columnWrapperStyle={{ gap: GAP }}
-        contentContainerStyle={styles.grid}
-        ItemSeparatorComponent={() => <View style={{ height: GAP }} />}
-        showsVerticalScrollIndicator={false}
-      />
-      <BottomBar onMenu={() => {}} onProfile={onProfile} onExit={onExit} />
+      <View style={styles.menuBar}>
+        <MenuButton label="Perfil" icon="account-circle" onPress={onProfile} />
+        <View style={styles.barDivider} />
+        <MenuButton label="Menu" icon="view-grid-outline" onPress={onMenu} />
+        <View style={styles.barDivider} />
+        <MenuButton label="Sair" icon="logout" onPress={onExit} />
+      </View>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionKicker}>Painel principal</Text>
+        <Text style={styles.sectionTitle}>Escolha uma ferramenta</Text>
+        <Text style={styles.sectionSubtitle}>
+          Cartoes uniformes, prontos para abrir as calculadoras mais usadas.
+        </Text>
+      </View>
+      <View style={styles.panel}>
+        <FlatList
+          data={menuItems}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.key}
+          numColumns={MENU_COLUMNS}
+          columnWrapperStyle={{ gap: GAP }}
+          contentContainerStyle={styles.grid}
+          ItemSeparatorComponent={() => <View style={{ height: GAP }} />}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
     </LinearGradient>
   );
 };
@@ -231,15 +250,15 @@ const MenuCard = ({ item, cardSize, index }) => {
     >
       <Pressable
         style={({ pressed }) => [
-          item.image ? styles.cardImage : styles.card,
           {
             width: cardSize,
             height: cardSize,
-            borderColor: `${item.accent}33`,
-            backgroundColor: `${item.accent}12`,
+            borderColor: `${item.accent}26`,
+            backgroundColor: `${item.accent}0d`,
             shadowColor: item.accent,
           },
-          pressed && styles.cardPressed,
+          styles.cardShell,
+          pressed && styles.cardShellPressed,
         ]}
         onPress={item.onPress}
         onPressIn={handlePressIn}
@@ -247,52 +266,48 @@ const MenuCard = ({ item, cardSize, index }) => {
       >
         <View
           style={[
-            styles.iconArea,
-            {
-              width: cardSize,
-              height: cardSize,
-            },
+            styles.cardBody,
+            { width: cardSize - 12, height: cardSize - 12 },
           ]}
         >
-          {item.image ? (
-            <>
-              <Image
-                source={item.image}
-                style={[
-                  styles.fullImage,
-                  { width: cardSize, height: cardSize },
-                ]}
-              />
-              <View
-                style={[
-                  styles.overlay,
-                  {
-                    backgroundColor: `${item.accent}24`,
-                  },
-                ]}
-              />
-            </>
-          ) : (
-            <View
-              style={[
-                styles.iconBadge,
-                {
-                  width: cardSize * 0.74,
-                  height: cardSize * 0.74,
-                  borderRadius: (cardSize * 0.74) / 2,
-                  backgroundColor: `${item.accent}0f`,
-                  borderColor: `${item.accent}22`,
-                },
-              ]}
-            >
-              {item.icon({ color: item.accent, size: cardSize * 0.56 })}
-            </View>
-          )}
+          <View
+            style={[styles.cornerTag, { backgroundColor: `${item.accent}3a` }]}
+          >
+            <Text style={styles.cornerTagText}>Calc</Text>
+          </View>
+          <LinearGradient
+            colors={[`${item.accent}22`, `${item.accent}08`]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.cardGradient}
+          />
+          <View
+            style={[styles.accentHalo, { backgroundColor: `${item.accent}1c` }]}
+          />
+          <View
+            style={[styles.accentBar, { backgroundColor: `${item.accent}88` }]}
+          />
+          <Image
+            source={item.image}
+            style={[
+              styles.fullImage,
+              { width: cardSize - 20, height: cardSize - 20 },
+            ]}
+          />
+          <View
+            style={[styles.overlay, { backgroundColor: `${item.accent}19` }]}
+          />
         </View>
       </Pressable>
     </Animated.View>
   );
 };
+
+const MenuButton = ({ label, icon, onPress }) => (
+  <Pressable style={styles.barButton} onPress={onPress}>
+    <MaterialCommunityIcons name={icon} size={32} color={colors.surface} />
+  </Pressable>
+);
 
 const styles = StyleSheet.create({
   screen: {
@@ -329,63 +344,88 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 6 },
   },
   grid: {
-    paddingBottom: 120,
+    paddingBottom: 24,
     gap: GAP,
+  },
+  panel: {
+    backgroundColor: "rgba(255,255,255,0.06)",
+    borderRadius: 22,
+    paddingVertical: 8,
+    paddingHorizontal: PANEL_PADDING,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.12)",
+    shadowColor: "#091a12",
+    shadowOpacity: 0.26,
+    shadowRadius: 22,
+    shadowOffset: { width: 0, height: 14 },
+  },
+  sectionHeader: {
+    gap: 6,
+    marginBottom: 10,
+    alignItems: "flex-start",
+  },
+  sectionKicker: {
+    color: "#f0e6d8",
+    textTransform: "uppercase",
+    fontWeight: "800",
+    letterSpacing: 1,
+  },
+  sectionTitle: {
+    color: colors.surface,
+    fontSize: 24,
+    fontWeight: "900",
+    letterSpacing: -0.3,
+  },
+  sectionSubtitle: {
+    color: "rgba(255,255,255,0.86)",
   },
   cardWrapper: {
     alignItems: "center",
     gap: 8,
   },
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: 18,
+  cardShell: {
+    borderRadius: 20,
     padding: 10,
     borderWidth: 1,
-    borderColor: colors.border,
-    shadowColor: colors.ink,
-    shadowOpacity: 0.12,
-    shadowRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowOpacity: 0.22,
+    shadowRadius: 14,
     shadowOffset: { width: 0, height: 10 },
     elevation: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
     overflow: "hidden",
   },
-  cardImage: {
-    backgroundColor: colors.surface,
-    borderRadius: 18,
-    padding: 0,
-    borderWidth: 1,
-    borderColor: colors.border,
-    shadowColor: colors.ink,
-    shadowOpacity: 0.12,
-    shadowRadius: 16,
-    shadowOffset: { width: 0, height: 10 },
-    elevation: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-    overflow: "hidden",
-  },
-  cardPressed: {
+  cardShellPressed: {
     transform: [{ scale: 0.98 }],
     backgroundColor: colors.surfaceMuted,
   },
-  iconArea: {
-    flex: 1,
+  cardBody: {
+    borderRadius: 18,
+    overflow: "hidden",
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
-    height: "100%",
+    alignSelf: "center",
+    backgroundColor: colors.surface,
+    position: "relative",
   },
-  iconBadge: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 6 },
+  cardGradient: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  accentHalo: {
+    position: "absolute",
+    width: "80%",
+    height: "80%",
+    borderRadius: 20,
+    transform: [{ scale: 1.1 }],
+  },
+  accentBar: {
+    position: "absolute",
+    top: 14,
+    left: 14,
+    right: 14,
+    height: 6,
+    borderRadius: 8,
+    opacity: 0.5,
   },
   overlay: {
     position: "absolute",
@@ -396,11 +436,60 @@ const styles = StyleSheet.create({
   },
   fullImage: {
     resizeMode: "cover",
-    borderRadius: 18,
+    borderRadius: 16,
+    alignSelf: "center",
   },
-  cardSubtitle: {
-    color: colors.inkMuted,
-    fontSize: 12,
+  cornerTag: {
+    position: "absolute",
+    top: 12,
+    right: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.18)",
+  },
+  cornerTagText: {
+    color: colors.surface,
+    fontWeight: "800",
+    fontSize: 11,
+    letterSpacing: 0.4,
+    textTransform: "uppercase",
+  },
+  menuBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "rgba(255,255,255,0.1)",
+    borderRadius: 16,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+    marginTop: -16,
+    marginBottom: 12,
+    gap: 0,
+    alignSelf: "center",
+    width: "100%",
+    maxWidth: 520,
+    shadowColor: "#0b1320",
+    shadowOpacity: 0.22,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 10 },
+  },
+  barDivider: {
+    width: 1,
+    height: 26,
+    backgroundColor: "rgba(255,255,255,0.18)",
+  },
+  barButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 12,
+    backgroundColor: "transparent",
+    flex: 1,
   },
 });
 

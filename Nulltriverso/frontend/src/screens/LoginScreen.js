@@ -22,6 +22,13 @@ const LoginScreen = ({ onLogin }) => {
   const spin = useRef(new Animated.Value(0)).current;
   const spinOpposite = useRef(new Animated.Value(0)).current;
   const pulse = useRef(new Animated.Value(0)).current;
+  const sweep = useRef(new Animated.Value(0)).current;
+  const shimmer = useRef(new Animated.Value(0)).current;
+  const starOrbits = [
+    { radius: 96, size: 8, angle: 12 },
+    { radius: 110, size: 7, angle: 128 },
+    { radius: 82, size: 9, angle: 232 },
+  ];
 
   useEffect(() => {
     const vortex = Animated.loop(
@@ -59,16 +66,46 @@ const LoginScreen = ({ onLogin }) => {
       ])
     );
 
+    const sweepOrbit = Animated.loop(
+      Animated.timing(sweep, {
+        toValue: 1,
+        duration: 6500,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      })
+    );
+
+    const shimmerLoop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(shimmer, {
+          toValue: 1,
+          duration: 2200,
+          easing: Easing.inOut(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.timing(shimmer, {
+          toValue: 0,
+          duration: 2200,
+          easing: Easing.inOut(Easing.quad),
+          useNativeDriver: true,
+        }),
+      ])
+    );
+
     vortex.start();
     counterVortex.start();
     pulseLoop.start();
+    sweepOrbit.start();
+    shimmerLoop.start();
 
     return () => {
       vortex.stop();
       counterVortex.stop();
       pulseLoop.stop();
+      sweepOrbit.stop();
+      shimmerLoop.stop();
     };
-  }, [spin, spinOpposite, pulse]);
+  }, [spin, spinOpposite, pulse, sweep, shimmer]);
 
   const spinRotation = spin.interpolate({
     inputRange: [0, 1],
@@ -83,6 +120,21 @@ const LoginScreen = ({ onLogin }) => {
   const pulseScale = pulse.interpolate({
     inputRange: [0, 1],
     outputRange: [0.94, 1.08],
+  });
+
+  const sweepRotation = sweep.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
+
+  const shimmerOpacity = shimmer.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.12, 0.4],
+  });
+
+  const shimmerScale = shimmer.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 1.14],
   });
 
   const handleSubmit = () => {
@@ -123,6 +175,77 @@ const LoginScreen = ({ onLogin }) => {
                 />
               </Animated.View>
               <Animated.View
+                pointerEvents="none"
+                style={[
+                  styles.halo,
+                  {
+                    opacity: shimmerOpacity,
+                    transform: [{ scale: shimmerScale }],
+                  },
+                ]}
+              />
+              <Animated.View
+                pointerEvents="none"
+                style={[
+                  styles.sweepRing,
+                  {
+                    transform: [
+                      { rotate: sweepRotation },
+                      { scale: shimmerScale },
+                    ],
+                    opacity: shimmerOpacity,
+                  },
+                ]}
+              />
+              <Animated.View
+                pointerEvents="none"
+                style={[
+                  styles.moonOrbit,
+                  { transform: [{ rotate: sweepRotation }] },
+                ]}
+              >
+                <Animated.View
+                  style={[
+                    styles.moon,
+                    {
+                      transform: [{ translateX: 112 }, { scale: pulseScale }],
+                      opacity: shimmerOpacity,
+                    },
+                  ]}
+                />
+              </Animated.View>
+              {starOrbits.map((star, index) => (
+                <Animated.View
+                  key={`star-${index}`}
+                  pointerEvents="none"
+                  style={[
+                    styles.starOrbit,
+                    {
+                      width: star.radius * 2,
+                      height: star.radius * 2,
+                      transform: [{ rotate: sweepRotation }],
+                    },
+                  ]}
+                >
+                  <Animated.View
+                    style={[
+                      styles.star,
+                      {
+                        width: star.size,
+                        height: star.size,
+                        borderRadius: star.size / 2,
+                        opacity: shimmerOpacity,
+                        transform: [
+                          { rotate: `${star.angle}deg` },
+                          { translateX: star.radius },
+                          { scale: pulseScale },
+                        ],
+                      },
+                    ]}
+                  />
+                </Animated.View>
+              ))}
+              <Animated.View
                 style={[
                   styles.disk,
                   styles.diskSecondary,
@@ -135,26 +258,15 @@ const LoginScreen = ({ onLogin }) => {
                 ]}
               >
                 <LinearGradient
-                  colors={[
-                    "rgba(205,195,164,0.12)",
-                    "rgba(90,100,44,0.42)",
-                    "rgba(0,0,0,0.82)",
-                  ]}
+                  colors={["transparent", "transparent", "transparent"]}
                   start={{ x: 0.9, y: 0.2 }}
                   end={{ x: 0, y: 1 }}
                   style={styles.diskGradient}
                 />
               </Animated.View>
-              <Animated.View
-                pointerEvents="none"
-                style={[
-                  styles.eventHorizon,
-                  { transform: [{ scale: pulseScale }] },
-                ]}
-              />
               <View style={styles.logoGlow} pointerEvents="none" />
               <Image
-                source={require("../../assets/logos/Logo_02.png")}
+                source={require("../../assets/logos/Logo_00_1.png")}
                 style={styles.logo}
               />
             </View>
@@ -229,13 +341,13 @@ const styles = StyleSheet.create({
     height: 240,
     borderRadius: 120,
     overflow: "hidden",
-    opacity: 0.75,
+    opacity: 0.5,
   },
   diskSecondary: {
     width: 210,
     height: 210,
     borderRadius: 110,
-    opacity: 0.65,
+    opacity: 0,
   },
   diskGradient: {
     position: "absolute",
@@ -245,26 +357,68 @@ const styles = StyleSheet.create({
     left: -20,
     transform: [{ rotate: "12deg" }],
   },
-  eventHorizon: {
+  halo: {
     position: "absolute",
-    width: 178,
-    height: 178,
-    borderRadius: 100,
-    backgroundColor: "rgba(4,6,2,0.65)",
+    width: 246,
+    height: 246,
+    borderRadius: 123,
+    backgroundColor: "rgba(255,255,255,0.08)",
+    shadowColor: "#c9daff",
+    shadowOpacity: 0.38,
+    shadowRadius: 28,
+    shadowOffset: { width: 0, height: 0 },
+  },
+  sweepRing: {
+    position: "absolute",
+    width: 240,
+    height: 240,
+    borderRadius: 120,
     borderWidth: 2,
-    borderColor: "rgba(236,223,202,0.18)",
-    shadowColor: "#000",
-    shadowOpacity: 0.4,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 12 },
+    borderColor: "rgba(216,229,255,0.45)",
+    shadowColor: "#dbe9ff",
+    shadowOpacity: 0.6,
+    shadowRadius: 26,
+    shadowOffset: { width: 0, height: 0 },
+  },
+  moonOrbit: {
+    position: "absolute",
+    width: 240,
+    height: 240,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  moon: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: "rgba(236,232,222,0.95)",
+    borderWidth: 2,
+    borderColor: "rgba(120,110,90,0.35)",
+    shadowColor: "#fff5db",
+    shadowOpacity: 0.85,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 0 },
+  },
+  starOrbit: {
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  star: {
+    position: "absolute",
+    backgroundColor: "rgba(255,245,219,0.9)",
+    shadowColor: "#fff3d1",
+    shadowOpacity: 0.8,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 0 },
   },
   logoGlow: {
     position: "absolute",
     width: 210,
     height: 210,
     borderRadius: 110,
-    backgroundColor: "rgba(181,140,79,0.16)",
-    shadowColor: "#b58c4f",
+    backgroundColor: "rgba(200,220,255,0.12)",
+    shadowColor: "#c9daff",
     shadowOpacity: 0.38,
     shadowRadius: 26,
     shadowOffset: { width: 0, height: 0 },
@@ -276,7 +430,7 @@ const styles = StyleSheet.create({
     borderRadius: 95,
     borderWidth: 2,
     borderColor: "rgba(255,255,255,0.35)",
-    backgroundColor: "rgba(255,255,255,0.14)",
+    backgroundColor: "transparent",
     zIndex: 2,
   },
   cardWrapper: {
