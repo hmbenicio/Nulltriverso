@@ -19,7 +19,7 @@ import StarField from "../components/StarField";
 
 const MENU_COLUMNS = 3;
 const H_PADDING = 24;
-const GAP = 14;
+const GAP = 10;
 const PANEL_PADDING = 12;
 
 const MenuScreen = ({
@@ -163,31 +163,33 @@ const MenuScreen = ({
           />
         </View>
       </View>
+      <View style={styles.content}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>PAINEL PRINCIPAL</Text>
+
+          <Text style={styles.sectionSubtitle}>
+            Cartoes uniformes, prontos para abrir as calculadoras mais usadas.
+          </Text>
+        </View>
+        <View style={styles.panel}>
+          <FlatList
+            data={menuItems}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.key}
+            numColumns={MENU_COLUMNS}
+            columnWrapperStyle={{ gap: GAP }}
+            contentContainerStyle={styles.grid}
+            ItemSeparatorComponent={() => <View style={{ height: GAP }} />}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
+      </View>
       <View style={styles.menuBar}>
         <MenuButton label="Perfil" icon="account-circle" onPress={onProfile} />
         <View style={styles.barDivider} />
         <MenuButton label="Menu" icon="view-grid-outline" onPress={onMenu} />
         <View style={styles.barDivider} />
         <MenuButton label="Sair" icon="logout" onPress={onExit} />
-      </View>
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionKicker}>Painel principal</Text>
-        <Text style={styles.sectionTitle}>Escolha uma ferramenta</Text>
-        <Text style={styles.sectionSubtitle}>
-          Cartoes uniformes, prontos para abrir as calculadoras mais usadas.
-        </Text>
-      </View>
-      <View style={styles.panel}>
-        <FlatList
-          data={menuItems}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.key}
-          numColumns={MENU_COLUMNS}
-          columnWrapperStyle={{ gap: GAP }}
-          contentContainerStyle={styles.grid}
-          ItemSeparatorComponent={() => <View style={{ height: GAP }} />}
-          showsVerticalScrollIndicator={false}
-        />
       </View>
     </LinearGradient>
   );
@@ -314,11 +316,11 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: H_PADDING,
     paddingTop: 48,
-    paddingBottom: 32,
+    paddingBottom: 120,
     position: "relative",
   },
   header: {
-    marginBottom: 18,
+    marginBottom: 5,
     alignItems: "center",
   },
   logoWrapper: {
@@ -347,6 +349,10 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     gap: GAP,
   },
+  content: {
+    flex: 1,
+    width: "100%",
+  },
   panel: {
     backgroundColor: "rgba(255,255,255,0.06)",
     borderRadius: 22,
@@ -362,22 +368,25 @@ const styles = StyleSheet.create({
   sectionHeader: {
     gap: 6,
     marginBottom: 10,
-    alignItems: "flex-start",
+    alignItems: "center",
   },
   sectionKicker: {
     color: "#f0e6d8",
     textTransform: "uppercase",
     fontWeight: "800",
     letterSpacing: 1,
+    textAlign: "center",
   },
   sectionTitle: {
     color: colors.surface,
     fontSize: 24,
     fontWeight: "900",
     letterSpacing: -0.3,
+    textAlign: "center",
   },
   sectionSubtitle: {
     color: "rgba(255,255,255,0.86)",
+    textAlign: "center",
   },
   cardWrapper: {
     alignItems: "center",
@@ -457,6 +466,10 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   menuBar: {
+    position: "absolute",
+    left: H_PADDING,
+    right: H_PADDING,
+    bottom: 24,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -464,8 +477,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     paddingVertical: 0,
     paddingHorizontal: 0,
-    marginTop: -16,
-    marginBottom: 12,
     gap: 0,
     alignSelf: "center",
     width: "100%",
