@@ -1,9 +1,10 @@
 # Apresentacao do Projeto
 
 ## Narrativa
-Nulltriverso combina o "Null" da programacao com um universo de calculos nutricionais. Esta entrega final traz 12 calculadoras offline (IMC, RCEst, RCQ, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macros, Hidrica), identidade visual autoral e transparencia de formulas. Projeto pessoal de Helbert Miranda Benicio (Analista/Dev e Nutricionista CRN9 21602 - CFN) para portfolio profissional.
+Nulltriverso combina o "Null" da programacao com um universo de calculos nutricionais. Esta entrega final traz 12 calculadoras offline (IMC, RCEst, RCQ, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macros, Hidrica), tela de boas-vindas/login animada e identidade visual autoral com transparencia de formulas. Projeto pessoal de Helbert Miranda Benicio (Analista/Dev e Nutricionista CRN9 21602 - CFN) para portfolio profissional.
 
 ## Destaques da solucao
+- Tela inicial com gradiente roxo/ambar, campo de estrelas e animacao de "buraco negro"; CTA "Seja bem-vindo!" leva direto ao menu.  
 - Menu ilustrado com 12 logos proprias e animacao de entrada.  
 - Formularios curtos, validacao imediata e suporte a virgula/ponto.  
 - Resultados com badges/cores e resumos em `ResultRow`; IMC inclui gauge semicircular e linha mockada.  
@@ -11,7 +12,7 @@ Nulltriverso combina o "Null" da programacao com um universo de calculos nutrici
 - Persistencia local por modulo (AsyncStorage) para retomar a sessao rapidamente.
 
 ## Roteiro de demonstracao
-1) Abrir o menu para mostrar identidade e animacao.  
+1) Abrir o app na tela de boas-vindas/login para mostrar animacoes e gradiente; tocar em "Seja bem-vindo!" e acessar o menu.  
 2) IMC: validar campos, mostrar gauge/linha e faixa.  
 3) RCEst e RCQ: inserir medidas e comparar faixas de risco.  
 4) Peso acamado: selecionar sexo e preencher medidas; destacar equacao de Chumlea.  

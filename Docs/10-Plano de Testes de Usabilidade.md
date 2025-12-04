@@ -1,7 +1,7 @@
 # Plano de Testes de Usabilidade
 
 ## Objetivos
-- Verificar se o menu com 12 cards e compreendido sem instrucao.  
+- Verificar se a tela de boas-vindas/login e compreendida (sem autenticacao real) e se o menu com 12 cards e compreendido sem instrucao.  
 - Avaliar clareza de mensagens de erro, textos de formula e faixas de risco (IMC/RCQ/RCEst/%GC).  
 - Entender se cores/badges e o resumo em `ResultRow` ajudam na interpretacao.  
 - Garantir que usuarios encontrem os ultimos resultados salvos ao reabrir.
@@ -12,7 +12,8 @@
 - Android e iOS.
 
 ## Roteiro
-1. Abrir o app e pedir para escolher qualquer calculadora do menu (observando compreensao dos nomes).  
+1. Abrir o app, observar a tela de boas-vindas/login e pedir para avançar ao menu (CTA "Seja bem-vindo!").  
+2. Escolher qualquer calculadora do menu (observando compreensao dos nomes).  
 2. Concluir um calculo simples (IMC ou RCEst) sem ajuda.  
 3. Concluir um calculo com selecao (EER com atividade, %GC escolhendo protocolo, MAMA trocando unidade ou Peso acamado escolhendo sexo).  
 4. Induzir erro (campo vazio ou zero) e observar entendimento da mensagem.  

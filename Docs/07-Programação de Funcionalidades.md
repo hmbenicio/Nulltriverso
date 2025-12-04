@@ -4,6 +4,7 @@
 
 | Item | Descricao | Status |
 | ---- | --------- | ------ |
+| Login/boas-vindas | Gradiente roxo/ambar, campo de estrelas, animacao de discos giratorios e CTA "Seja bem-vindo!" (sem autenticacao) | Concluido |
 | Menu de calculadoras | Grid 3 colunas com 12 cards ilustrados e animacao de entrada | Concluido |
 | IMC | Peso/altura/nome, gauge e linha mockada, faixas OMS, persistencia `imc:last` | Concluido |
 | RCEst / WHtR | Cintura/estatura, faixas <0,4 ate >0,6, persistencia `whtr:last` | Concluido |
@@ -19,6 +20,7 @@
 | Hidrica | 30-35 ml/kg, 1 ml/kcal ou Holliday-Segar, persistencia `hidrica:last` | Concluido |
 
 ## Detalhes de implementacao
+- **LoginScreen**: combina `LinearGradient`, `Animated` (rotacao/pulso) e `StarField`; campos de email/senha sao ilustrativos e o botao navega direto para o menu via `useAppNavigation`.  
 - **HomeScreen (IMC)**: `utils/imc` calcula IMC/status/cor; gauge/linha com dados mockados; salva e recarrega automaticamente.  
 - **RceScreen/WhtrScreen**: `utils/wht` calcula razao cintura/estatura e `statusFromWhtr` define cor/faixa.  
 - **RcqScreen**: `utils/rcq` calcula razao cintura/quadril; `statusFromRcq` aplica thresholds por sexo.  

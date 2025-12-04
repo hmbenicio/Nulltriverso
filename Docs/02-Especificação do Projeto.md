@@ -1,10 +1,10 @@
 # Especificacao do Projeto
 
-Esta versao entrega o menu completo de calculadoras do Nulltriverso (12 cards) com logica client-side e persistencia local. Todas as formulas sao exibidas nos textos de apoio e referenciadas na documentacao.
+Esta versao entrega o menu completo de calculadoras do Nulltriverso (12 cards) com logica client-side e persistencia local, agora precedido por uma tela de boas-vindas/login animada (sem autenticacao) que conduz ao menu. Todas as formulas sao exibidas nos textos de apoio e referenciadas na documentacao.
 
 ## Personas
 
-- **Helena (30, nutricionista clinica)**: precisa de IMC, RCQ/RCEst, %GC e peso acamado em consulta rapida, sem login.  
+- **Helena (30, nutricionista clinica)**: precisa de IMC, RCQ/RCEst, %GC e peso acamado em consulta rapida, sem travar em cadastro (login e apenas estetico).  
 - **Carlos (45, professor ativo)**: quer saber TMB, GET e macros para planejar treinos e dieta, validando se valores fazem sentido.  
 - **Lia (26, estudante de nutricao)**: usa protocolos Jackson & Pollock, US Navy e MAMA para estudo; confere de onde vem cada formula.  
 - **Joao (52, cuidando da mae acamada)**: estima peso com fita e dobra subescapular para ajustar medicamentos e dieta domiciliar.
@@ -13,6 +13,7 @@ Esta versao entrega o menu completo de calculadoras do Nulltriverso (12 cards) c
 
 | EU COMO | QUERO | PARA |
 | ------- | ----- | ---- |
+| Pessoa usuaria | Entrar rapidamente no app sem criar conta | Chegar ao menu a partir do CTA "Seja bem-vindo!" |
 | Pessoa usuaria | Calcular IMC com feedback visual | Entender minha faixa rapidamente |
 | Profissional | Medir RCEst/RCQ e ver faixa de risco | Avaliar gordura abdominal de forma simples |
 | Estudante | Selecionar protocolo de %GC | Comparar metodos (dobras x circunferencias) |
@@ -25,11 +26,12 @@ Esta versao entrega o menu completo de calculadoras do Nulltriverso (12 cards) c
 
 ## Modelagem resumida
 
-1. Menu em grade com 3 colunas, logos autorais e animacao de entrada.  
-2. Formularios validam numeros (ponto ou virgula), campos obrigatorios e unidades quando aplicavel.  
-3. Funcoes puras em `utils/` executam cada equacao com constantes separadas em `constants/`.  
-4. Resultado aparece em `SectionCard` com `ResultRow`, badge/cores e dicas do metodo.  
-5. Ultimo calculo de cada tela e salvo em AsyncStorage e carregado no `useEffect` inicial.
+1. Tela de boas-vindas/login com gradiente, campo de estrelas e animacao de "buraco negro"; CTA "Seja bem-vindo!" abre o menu (sem backend).  
+2. Menu em grade com 3 colunas, logos autorais e animacao de entrada.  
+3. Formularios validam numeros (ponto ou virgula), campos obrigatorios e unidades quando aplicavel.  
+4. Funcoes puras em `utils/` executam cada equacao com constantes separadas em `constants/`.  
+5. Resultado aparece em `SectionCard` com `ResultRow`, badge/cores e dicas do metodo.  
+6. Ultimo calculo de cada tela e salvo em AsyncStorage e carregado no `useEffect` inicial.
 
 ## Indicadores de desempenho
 
@@ -46,6 +48,7 @@ Esta versao entrega o menu completo de calculadoras do Nulltriverso (12 cards) c
 
 | ID | Descricao | Prioridade |
 | -- | --------- | ---------- |
+| RF-00 | Tela inicial de boas-vindas/login com CTA "Seja bem-vindo!" levando ao menu, sem autenticacao real | Media |
 | RF-01 | Menu com 12 cards (IMC, RCEst, RCQ, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macro, Hidrica) | Alta |
 | RF-02 | Validar campos obrigatorios e numeros positivos; aceitar ponto ou virgula | Alta |
 | RF-03 | IMC com faixas OMS, gauge e linha | Alta |
@@ -74,7 +77,7 @@ Esta versao entrega o menu completo de calculadoras do Nulltriverso (12 cards) c
 | ID | Restricao |
 | -- | --------- |
 | R-01 | Sem backend nesta versao; somente armazenamento local. |
-| R-02 | Resultados sao estimativas e nao substituem avaliacao clinica. |
+| R-02 | Tela de login nao autentica nem bloqueia uso; serve apenas para boas-vindas e narrativa visual. |
 | R-03 | Somente dependencias suportadas pelo Expo 54 (sem nativos adicionais). |
 | R-04 | Icones e imagens locais (sem download em tempo de execucao). |
 
@@ -94,6 +97,7 @@ Esta versao entrega o menu completo de calculadoras do Nulltriverso (12 cards) c
 
 | Historia | RF/RNF | Teste previsto |
 | -------- | ------ | -------------- |
+| Entrar sem cadastro | RF-00, RNF-02 | TS-LOGIN-01 |
 | Calcular IMC | RF-02, RF-03, RNF-02 | TS-IMC-01, TS-IMC-02 |
 | Avaliar RCEst/RCQ | RF-02, RF-04, RNF-02 | TS-RCE-01, TS-RCQ-01 |
 | Estimar peso acamado | RF-02, RF-05 | TS-PESO-01 |

@@ -4,7 +4,7 @@ Nulltriverso e um ecossistema pessoal de calculos nutricionais, criado por Helbe
 
 # Problema
 
-Profissionais e estudantes precisam validar rapidamente indicadores como IMC, RCEst/RCQ, gordura corporal, TMB/GET, NAF, macros e hidratacao sem depender de conexao, cadastros ou telas confusas. Apps existentes costumam esconder as equacoes, nao guardam o ultimo resultado e misturam estilos, o que dificulta uso em consulta e estudo.
+Profissionais e estudantes precisam validar rapidamente indicadores como IMC, RCEst/RCQ, gordura corporal, TMB/GET, NAF, macros e hidratacao sem depender de conexao, cadastros ou telas confusas. Apps existentes costumam esconder as equacoes, nao guardam o ultimo resultado e misturam estilos, o que dificulta uso em consulta e estudo. Mesmo quando existe uma tela de login, ela geralmente trava o uso; aqui o fluxo continua sem autenticacao real, apenas com uma entrada de boas-vindas.
 
 # Objetivos
 
@@ -14,6 +14,7 @@ Profissionais e estudantes precisam validar rapidamente indicadores como IMC, RC
 - Garantir fluxos curtos com validacao imediata e mensagens diretas em portugues.
 - Disponibilizar calculos-chave: IMC (OMS), RCEst/WHtR, RCQ, peso estimado de acamados (Chumlea), TMB (Harris-Benedict), EER (IOM + gestacao), GET (GEB x NAF), NAF detalhado, %GC (Jackson & Pollock + Siri / US Navy), MAMA, distribuicao de macronutrientes e necessidade hidrica.
 - Persistir o ultimo calculo de cada modulo com AsyncStorage para consulta instantanea.
+- Manter uma tela inicial de boas-vindas/login apenas para ambientacao visual, sem barrar o acesso ao menu ou exigir cadastro.
 - Reutilizar componentes e paleta unificada para acelerar futuras expansoes (bioimpedancia, historico, agenda).
 - Documentar todo o contexto, formulas e referencias para auditoria e aprendizado.
 
