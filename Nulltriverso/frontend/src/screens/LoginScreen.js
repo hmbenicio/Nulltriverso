@@ -175,7 +175,7 @@ const LoginScreen = ({ onLogin }) => {
                 />
                 <Text style={styles.helper}>Esqueci minha senha</Text>
                 <PrimaryButton
-                  label="Sign in"
+                  label="Seja bem-vindo!"
                   onPress={handleSubmit}
                   style={styles.cta}
                   textStyle={styles.ctaText}

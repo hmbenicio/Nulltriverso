@@ -4,6 +4,7 @@ Aplicacao mobile Expo/React Native que une o conceito de "Null" da programacao c
 
 ## Funcionalidades
 
+- **Tela de boas-vindas/login** com gradiente, campo de estrelas, animacao de "buraco negro" e CTA "Seja bem-vindo!" (sem autenticacao real; atalho para o menu).  
 - **Menu ilustrado** com 12 cards tematicos (logos autorais) e efeito de estrelas.  
 - **IMC** (OMS) com badge colorida, barra de progresso, gauge semicircular e linha de tendencia mockada.  
 - **RCEst / WHtR** e **RCQ** para risco cardiometabolico (cintura/estatura e cintura/quadril).  
@@ -17,11 +18,12 @@ Aplicacao mobile Expo/React Native que une o conceito de "Null" da programacao c
 
 ## Fluxo do app
 
-1. O app abre no **Menu** e cada card leva a uma calculadora.  
-2. Cada tela valida entradas, mostra erros curtos e executa o calculo.  
-3. O resultado e salvo/local e recarregado ao reabrir.  
-4. Visual padrao: gradiente, cards `SectionCard`, botoes verdes e `ResultRow` para resumo.  
-5. A barra inferior facilita voltar ao menu, acessar perfil (stub) e sair (stub).
+1. O app abre na **tela de login/boas-vindas** e o botao "Seja bem-vindo!" leva ao menu (sem backend).  
+2. O **Menu** mostra 12 calculadoras; cada card leva a um fluxo especifico.  
+3. Cada tela valida entradas, mostra erros curtos e executa o calculo.  
+4. O resultado e salvo/local e recarregado ao reabrir.  
+5. Visual padrao: gradiente, campo de estrelas, cards `SectionCard`, botoes verdes e `ResultRow` para resumo.  
+6. A barra inferior facilita voltar ao menu, acessar perfil (stub) e sair (stub) retornando ao login.
 
 ## Stack
 
