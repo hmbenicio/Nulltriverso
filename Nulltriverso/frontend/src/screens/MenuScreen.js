@@ -49,84 +49,84 @@ const MenuScreen = ({
         key: "imc",
         title: "IMC",
         accent: colors.primary,
-        image: require("../../assets/01_Icone_IMC.png"),
+        image: require("../../assets/logos_menu/01_Icone_IMC.png"),
         onPress: onOpenImc,
       },
       {
         key: "rcest",
         title: "RCEst",
         accent: "#d96f63",
-        image: require("../../assets/02_Icone_RCE.png"),
+        image: require("../../assets/logos_menu/02_Icone_RCE.png"),
         onPress: onOpenRcest,
       },
       {
         key: "rcq",
         title: "RCQ",
         accent: "#355478",
-        image: require("../../assets/03_Icone_RCQ.png"),
+        image: require("../../assets/logos_menu/03_Icone_RCQ.png"),
         onPress: onOpenRcq,
       },
       {
         key: "peso",
         title: "Peso acamado",
         accent: "#f7c18f",
-        image: require("../../assets/04_Icone_PESO.png"),
+        image: require("../../assets/logos_menu/04_Icone_PESO.png"),
         onPress: onOpenPeso,
       },
       {
         key: "tmb",
         title: "TMB",
         accent: "#256fca",
-        image: require("../../assets/05_Icone_TMB.png"),
+        image: require("../../assets/logos_menu/05_Icone_TMB.png"),
         onPress: onOpenTmb,
       },
       {
         key: "eer",
         title: "EER",
         accent: colors.warn,
-        image: require("../../assets/06_Icone_EER.png"),
+        image: require("../../assets/logos_menu/06_Icone_EER.png"),
         onPress: onOpenEer,
       },
       {
         key: "get",
         title: "GET",
         accent: "#f29a64",
-        image: require("../../assets/07_Icone_GET.png"),
+        image: require("../../assets/logos_menu/07_Icone_GET.png"),
         onPress: onOpenGet,
       },
       {
         key: "naf",
         title: "NAF",
         accent: "#62b66e",
-        image: require("../../assets/08_Icone_NAF.png"),
+        image: require("../../assets/logos_menu/08_Icone_NAF.png"),
         onPress: onOpenNaf,
       },
       {
         key: "gordura",
         title: "% Gordura",
         accent: "#e3b952",
-        image: require("../../assets/09_Icone_GC.png"),
+        image: require("../../assets/logos_menu/09_Icone_GC.png"),
         onPress: onOpenGc,
       },
       {
         key: "musculo",
         title: "Massa musc.",
         accent: "#e94856",
-        image: require("../../assets/10_Icone_MI.png"),
+        image: require("../../assets/logos_menu/10_Icone_MI.png"),
         onPress: onOpenMi,
       },
       {
         key: "macro",
         title: "Macro",
         accent: "#bb4be7",
-        image: require("../../assets/11_Icone_MACRO.png"),
+        image: require("../../assets/logos_menu/11_Icone_MACRO.png"),
         onPress: onOpenMacro,
       },
       {
         key: "hidrica",
         title: "Hidrica",
         accent: "#66b2eb",
-        image: require("../../assets/12_Icone_HIDRO.png"),
+        image: require("../../assets/logos_menu/12_Icone_HIDRO.png"),
         onPress: onOpenHidrica,
       },
     ],
@@ -149,12 +149,12 @@ const MenuScreen = ({
       <View style={styles.header}>
         <View style={styles.logoWrapper}>
           <Image
-            source={require("../../assets/Logo_00_WS_1.png")}
+            source={require("../../assets/logos_ws/Logo_04_WS_1.png")}
             style={[styles.headerLogo, styles.headerLogoGlow]}
             blurRadius={22}
           />
           <Image
-            source={require("../../assets/Logo_00_WS_1.png")}
+            source={require("../../assets/logos_ws/Logo_04_WS_1.png")}
             style={styles.headerLogo}
           />
         </View>
