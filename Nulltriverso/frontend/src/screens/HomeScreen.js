@@ -193,7 +193,7 @@ const HomeScreen = ({ onMenu, onProfile, onExit }) => {
           </SectionCard>
 
           <SectionCard style={styles.referenceCard}>
-            <Text style={styles.legendTitle}>Observações</Text>
+            <Text style={styles.legendTitle}>Observacoes</Text>
             <Text style={styles.referenceText}>
               IMC = peso (kg) / altura (m)^2. Exemplo: 70 kg e 1,60 m -> 70/2,56 = 27,3.
             </Text>
@@ -205,6 +205,13 @@ const HomeScreen = ({ onMenu, onProfile, onExit }) => {
             </Text>
             <Text style={styles.referenceText}>
               Para avaliacao completa, procure medico ou nutricionista que considere fatores como massa magra, gordura e idade.
+            </Text>
+            <Text style={[styles.legendTitle, styles.referencesTitle]}>Referencias</Text>
+            <Text style={styles.referenceText}>
+              Organizacao Mundial da Saude (OMS). Obesity: preventing and managing the global epidemic. WHO Technical Report Series 894, 2000. Faixas de IMC para adultos.
+            </Text>
+            <Text style={styles.referenceText}>
+              WHO. Body mass index - BMI classification. Acesso em 2024. Disponivel em https://www.who.int/data/gho/data/themes/topics/topic-details/GHO/body-mass-index
             </Text>
           </SectionCard>
         </ScrollView>
@@ -312,6 +319,9 @@ const styles = StyleSheet.create({
     color: colors.ink,
     fontWeight: "800",
     fontSize: 16,
+  },
+  referencesTitle: {
+    marginTop: 6,
   },
   referenceCard: {
     gap: 8,

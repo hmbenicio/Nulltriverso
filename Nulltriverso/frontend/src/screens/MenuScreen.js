@@ -12,12 +12,13 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { colors } from "../theme/colors";
+import { menuGradient } from "../theme/gradients";
 import BottomBar from "../components/BottomBar";
+import StarField from "../components/StarField";
 
 const MENU_COLUMNS = 3;
 const H_PADDING = 24;
 const GAP = 14;
-const gradientColors = ["#1A3B32", "#2F5A42", "#CE8D55", "#EAD0AE"];
 
 const MenuScreen = ({
   onOpenImc,
@@ -136,44 +137,14 @@ const MenuScreen = ({
     <MenuCard item={item} cardSize={cardSize} index={index} />
   );
 
-  const stars = useMemo(
-    () =>
-      Array.from({ length: 120 }, (_, i) => ({
-        id: `star-${i}`,
-        top: Math.random() * 100,
-        left: Math.random() * 100,
-        size: 0.8 + Math.random() * 2.6,
-        opacity: 0.3 + Math.random() * 0.45,
-        color: i % 3 === 0 ? "#ffe9c5" : "#fff7e3",
-      })),
-    []
-  );
-
   return (
     <LinearGradient
-      colors={gradientColors}
+      colors={menuGradient}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={styles.screen}
     >
-      <View style={styles.starField} pointerEvents="none">
-        {stars.map((star) => (
-          <View
-            key={star.id}
-            style={[
-              styles.star,
-              {
-                top: `${star.top}%`,
-                left: `${star.left}%`,
-                width: star.size,
-                height: star.size,
-                opacity: star.opacity,
-                backgroundColor: star.color,
-              },
-            ]}
-          />
-        ))}
-      </View>
+      <StarField />
       <StatusBar style="dark" />
       <View style={styles.header}>
         <View style={styles.logoWrapper}>
@@ -330,17 +301,6 @@ const styles = StyleSheet.create({
     paddingTop: 48,
     paddingBottom: 32,
     position: "relative",
-  },
-  starField: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  star: {
-    position: "absolute",
-    borderRadius: 50,
   },
   header: {
     marginBottom: 18,

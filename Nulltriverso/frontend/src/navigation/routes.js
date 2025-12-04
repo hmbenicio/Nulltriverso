@@ -1,0 +1,17 @@
+export const ROUTES = {
+  LOGIN: "login",
+  MENU: "menu",
+  IMC: "imc",
+  EER: "eer",
+  TMB: "tmb",
+  GET: "get",
+  GC: "gc",
+  MI: "mi",
+  PESO: "peso",
+  WHTR: "whtr",
+  RCQ: "rcq",
+  RCEST: "rcest",
+  NAF: "naf",
+  HIDRICA: "hidrica",
+  MACRO: "macro",
+};
