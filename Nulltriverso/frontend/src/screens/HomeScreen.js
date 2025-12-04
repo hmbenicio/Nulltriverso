@@ -25,14 +25,15 @@ import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
 import ImcGauge from "../components/ImcGauge";
-import BottomBar from "../components/BottomBar";
+import InlineMenuBar from "../components/InlineMenuBar";
 
 const initialForm = {
   weight: "",
   height: "",
 };
 
-const HomeScreen = ({ onMenu, onProfile, onExit }) => {
+
+const HomeScreen = ({ onMenu, onProfile, onInfo }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -112,6 +113,7 @@ const HomeScreen = ({ onMenu, onProfile, onExit }) => {
               IMC usa a mesma formula para homens e mulheres: peso dividido pela altura em metros ao quadrado.
             </Text>
           </View>
+          <InlineMenuBar onMenu={onMenu} onProfile={onProfile} onInfo={onInfo} />
 
           <SectionCard>
             <View style={styles.cardHeader}>
@@ -215,11 +217,11 @@ const HomeScreen = ({ onMenu, onProfile, onExit }) => {
             </Text>
           </SectionCard>
         </ScrollView>
-        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
 };
+
 
 const styles = StyleSheet.create({
   screen: {
@@ -333,3 +335,10 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
+
+
+
+
+
+

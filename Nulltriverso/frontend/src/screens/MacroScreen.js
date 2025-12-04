@@ -15,10 +15,10 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
-import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { MACRO_STORAGE_KEY } from "../constants/macros";
 import { parseLocaleNumber } from "../utils/number";
+import InlineMenuBar from "../components/InlineMenuBar";
 
 const CAL_PER_GRAM = {
   carb: 4,
@@ -26,7 +26,8 @@ const CAL_PER_GRAM = {
   fat: 9,
 };
 
-const MacroScreen = ({ onMenu, onProfile, onExit }) => {
+
+const MacroScreen = ({ onMenu, onProfile, onInfo }) => {
   const [totalKcal, setTotalKcal] = useState("");
   const [carbPct, setCarbPct] = useState("50");
   const [proteinPct, setProteinPct] = useState("20");
@@ -123,6 +124,7 @@ const MacroScreen = ({ onMenu, onProfile, onExit }) => {
               1) Defina o total de calorias diario (TDEE), 2) escolha a proporcao de macros e 3) converta em gramas.
             </Text>
           </View>
+          <InlineMenuBar onMenu={onMenu} onProfile={onProfile} onInfo={onInfo} />
 
           <SectionCard>
             <View style={styles.cardHeader}>
@@ -216,11 +218,11 @@ const MacroScreen = ({ onMenu, onProfile, onExit }) => {
             </Text>
           </SectionCard>
         </ScrollView>
-        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
 };
+
 
 const styles = StyleSheet.create({
   screen: {
@@ -346,3 +348,10 @@ const styles = StyleSheet.create({
 });
 
 export default MacroScreen;
+
+
+
+
+
+
+

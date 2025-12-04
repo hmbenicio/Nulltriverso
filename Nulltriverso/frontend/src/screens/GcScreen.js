@@ -16,16 +16,17 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
-import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { GC_PROTOCOLS, GC_STORAGE_KEY } from "../constants/gc";
 import { calculateBodyFat } from "../utils/gc";
 import { parseLocaleNumber } from "../utils/number";
+import InlineMenuBar from "../components/InlineMenuBar";
 
 const SEX_OPTIONS = [
   { key: "female", label: "Feminino" },
   { key: "male", label: "Masculino" },
 ];
+
 
 const initialForm = {
   age: "",
@@ -44,7 +45,8 @@ const initialForm = {
   subscapular: "",
 };
 
-const GcScreen = ({ onMenu, onProfile, onExit }) => {
+
+const GcScreen = ({ onMenu, onProfile, onInfo }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -187,6 +189,7 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
               Resultados sao aproximados; consistencia na tecnica e essencial.
             </Text>
           </View>
+          <InlineMenuBar onMenu={onMenu} onProfile={onProfile} onInfo={onInfo} />
 
           <SectionCard>
             <View style={styles.cardHeader}>
@@ -344,11 +347,11 @@ const GcScreen = ({ onMenu, onProfile, onExit }) => {
             </Text>
           </SectionCard>
         </ScrollView>
-        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
 };
+
 
 const styles = StyleSheet.create({
   screen: {
@@ -513,3 +516,10 @@ const styles = StyleSheet.create({
 });
 
 export default GcScreen;
+
+
+
+
+
+
+

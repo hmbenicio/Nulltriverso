@@ -16,16 +16,17 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
-import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { RCQ_STORAGE_KEY } from "../constants/rcq";
 import { calculateRcq, statusFromRcq } from "../utils/rcq";
 import { parseLocaleNumber } from "../utils/number";
+import InlineMenuBar from "../components/InlineMenuBar";
 
 const SEX_OPTIONS = [
   { key: "female", label: "Feminino" },
   { key: "male", label: "Masculino" },
 ];
+
 
 const initialForm = {
   waist: "",
@@ -33,7 +34,8 @@ const initialForm = {
   sex: "female",
 };
 
-const RcqScreen = ({ onMenu, onProfile, onExit }) => {
+
+const RcqScreen = ({ onMenu, onProfile, onInfo }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -102,6 +104,7 @@ const RcqScreen = ({ onMenu, onProfile, onExit }) => {
               Relacao simples para risco cardiometabolico. Medidas em centimetros, fita nivelada.
             </Text>
           </View>
+          <InlineMenuBar onMenu={onMenu} onProfile={onProfile} onInfo={onInfo} />
 
           <SectionCard>
             <View style={styles.cardHeader}>
@@ -197,11 +200,11 @@ const RcqScreen = ({ onMenu, onProfile, onExit }) => {
             </Text>
           </SectionCard>
         </ScrollView>
-        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
 };
+
 
 const styles = StyleSheet.create({
   screen: {
@@ -331,3 +334,10 @@ const styles = StyleSheet.create({
 });
 
 export default RcqScreen;
+
+
+
+
+
+
+

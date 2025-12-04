@@ -15,18 +15,19 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
-import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { WHTR_STORAGE_KEY } from "../constants/wht";
 import { calculateWhtr, statusFromWhtr } from "../utils/wht";
 import { parseLocaleNumber } from "../utils/number";
+import InlineMenuBar from "../components/InlineMenuBar";
 
 const initialForm = {
   waist: "",
   height: "",
 };
 
-const WhtrScreen = ({ onMenu, onProfile, onExit }) => {
+
+const WhtrScreen = ({ onMenu, onProfile, onInfo }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -93,6 +94,7 @@ const WhtrScreen = ({ onMenu, onProfile, onExit }) => {
               Cintura/altura em centimetros. Alerta quando a cintura ultrapassa metade da altura (WHtR ≥ 0,5).
             </Text>
           </View>
+          <InlineMenuBar onMenu={onMenu} onProfile={onProfile} onInfo={onInfo} />
 
           <SectionCard>
             <View style={styles.cardHeader}>
@@ -161,11 +163,11 @@ const WhtrScreen = ({ onMenu, onProfile, onExit }) => {
             </Text>
           </SectionCard>
         </ScrollView>
-        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
 };
+
 
 const styles = StyleSheet.create({
   screen: {
@@ -263,3 +265,10 @@ const styles = StyleSheet.create({
 });
 
 export default WhtrScreen;
+
+
+
+
+
+
+

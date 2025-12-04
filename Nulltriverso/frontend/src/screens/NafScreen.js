@@ -16,12 +16,12 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
-import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { NAF_LEVELS_EXTENDED, NAF_STORAGE_KEY } from "../constants/naf";
 import { parseLocaleNumber } from "../utils/number";
+import InlineMenuBar from "../components/InlineMenuBar";
 
-const NafScreen = ({ onMenu, onProfile, onExit }) => {
+const NafScreen = ({ onMenu, onProfile, onInfo }) => {
   const [selected, setSelected] = useState(NAF_LEVELS_EXTENDED[0].key);
   const [tmb, setTmb] = useState("");
   const [result, setResult] = useState(null);
@@ -87,6 +87,7 @@ const NafScreen = ({ onMenu, onProfile, onExit }) => {
               Selecione o perfil de atividade e, opcionalmente, informe sua TMB para ver o intervalo estimado de GET (TMB x fator).
             </Text>
           </View>
+          <InlineMenuBar onMenu={onMenu} onProfile={onProfile} onInfo={onInfo} />
 
           <SectionCard>
             <View style={styles.cardHeader}>
@@ -187,11 +188,11 @@ const NafScreen = ({ onMenu, onProfile, onExit }) => {
             </Text>
           </SectionCard>
         </ScrollView>
-        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
 };
+
 
 const styles = StyleSheet.create({
   screen: {
@@ -339,3 +340,10 @@ const styles = StyleSheet.create({
 });
 
 export default NafScreen;
+
+
+
+
+
+
+

@@ -16,16 +16,17 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
-import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { MI_STORAGE_KEY } from "../constants/mi";
 import { calculateMama } from "../utils/mi";
 import { parseLocaleNumber } from "../utils/number";
+import InlineMenuBar from "../components/InlineMenuBar";
 
 const UNIT_OPTIONS = [
   { key: "mm", label: "PCT em mm" },
   { key: "cm", label: "PCT em cm" },
 ];
+
 
 const initialForm = {
   armCircumference: "",
@@ -33,7 +34,8 @@ const initialForm = {
   tricepsUnit: "mm",
 };
 
-const MiScreen = ({ onMenu, onProfile, onExit }) => {
+
+const MiScreen = ({ onMenu, onProfile, onInfo }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -105,6 +107,7 @@ const MiScreen = ({ onMenu, onProfile, onExit }) => {
               Se medir PCT em mm, escolha a unidade para converter automaticamente.
             </Text>
           </View>
+          <InlineMenuBar onMenu={onMenu} onProfile={onProfile} onInfo={onInfo} />
 
           <SectionCard>
             <View style={styles.cardHeader}>
@@ -203,11 +206,11 @@ const MiScreen = ({ onMenu, onProfile, onExit }) => {
             </Text>
           </SectionCard>
         </ScrollView>
-        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
 };
+
 
 const styles = StyleSheet.create({
   screen: {
@@ -327,3 +330,10 @@ const styles = StyleSheet.create({
 });
 
 export default MiScreen;
+
+
+
+
+
+
+

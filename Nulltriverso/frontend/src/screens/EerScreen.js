@@ -17,16 +17,17 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
-import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { ACTIVITY_LEVELS, EER_STORAGE_KEY } from "../constants/eer";
 import { calculateEer } from "../utils/eer";
 import { parseLocaleNumber } from "../utils/number";
+import InlineMenuBar from "../components/InlineMenuBar";
 
 const SEX_OPTIONS = [
   { key: "female", label: "Feminino" },
   { key: "male", label: "Masculino" },
 ];
+
 
 const initialForm = {
   age: "",
@@ -38,7 +39,8 @@ const initialForm = {
   gestationalWeeks: "",
 };
 
-const EerScreen = ({ onMenu, onProfile, onExit }) => {
+
+const EerScreen = ({ onMenu, onProfile, onInfo }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -132,6 +134,7 @@ const EerScreen = ({ onMenu, onProfile, onExit }) => {
               8 kcal/semana + 180 kcal.
             </Text>
           </View>
+          <InlineMenuBar onMenu={onMenu} onProfile={onProfile} onInfo={onInfo} />
 
           <SectionCard>
             <View style={styles.cardHeader}>
@@ -314,11 +317,11 @@ const EerScreen = ({ onMenu, onProfile, onExit }) => {
             </Text>
           </SectionCard>
         </ScrollView>
-        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
 };
+
 
 const styles = StyleSheet.create({
   screen: {
@@ -489,3 +492,10 @@ const styles = StyleSheet.create({
 });
 
 export default EerScreen;
+
+
+
+
+
+
+

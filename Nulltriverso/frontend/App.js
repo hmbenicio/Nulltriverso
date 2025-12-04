@@ -25,6 +25,10 @@ export default function App() {
     Alert.alert("Perfil", "Funcionalidade de perfil nao implementada.");
   }, []);
 
+  const handleInfo = useCallback(() => {
+    Alert.alert("Informações", "Area de informacoes em desenvolvimento.");
+  }, []);
+
   const handleExit = useCallback(() => {
     navigate(ROUTES.LOGIN);
   }, [navigate]);
@@ -59,9 +63,9 @@ export default function App() {
     () => ({
       onMenu: navigation.goToMenu,
       onProfile: handleProfile,
-      onExit: handleExit,
+      onInfo: handleInfo,
     }),
-    [navigation.goToMenu, handleProfile, handleExit]
+    [navigation.goToMenu, handleProfile, handleInfo]
   );
 
   switch (screen) {
