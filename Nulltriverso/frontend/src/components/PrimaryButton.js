@@ -2,16 +2,17 @@ import React from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { colors } from "../theme/colors";
 
-const PrimaryButton = ({ label, onPress }) => (
+const PrimaryButton = ({ label, onPress, style, textStyle }) => (
   <Pressable
     android_ripple={{ color: "#e5ab7e55" }}
     style={({ pressed }) => [
       styles.button,
       pressed && styles.buttonPressed,
+      style,
     ]}
     onPress={onPress}
   >
-    <Text style={styles.text}>{label}</Text>
+    <Text style={[styles.text, textStyle]}>{label}</Text>
   </Pressable>
 );
 

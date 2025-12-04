@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo } from "react";
+import { Alert } from "react-native";
+import LoginScreen from "./src/screens/LoginScreen";
 import MenuScreen from "./src/screens/MenuScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import EerScreen from "./src/screens/EerScreen";
@@ -13,166 +15,105 @@ import RceScreen from "./src/screens/RceScreen";
 import NafScreen from "./src/screens/NafScreen";
 import HidricaScreen from "./src/screens/HidricaScreen";
 import MacroScreen from "./src/screens/MacroScreen";
-import { Alert } from "react-native";
+import { ROUTES } from "./src/navigation/routes";
+import { useAppNavigation } from "./src/navigation/useAppNavigation";
 
 export default function App() {
-  const [screen, setScreen] = useState("menu");
+  const { screen, navigate } = useAppNavigation(ROUTES.LOGIN);
 
-  const handleProfile = () => {
+  const handleProfile = useCallback(() => {
     Alert.alert("Perfil", "Funcionalidade de perfil nao implementada.");
-  };
+  }, []);
 
-  const handleExit = () => {
-    Alert.alert("Sair", "Funcionalidade de sair nao implementada.");
-  };
+  const handleExit = useCallback(() => {
+    navigate(ROUTES.LOGIN);
+  }, [navigate]);
 
-  if (screen === "imc") {
-    return (
-      <HomeScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  if (screen === "eer") {
-    return (
-      <EerScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  if (screen === "tmb") {
-    return (
-      <TmbScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  if (screen === "get") {
-    return (
-      <GetScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  if (screen === "gc") {
-    return (
-      <GcScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  if (screen === "mi") {
-    return (
-      <MiScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  if (screen === "peso") {
-    return (
-      <BedriddenWeightScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  if (screen === "whtr") {
-    return (
-      <WhtrScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  if (screen === "rcq") {
-    return (
-      <RcqScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  if (screen === "rcest") {
-    return (
-      <RceScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  if (screen === "naf") {
-    return (
-      <NafScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  if (screen === "hidrica") {
-    return (
-      <HidricaScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  if (screen === "macro") {
-    return (
-      <MacroScreen
-        onMenu={() => setScreen("menu")}
-        onProfile={handleProfile}
-        onExit={handleExit}
-      />
-    );
-  }
-
-  return (
-    <MenuScreen
-      onOpenImc={() => setScreen("imc")}
-      onOpenEer={() => setScreen("eer")}
-      onOpenTmb={() => setScreen("tmb")}
-      onOpenGet={() => setScreen("get")}
-      onOpenGc={() => setScreen("gc")}
-      onOpenMi={() => setScreen("mi")}
-      onOpenPeso={() => setScreen("peso")}
-      onOpenWhtr={() => setScreen("whtr")}
-      onOpenRcq={() => setScreen("rcq")}
-      onOpenRcest={() => setScreen("rcest")}
-      onOpenNaf={() => setScreen("naf")}
-      onOpenHidrica={() => setScreen("hidrica")}
-      onOpenMacro={() => setScreen("macro")}
-      onProfile={handleProfile}
-      onExit={handleExit}
-    />
+  const goTo = useCallback(
+    (nextScreen) => () => navigate(nextScreen),
+    [navigate]
   );
+
+  const navigation = useMemo(
+    () => ({
+      goToLogin: goTo(ROUTES.LOGIN),
+      goToMenu: goTo(ROUTES.MENU),
+      goToImc: goTo(ROUTES.IMC),
+      goToEer: goTo(ROUTES.EER),
+      goToTmb: goTo(ROUTES.TMB),
+      goToGet: goTo(ROUTES.GET),
+      goToGc: goTo(ROUTES.GC),
+      goToMi: goTo(ROUTES.MI),
+      goToPeso: goTo(ROUTES.PESO),
+      goToWhtr: goTo(ROUTES.WHTR),
+      goToRcq: goTo(ROUTES.RCQ),
+      goToRcest: goTo(ROUTES.RCEST),
+      goToNaf: goTo(ROUTES.NAF),
+      goToHidrica: goTo(ROUTES.HIDRICA),
+      goToMacro: goTo(ROUTES.MACRO),
+    }),
+    [goTo]
+  );
+
+  const commonNavigation = useMemo(
+    () => ({
+      onMenu: navigation.goToMenu,
+      onProfile: handleProfile,
+      onExit: handleExit,
+    }),
+    [navigation.goToMenu, handleProfile, handleExit]
+  );
+
+  switch (screen) {
+    case ROUTES.LOGIN:
+      return <LoginScreen onLogin={navigation.goToMenu} />;
+    case ROUTES.MENU:
+      return (
+        <MenuScreen
+          onOpenImc={navigation.goToImc}
+          onOpenEer={navigation.goToEer}
+          onOpenTmb={navigation.goToTmb}
+          onOpenGet={navigation.goToGet}
+          onOpenGc={navigation.goToGc}
+          onOpenMi={navigation.goToMi}
+          onOpenPeso={navigation.goToPeso}
+          onOpenWhtr={navigation.goToWhtr}
+          onOpenRcq={navigation.goToRcq}
+          onOpenRcest={navigation.goToRcest}
+          onOpenNaf={navigation.goToNaf}
+          onOpenHidrica={navigation.goToHidrica}
+          onOpenMacro={navigation.goToMacro}
+          onProfile={handleProfile}
+          onExit={handleExit}
+        />
+      );
+    case ROUTES.IMC:
+      return <HomeScreen {...commonNavigation} />;
+    case ROUTES.EER:
+      return <EerScreen {...commonNavigation} />;
+    case ROUTES.TMB:
+      return <TmbScreen {...commonNavigation} />;
+    case ROUTES.GET:
+      return <GetScreen {...commonNavigation} />;
+    case ROUTES.GC:
+      return <GcScreen {...commonNavigation} />;
+    case ROUTES.MI:
+      return <MiScreen {...commonNavigation} />;
+    case ROUTES.PESO:
+      return <BedriddenWeightScreen {...commonNavigation} />;
+    case ROUTES.WHTR:
+      return <WhtrScreen {...commonNavigation} />;
+    case ROUTES.RCQ:
+      return <RcqScreen {...commonNavigation} />;
+    case ROUTES.RCEST:
+      return <RceScreen {...commonNavigation} />;
+    case ROUTES.NAF:
+      return <NafScreen {...commonNavigation} />;
+    case ROUTES.HIDRICA:
+      return <HidricaScreen {...commonNavigation} />;
+    case ROUTES.MACRO:
+      return <MacroScreen {...commonNavigation} />;
+    default:
+      return null;
+  }
 }
