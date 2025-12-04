@@ -16,12 +16,12 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
-import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { HIDRICA_METHODS, HIDRICA_STORAGE_KEY } from "../constants/hidrica";
 import { parseLocaleNumber } from "../utils/number";
+import InlineMenuBar from "../components/InlineMenuBar";
 
-const HidricaScreen = ({ onMenu, onProfile, onExit }) => {
+const HidricaScreen = ({ onMenu, onProfile, onInfo }) => {
   const [method, setMethod] = useState(HIDRICA_METHODS[0].key);
   const [weight, setWeight] = useState("");
   const [kcal, setKcal] = useState("");
@@ -112,6 +112,7 @@ const HidricaScreen = ({ onMenu, onProfile, onExit }) => {
               Estime a ingestao diaria com 30-35 ml/kg, 1 ml/kcal ou Holliday-Segar (pediatrico).
             </Text>
           </View>
+          <InlineMenuBar onMenu={onMenu} onProfile={onProfile} onInfo={onInfo} />
 
           <SectionCard>
             <View style={styles.cardHeader}>
@@ -204,11 +205,11 @@ const HidricaScreen = ({ onMenu, onProfile, onExit }) => {
             </Text>
           </SectionCard>
         </ScrollView>
-        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
 };
+
 
 const styles = StyleSheet.create({
   screen: {
@@ -327,3 +328,10 @@ const styles = StyleSheet.create({
 });
 
 export default HidricaScreen;
+
+
+
+
+
+
+

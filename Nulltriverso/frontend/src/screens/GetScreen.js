@@ -16,16 +16,17 @@ import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
-import BottomBar from "../components/BottomBar";
 import { colors } from "../theme/colors";
 import { GET_STORAGE_KEY, NAF_LEVELS } from "../constants/get";
 import { calculateGet } from "../utils/get";
 import { parseLocaleNumber } from "../utils/number";
+import InlineMenuBar from "../components/InlineMenuBar";
 
 const SEX_OPTIONS = [
   { key: "female", label: "Feminino" },
   { key: "male", label: "Masculino" },
 ];
+
 
 const initialForm = {
   age: "",
@@ -35,7 +36,8 @@ const initialForm = {
   naf: "sedentary",
 };
 
-const GetScreen = ({ onMenu, onProfile, onExit }) => {
+
+const GetScreen = ({ onMenu, onProfile, onInfo }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -112,6 +114,7 @@ const GetScreen = ({ onMenu, onProfile, onExit }) => {
               dentro do fator de atividade.
             </Text>
           </View>
+          <InlineMenuBar onMenu={onMenu} onProfile={onProfile} onInfo={onInfo} />
 
           <SectionCard>
             <View style={styles.cardHeader}>
@@ -246,11 +249,11 @@ const GetScreen = ({ onMenu, onProfile, onExit }) => {
             </Text>
           </SectionCard>
         </ScrollView>
-        <BottomBar onMenu={onMenu} onProfile={onProfile} onExit={onExit} />
       </KeyboardAvoidingView>
     </LinearGradient>
   );
 };
+
 
 const styles = StyleSheet.create({
   screen: {
@@ -411,3 +414,10 @@ const styles = StyleSheet.create({
 });
 
 export default GetScreen;
+
+
+
+
+
+
+
