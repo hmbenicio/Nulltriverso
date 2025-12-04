@@ -154,7 +154,7 @@ const LoginScreen = ({ onLogin }) => {
               />
               <View style={styles.logoGlow} pointerEvents="none" />
               <Image
-                source={require("../../assets/Logo_00.png")}
+                source={require("../../assets/logos/Logo_02.png")}
                 style={styles.logo}
               />
             </View>
