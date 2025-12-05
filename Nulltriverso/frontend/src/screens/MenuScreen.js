@@ -146,14 +146,15 @@ const MenuScreen = ({
       colors={menuGradient}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
-      style={styles.screen}
-    >
-      <StarField />
-      <StatusBar style="dark" />
-      <View style={styles.header}>
-        <View style={styles.logoWrapper}>
-          <Image
-            source={require("../../assets/logos/Logo_00_1.png")}
+    style={styles.screen}
+  >
+    <StarField />
+    <View style={styles.coolFilter} />
+    <StatusBar style="dark" />
+    <View style={styles.header}>
+      <View style={styles.logoWrapper}>
+        <Image
+          source={require("../../assets/logos/Logo_00_1.png")}
             style={[styles.headerLogo, styles.headerLogoGlow]}
             blurRadius={22}
           />
@@ -318,6 +319,10 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 120,
     position: "relative",
+  },
+  coolFilter: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(70,180,255,0.24)",
   },
   header: {
     marginBottom: 0,

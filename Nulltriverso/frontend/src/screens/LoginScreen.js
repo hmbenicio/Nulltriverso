@@ -154,6 +154,7 @@ const LoginScreen = ({ onLogin }) => {
     >
       <StatusBar style="light" />
       <StarField />
+      <View style={styles.coolFilter} />
       <View style={styles.vignette} />
       <KeyboardAvoidingView
         style={styles.flex}
@@ -352,6 +353,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 28,
+  },
+  coolFilter: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(70,180,255,0.24)",
   },
   vignette: {
     position: "absolute",
