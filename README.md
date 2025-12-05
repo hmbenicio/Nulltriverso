@@ -40,19 +40,21 @@ Requisitos: Node.js 18+ e Expo Go em um dispositivo real ou emulador. Testes em 
 - `Nulltriverso/backend` permanece reservado para futura integracao.
 
 ## Documentacao principal
-- `Docs/01-Documentacao de Contexto.md`
-- `Docs/02-Especificacao do Projeto.md`
-- `Docs/03-Metodologia.md`
-- `Docs/04-Projeto de Interface.md`
-- `Docs/05-Arquitetura da Solucao.md`
-- `Docs/06-Template Padrao da Aplicacao.md`
-- `Docs/07-Programacao de Funcionalidades.md`
-- `Docs/08-Plano de Testes de Software.md`
-- `Docs/09-Registro de Testes de Software.md`
-- `Docs/10-Plano de Testes de Usabilidade.md`
-- `Docs/11-Registro de Testes de Usabilidade.md`
-- `Docs/12-Apresentacao do Projeto.md`
-- `Docs/13-Referencias.md`
+> <ol>
+> <li><a href="Docs/01-Documentação de Contexto.md"> Documentação de Contexto</a></li>
+> <li><a href="Docs/02-Especificação do Projeto.md"> Especificação do Projeto</a></li>
+> <li><a href="Docs/03-Metodologia.md"> Metodologia</a></li>
+> <li><a href="Docs/04-Projeto de Interface.md"> Projeto de Interface</a></li>
+> <li><a href="Docs/05-Arquitetura da Solução.md"> Arquitetura da Solução</a></li>
+> <li><a href="Docs/06-Template Padrão da Aplicação.md"> Template Padrão da Aplicação</a></li>
+> <li><a href="Docs/07-Programação de Funcionalidades.md"> Programação de Funcionalidades</a></li>
+> <li><a href="Docs/08-Plano de Testes de Software.md"> Plano de Testes de Software</a></li>
+> <li><a href="Docs/09-Registro de Testes de Software.md"> Registro de Testes de Software</a></li>
+> <li><a href="Docs/10-Plano de Testes de Usabilidade.md"> Plano de Testes de Usabilidade</a></li>
+> <li><a href="Docs/11-Registro de Testes de Usabilidade.md"> Registro de Testes de Usabilidade</a></li>
+> <li><a href="Docs/12-Apresentação do Projeto.md"> Apresentação do Projeto</a></li>
+> <li><a href="Docs/13-Referências.md"> Referências</a></li>
+</ol>
 
 ## Contato
 Helbert Miranda Benicio - nutricionista CRN9 21602 e desenvolvedor. Projeto pessoal para portfolio.
