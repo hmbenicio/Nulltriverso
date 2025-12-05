@@ -112,7 +112,7 @@ export default function App() {
     case ROUTES.RCEST:
       return <RceScreen {...commonNavigation} />;
     case ROUTES.NAF:
-      return <NafScreen {...commonNavigation} />;
+      return <NafScreen {...commonNavigation} onTmb={navigation.goToTmb} />;
     case ROUTES.HIDRICA:
       return <HidricaScreen {...commonNavigation} />;
     case ROUTES.MACRO:
