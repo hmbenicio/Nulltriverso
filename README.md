@@ -46,7 +46,7 @@ Requisitos: Node.js 18+ e Expo Go em um dispositivo real ou emulador. Testes em 
 
 ## Documentacao principal
 
-- > <ol>
+> <ol>
 > <li><a href="Docs/01-Documentação de Contexto.md"> Documentação de Contexto</a></li>
 > <li><a href="Docs/02-Especificação do Projeto.md"> Especificação do Projeto</a></li>
 > <li><a href="Docs/03-Metodologia.md"> Metodologia</a></li>
@@ -61,4 +61,6 @@ Requisitos: Node.js 18+ e Expo Go em um dispositivo real ou emulador. Testes em 
 > <li><a href="Docs/12-Apresentação do Projeto.md"> Apresentação do Projeto</a></li>
 > <li><a href="Docs/13-Referências.md"> Referências</a></li>
 </ol>
-9 21602 e desenvolvedor. Projeto pessoal para portfolio.
+
+## Desenvolvedor
+Helbert Miranda Benicio (Analista/Dev e Nutricionista CRN9 21602).
