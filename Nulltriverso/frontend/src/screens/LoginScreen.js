@@ -276,6 +276,12 @@ const LoginScreen = ({ onLogin }) => {
           </View>
           <View style={styles.cardWrapper}>
             <View style={styles.card}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.loginTitle}>Acesse sua conta</Text>
+                <Text style={styles.cardSubtitle}>
+                  Conecte-se para continuar
+                </Text>
+              </View>
               <View style={styles.form}>
                 <View style={styles.inputWrapper}>
                   <MaterialCommunityIcons
@@ -497,6 +503,20 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "800",
   },
+  loginTitle: {
+    color: "#f5e9ff",
+    fontSize: 24,
+    fontWeight: "800",
+    textAlign: "center",
+    letterSpacing: 0.4,
+  },
+  cardSubtitle: {
+    color: "#e9def5",
+    textAlign: "center",
+    marginTop: 6,
+    fontSize: 14,
+    fontWeight: "600",
+  },
   divider: {
     height: 1,
     backgroundColor: colors.border,
@@ -551,4 +571,3 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
-
