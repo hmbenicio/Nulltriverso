@@ -10,17 +10,17 @@ import {
   Pressable,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
+import ScreenBackground from "../components/ScreenBackground";
 import SectionCard from "../components/SectionCard";
 import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
+import BackToMenuButton from "../components/BackToMenuButton";
 import ResultRow from "../components/ResultRow";
 import { colors } from "../theme/colors";
 import { RCQ_STORAGE_KEY } from "../constants/rcq";
 import { calculateRcq, statusFromRcq } from "../utils/rcq";
 import { parseLocaleNumber } from "../utils/number";
-import InlineMenuBar from "../components/InlineMenuBar";
 
 const SEX_OPTIONS = [
   { key: "female", label: "Feminino" },
@@ -89,8 +89,8 @@ const RcqScreen = ({ onMenu, onProfile, onInfo }) => {
   }, [form]);
 
   return (
-    <LinearGradient colors={[colors.backgroundLight, colors.background]} style={styles.screen}>
-      <StatusBar style="dark" />
+    <ScreenBackground>
+      <StatusBar style="light" />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={styles.flex}
@@ -98,14 +98,12 @@ const RcqScreen = ({ onMenu, onProfile, onInfo }) => {
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
-            <Text style={styles.kicker}>Gordura abdominal</Text>
+            <Text style={styles.kicker}>ANTROPOMETRIA & MEDIDAS</Text>
             <Text style={styles.title}>RCQ · Cintura / Quadril</Text>
             <Text style={styles.subtitle}>
               Relacao simples para risco cardiometabolico. Medidas em centimetros, fita nivelada.
             </Text>
           </View>
-          <InlineMenuBar onMenu={onMenu} onProfile={onProfile} onInfo={onInfo} />
-
           <SectionCard>
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>Dados do calculo</Text>
@@ -199,17 +197,17 @@ const RcqScreen = ({ onMenu, onProfile, onInfo }) => {
               • Yusuf S et al. Obesity and the risk of myocardial infarction in 27,000 participants. Lancet. 2005.
             </Text>
           </SectionCard>
+          <View style={styles.footer}>
+            <BackToMenuButton onPress={onMenu} />
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </LinearGradient>
+    </ScreenBackground>
   );
 };
 
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
   flex: {
     flex: 1,
   },
@@ -223,19 +221,22 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   kicker: {
-    color: colors.ink,
+    color: "rgba(255,255,255,0.85)",
     fontWeight: "700",
     letterSpacing: 1,
     textTransform: "uppercase",
   },
   title: {
-    color: colors.ink,
+    color: colors.surface,
     fontSize: 30,
     fontWeight: "800",
     letterSpacing: -0.4,
+    textShadowColor: "rgba(0,0,0,0.35)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 6,
   },
   subtitle: {
-    color: colors.inkMuted,
+    color: "rgba(255,255,255,0.85)",
     lineHeight: 20,
   },
   cardHeader: {
@@ -330,6 +331,10 @@ const styles = StyleSheet.create({
   helperText: {
     color: colors.inkMuted,
     lineHeight: 20,
+  },
+  footer: {
+    marginTop: 4,
+    alignItems: "center",
   },
 });
 

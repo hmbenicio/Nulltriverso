@@ -10,7 +10,8 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
-import { LinearGradient } from "expo-linear-gradient";
+import ScreenBackground from "../components/ScreenBackground";
+import BackToMenuButton from "../components/BackToMenuButton";
 import { STORAGE_KEY } from "../constants/imc";
 import {
   calculateImc,
@@ -25,7 +26,6 @@ import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import ResultRow from "../components/ResultRow";
 import ImcGauge from "../components/ImcGauge";
-import InlineMenuBar from "../components/InlineMenuBar";
 
 const initialForm = {
   weight: "",
@@ -98,8 +98,8 @@ const HomeScreen = ({ onMenu, onProfile, onInfo }) => {
   }, [form]);
 
   return (
-    <LinearGradient colors={[colors.backgroundLight, colors.background]} style={styles.screen}>
-      <StatusBar style="dark" />
+    <ScreenBackground>
+      <StatusBar style="light" />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={styles.flex}
@@ -113,8 +113,6 @@ const HomeScreen = ({ onMenu, onProfile, onInfo }) => {
               IMC usa a mesma formula para homens e mulheres: peso dividido pela altura em metros ao quadrado.
             </Text>
           </View>
-          <InlineMenuBar onMenu={onMenu} onProfile={onProfile} onInfo={onInfo} />
-
           <SectionCard>
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>Dados do paciente</Text>
@@ -216,17 +214,17 @@ const HomeScreen = ({ onMenu, onProfile, onInfo }) => {
               WHO. Body mass index - BMI classification. Acesso em 2024. Disponivel em https://www.who.int/data/gho/data/themes/topics/topic-details/GHO/body-mass-index
             </Text>
           </SectionCard>
+          <View style={styles.footer}>
+            <BackToMenuButton onPress={onMenu} />
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </LinearGradient>
+    </ScreenBackground>
   );
 };
 
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
   flex: {
     flex: 1,
   },
@@ -240,19 +238,22 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   kicker: {
-    color: colors.ink,
+    color: "rgba(255,255,255,0.85)",
     fontWeight: "700",
     letterSpacing: 1,
     textTransform: "uppercase",
   },
   title: {
-    color: colors.ink,
+    color: colors.surface,
     fontSize: 32,
     fontWeight: "800",
     letterSpacing: -0.5,
+    textShadowColor: "rgba(0,0,0,0.35)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 6,
   },
   subtitle: {
-    color: colors.inkMuted,
+    color: "rgba(255,255,255,0.85)",
     lineHeight: 21,
   },
   cardHeader: {
@@ -331,6 +332,10 @@ const styles = StyleSheet.create({
   referenceText: {
     color: colors.inkMuted,
     lineHeight: 20,
+  },
+  footer: {
+    marginTop: 4,
+    alignItems: "center",
   },
 });
 
