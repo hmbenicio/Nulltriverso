@@ -18,6 +18,7 @@
 | Massa muscular (MAMA) | CB + PCT em mm/cm -> CMB e area do braco, persistencia `mi:last` | Concluido |
 | Macros | Distribuicao kcal -> g/dia respeitando faixas (45-60/15-25/20-35), persistencia `@nulltriverso/macros` | Concluido |
 | Hidrica | 30-35 ml/kg, 1 ml/kcal ou Holliday-Segar, persistencia `hidrica:last` | Concluido |
+| Identidade visual | Logos/gradientes otimizados, campo de estrelas, animacoes leves e BottomBar comum | Concluido |
 
 ## Detalhes de implementacao
 - **LoginScreen**: combina `LinearGradient`, `Animated` (rotacao/pulso) e `StarField`; campos de email/senha sao ilustrativos e o botao navega direto para o menu via `useAppNavigation`.  
@@ -31,7 +32,9 @@
 - **MiScreen**: converte PCT mm->cm quando necessario; mostra CMB e area.  
 - **MacroScreen**: valida soma 100% e faixas recomendadas antes de converter kcal -> g/dia.  
 - **HidricaScreen**: tres metodos; ml_min/max calculados conforme peso ou kcal.  
-- **Persistencia**: `useEffect` em cada tela carrega ultimo resultado; falhas de IO geram `console.warn`.
+- **Persistencia**: `useEffect` em cada tela carrega ultimo resultado; falhas de IO geram `console.warn`.  
+- **BottomBar**: atalhos para menu/perfil/sair (perfil stub, sair volta ao login).  
+- **Assets**: PNG de menu/login comprimidos (512-700 px) para reduzir bundle sem perder identidade.
 
 ## Pendencias/roadmap
 - Bioimpedancia e historico completo de calculos por usuario.  

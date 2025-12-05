@@ -15,4 +15,6 @@
 - WHO/FAO. Energy and protein requirements (NAF/fatores de atividade).  
 - Documentacao Expo 54 - https://docs.expo.dev/  
 - React Native SVG - https://github.com/software-mansion/react-native-svg  
-- AsyncStorage - https://react-native-async-storage.github.io/async-storage/docs/install/
+- AsyncStorage - https://react-native-async-storage.github.io/async-storage/docs/install/  
+- Expo Linear Gradient - https://docs.expo.dev/versions/latest/sdk/linear-gradient/  
+- Boas praticas de otimizacao de assets PNG (ImageMagick/Pillow).

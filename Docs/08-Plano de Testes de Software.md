@@ -7,6 +7,7 @@ Garantir que todas as calculadoras funcionem offline, apliquem corretamente as f
 - Smoke manual no Expo Go (Android/iOS) seguindo casos definidos.  
 - Validacao visual de faixas/cores, pills e gauge/linha no IMC.  
 - Registro de resultados e valores esperados para facilitar reexecucao.  
+- Checar carregamento de assets otimizados (logos/menu/login) sem atrasar a primeira tela.  
 - Futuro: automatizar funcoes puras em `src/utils/`.
 
 ## Casos de teste (resumo)
@@ -40,4 +41,4 @@ Garantir que todas as calculadoras funcionem offline, apliquem corretamente as f
 ## Ambiente de teste
 - Expo Go 54, Android 12+ e iOS 16+.  
 - Sem conexao necessaria apos instalacao.  
-- Testar em dispositivo intermediario e observar desempenho em aparelhos de entrada.
+- Testar em dispositivo intermediario e observar desempenho em aparelhos de entrada, verificando fluidez das animacoes.

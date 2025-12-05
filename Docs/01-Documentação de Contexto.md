@@ -1,29 +1,29 @@
 # Introducao
 
-Nulltriverso e um ecossistema pessoal de calculos nutricionais, criado por Helbert Miranda Benicio (Analista/Dev e Nutricionista CRN9 21602 - CFN). O conceito une o "Null" da programacao com um universo de possibilidades da nutricao: varias calculadoras offline, identidade visual unica e transparencia sobre cada formula aplicada.
+Nulltriverso e um ecossistema pessoal de calculos nutricionais criado por Helbert Miranda Benicio (Analista/Dev e Nutricionista CRN9 21602 - CFN). A proposta mistura o "Null" da programacao com um universo de calculadoras offline, identidade visual proprietaria (gradientes, campo de estrelas e logos otimizados) e transparencia total das formulas usadas em cada tela.
 
 # Problema
 
-Profissionais e estudantes precisam validar rapidamente indicadores como IMC, RCEst/RCQ, gordura corporal, TMB/GET, NAF, macros e hidratacao sem depender de conexao, cadastros ou telas confusas. Apps existentes costumam esconder as equacoes, nao guardam o ultimo resultado e misturam estilos, o que dificulta uso em consulta e estudo. Mesmo quando existe uma tela de login, ela geralmente trava o uso; aqui o fluxo continua sem autenticacao real, apenas com uma entrada de boas-vindas.
+Profissionais, estudantes e curiosos precisam validar rapidamente indicadores como IMC, RCEst/RCQ, gordura corporal, TMB/GET, NAF, macros e hidratacao sem depender de conexao, cadastro ou interfaces confusas. Apps existentes costumam esconder equacoes, nao guardam o ultimo resultado e variam o visual entre telas; ate a tela de login costuma bloquear o uso. Aqui o fluxo e livre, com login apenas ilustrativo e calculadoras consistentes.
 
 # Objetivos
 
-**Objetivo geral:** entregar um multiverso de calculadoras nutricionais mobile, offline e coerentes, com referencias cientificas claras e prontas para portfolio profissional.
+**Objetivo geral:** entregar um multiverso mobile de calculadoras nutricionais offline e coerentes, citando referencias cientificas e pronto para portfolio profissional.
 
 **Objetivos especificos**
-- Garantir fluxos curtos com validacao imediata e mensagens diretas em portugues.
-- Disponibilizar calculos-chave: IMC (OMS), RCEst/WHtR, RCQ, peso estimado de acamados (Chumlea), TMB (Harris-Benedict), EER (IOM + gestacao), GET (GEB x NAF), NAF detalhado, %GC (Jackson & Pollock + Siri / US Navy), MAMA, distribuicao de macronutrientes e necessidade hidrica.
-- Persistir o ultimo calculo de cada modulo com AsyncStorage para consulta instantanea.
-- Manter uma tela inicial de boas-vindas/login apenas para ambientacao visual, sem barrar o acesso ao menu ou exigir cadastro.
-- Reutilizar componentes e paleta unificada para acelerar futuras expansoes (bioimpedancia, historico, agenda).
-- Documentar todo o contexto, formulas e referencias para auditoria e aprendizado.
+- Manter fluxos curtos com validacao imediata e mensagens diretas em portugues.
+- Disponibilizar 12 calculadoras: IMC (OMS), RCEst/WHtR, RCQ, peso estimado de acamados (Chumlea), TMB (Harris-Benedict), EER (IOM + gestacao), GET (GEB x NAF), NAF detalhado, %GC (Jackson & Pollock + Siri / US Navy), MAMA, distribuicao de macronutrientes e necessidade hidrica.
+- Persistir o ultimo calculo de cada modulo com AsyncStorage para reuso instantaneo.
+- Manter tela inicial de boas-vindas/login apenas para ambientacao visual, sem bloquear acesso ao menu ou exigir cadastro.
+- Reutilizar componentes, paleta e chaves de storage para facilitar expansoes futuras (bioimpedancia, historico, agenda).
+- Documentar contexto, formulas, testes e referencias de forma auditavel.
 
 # Publico-alvo
 
-1. **Nutricionistas e estudantes** - apoio rapido em consulta ou estudo, com equacao explicita e faixa de risco.  
-2. **Pessoas interessadas em bem-estar** - querem medir IMC, gasto, macros e hidratacao sem login.  
-3. **Educadores fisicos e enfermeiros** - precisam de calculos de composicao corporal, NAF e peso acamado para conduta imediata.  
-4. **Time de produto/engenharia** - valida base tecnica e visual reutilizavel em novos modulos.
+1. **Nutricionistas e estudantes**: apoio rapido em consulta ou estudo, com equacao explicita e faixa de risco visivel.  
+2. **Pessoas interessadas em bem-estar**: IMC, gasto, macros e hidratacao sem login.  
+3. **Educadores fisicos e enfermeiros**: composicao corporal, NAF e peso acamado para conduta imediata.  
+4. **Time de produto/engenharia**: base tecnica e visual reutilizavel em novos modulos.
 
 Stakeholders e expectativas:
 

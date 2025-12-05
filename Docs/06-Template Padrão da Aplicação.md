@@ -44,4 +44,5 @@ Guia de padroes visuais e de codigo que sustentam todas as calculadoras do Nullt
 - Funcoes de calculo puras; AsyncStorage apenas na camada de tela.  
 - Reutilizar `parseLocaleNumber` para entradas numericas.  
 - Manter chaves de storage em `constants` para compatibilidade de evolucao.  
-- Documentar referencias na tela e repetir nos arquivos de docs para auditoria.
+- Documentar referencias na tela e repetir nos arquivos de docs para auditoria.  
+- Priorizar assets otimizados (PNG 512-700 px) para manter startup leve.

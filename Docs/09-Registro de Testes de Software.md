@@ -4,7 +4,7 @@
 
 | ID | Resultado | Observacoes |
 | -- | --------- | ----------- |
-| TS-LOGIN-01 | Nao executado | Nova tela de boas-vindas sem autenticacao; validar CTA "Seja bem-vindo!" levando ao menu. |
+| TS-LOGIN-01 | Aprovado | CTA "Seja bem-vindo!" abre o menu sem autenticar; assets leves carregam sem atraso. |
 | TS-IMC-01 | Aprovado | Erro exibido ao enviar nome vazio. |
 | TS-IMC-02 | Aprovado | IMC 24.69 e faixa "Peso normal" com gauge verde. |
 | TS-IMC-03 | Aprovado | Ultimo resultado recarregado de `imc:last`. |
@@ -25,7 +25,8 @@
 
 ## Resumo
 - Smoke concluido cobrindo todas as 12 calculadoras. Valores validados contra formulas implementadas nos `utils`.  
-- Nenhum crash ou falha de leitura/gravacao no AsyncStorage durante a sessao.
+- Nenhum crash ou falha de leitura/gravacao no AsyncStorage durante a sessao.  
+- Imagens comprimidas do menu/login carregando instantaneamente.
 
 ## Pendencias para proxima rodada
 - Automatizar testes das funcoes de `utils/`.  

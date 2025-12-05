@@ -1,16 +1,16 @@
 # Projeto de Interface
 
 ## Visao geral
-O app abre em uma **tela de boas-vindas/login** com gradiente roxo/ambar, animacao de "buraco negro" (discos giratorios), campo de estrelas e CTA "Seja bem-vindo!" que libera o menu (sem autenticacao). Em seguida, surge um **menu em grade** com 3 colunas, gradiente de fundo e campo de estrelas. Cada card tem ilustracao autoral e leva a uma calculadora. As calculadoras compartilham o mesmo esqueleto: header com kicker/titulo/subtitulo, `SectionCard` para formulario/resultado, `PrimaryButton` para acao e `ResultRow` para resumo. Layout unico com `KeyboardAvoidingView` para manter inputs visiveis.
+O app abre em uma **tela de boas-vindas/login** com gradiente roxo/ambar, animacao de "buraco negro" (discos giratorios), campo de estrelas e CTA "Seja bem-vindo!" que libera o menu (sem autenticacao). O formulario traz campos de email/senha ficticios e toggle de visibilidade. Em seguida, surge um **menu em grade** com 3 colunas, gradiente de fundo e campo de estrelas. Cada card tem ilustracao autoral e leva a uma calculadora. As calculadoras compartilham o mesmo esqueleto: header com kicker/titulo/subtitulo, `SectionCard` para formulario/resultado, `PrimaryButton` para acao e `ResultRow` para resumo. Layout unico com `KeyboardAvoidingView` para manter inputs visiveis.
 
 ## Identidade visual
 - **Paleta**: verdes e tons terrosos nas calculadoras (primario `#0f482f`, sucesso `#22c55e`, alerta `#f59e0b`, critico `#ef4444`, fundos `#f7f4ef`/`#ebe2d9`) e gradientes roxo/ambar na tela de login/menu (`loginGradient` e `menuGradient`).  
 - **Tipografia**: fontes do sistema com pesos fortes em titulos e contraste moderado no corpo.  
-- **Iconografia**: 12 logos autorais nos cards do menu; gauge semicircular e linha mockada na tela de IMC; logo central em orbita na tela inicial.
+- **Iconografia**: 12 logos autorais nos cards do menu (PNG otimizados a 512 px); gauge semicircular e linha mockada na tela de IMC; logo central em orbita na tela inicial (~600 px).
 
 ## Componentes-chave
 - **SectionCard**: container com borda suave para formularios, resultados e dicas.  
-- **TextField**: input com borda clara, teclado decimal, aceita virgula/ponto.  
+- **TextField**: input com borda clara, teclado decimal, aceita virgula/ponto e pode exibir icones.  
 - **PrimaryButton**: botao verde em largura total do card.  
 - **Pills/tiles**: seletores de sexo, fator de atividade, protocolo, metodo ou unidade (mudam borda/fundo quando ativos).  
 - **ResultRow**: linha chave/valor para organizar o resumo.  
@@ -34,20 +34,20 @@ O app abre em uma **tela de boas-vindas/login** com gradiente roxo/ambar, animac
 - **Macros**: kcal diario + % de carbo/proteina/gordura (faixas 45-60 / 15-25 / 20-35) -> gramas/dia (4/4/9 kcal/g).  
 - **Hidrica**: 30-35 ml/kg, 1 ml/kcal ou Holliday-Segar (100/50/20 ml/kg).
 
-## Imagens por tela
-![Menu / Logo](../Nulltriverso/frontend/assets/Logo_00_WS_1.png)  
-![IMC](../Nulltriverso/frontend/assets/01_Icone_IMC.png)  
-![RCEst / WHtR](../Nulltriverso/frontend/assets/02_Icone_RCE.png)  
-![RCQ](../Nulltriverso/frontend/assets/03_Icone_RCQ.png)  
-![Peso acamado](../Nulltriverso/frontend/assets/04_Icone_PESO.png)  
-![TMB](../Nulltriverso/frontend/assets/05_Icone_TMB.png)  
-![EER](../Nulltriverso/frontend/assets/06_Icone_EER.png)  
-![GET](../Nulltriverso/frontend/assets/07_Icone_GET.png)  
-![NAF](../Nulltriverso/frontend/assets/08_Icone_NAF.png)  
-![Percentual de gordura](../Nulltriverso/frontend/assets/09_Icone_GC.png)  
-![Massa muscular (MI)](../Nulltriverso/frontend/assets/10_Icone_MI.png)  
-![Macros](../Nulltriverso/frontend/assets/11_Icone_MACRO.png)  
-![Hidrica](../Nulltriverso/frontend/assets/12_Icone_HIDRO.png)
+## Imagens por tela (otimizadas)
+![Menu / Logo](../Nulltriverso/frontend/assets/logos_ws/Logo_00_WS_1.png)  
+![IMC](../Nulltriverso/frontend/assets/logos_menu/01_Icone_IMC.png)  
+![RCEst / WHtR](../Nulltriverso/frontend/assets/logos_menu/02_Icone_RCE.png)  
+![RCQ](../Nulltriverso/frontend/assets/logos_menu/03_Icone_RCQ.png)  
+![Peso acamado](../Nulltriverso/frontend/assets/logos_menu/04_Icone_PESO.png)  
+![TMB](../Nulltriverso/frontend/assets/logos_menu/05_Icone_TMB.png)  
+![EER](../Nulltriverso/frontend/assets/logos_menu/06_Icone_EER.png)  
+![GET](../Nulltriverso/frontend/assets/logos_menu/07_Icone_GET.png)  
+![NAF](../Nulltriverso/frontend/assets/logos_menu/08_Icone_NAF.png)  
+![Percentual de gordura](../Nulltriverso/frontend/assets/logos_menu/09_Icone_GC.png)  
+![Massa muscular (MI)](../Nulltriverso/frontend/assets/logos_menu/10_Icone_MI.png)  
+![Macros](../Nulltriverso/frontend/assets/logos_menu/11_Icone_MACRO.png)  
+![Hidrica](../Nulltriverso/frontend/assets/logos_menu/12_Icone_HIDRO.png)
 
 ## Acessibilidade e UX
 - Teclados decimais e `KeyboardAvoidingView` em todas as telas.  
