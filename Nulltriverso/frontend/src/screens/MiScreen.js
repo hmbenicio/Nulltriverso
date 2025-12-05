@@ -101,7 +101,10 @@ const MiScreen = ({ onMenu, onProfile, onInfo }) => {
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
             <Text style={styles.kicker}>COMPOSIÇÃO CORPORAL</Text>
+          <View style={styles.titleRow}>
+            <BackToMenuButton onPress={onMenu} style={styles.homeButton} />
             <Text style={styles.title}>Indice de Muscularidade (MAMA)</Text>
+          </View>
             <Text style={styles.subtitle}>
               Calcula a area muscular do braco (cm²) usando circunferencia do braco (CB) e prega tricipital (PCT).
               Se medir PCT em mm, escolha a unidade para converter automaticamente.
@@ -203,9 +206,6 @@ const MiScreen = ({ onMenu, onProfile, onInfo }) => {
               • Frisancho AR. Anthropometric Standards for the Assessment of Growth and Nutritional Status. Univ. of Michigan Press, 1990.
             </Text>
           </SectionCard>
-          <View style={styles.footer}>
-            <BackToMenuButton onPress={onMenu} />
-          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenBackground>
@@ -232,10 +232,16 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textTransform: "uppercase",
   },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
   title: {
     color: colors.surface,
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "800",
+    flexShrink: 1,
     letterSpacing: -0.4,
     textShadowColor: "rgba(0,0,0,0.35)",
     textShadowOffset: { width: 0, height: 2 },
@@ -265,7 +271,6 @@ const styles = StyleSheet.create({
   optionsRow: {
     flexDirection: "row",
     gap: 8,
-    flexWrap: "wrap",
   },
   pill: {
     paddingHorizontal: 12,
@@ -306,7 +311,7 @@ const styles = StyleSheet.create({
   },
   highlightValue: {
     color: colors.primary,
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "800",
   },
   highlightLabel: {
@@ -328,15 +333,15 @@ const styles = StyleSheet.create({
     color: colors.inkMuted,
     lineHeight: 20,
   },
-  footer: {
-    marginTop: 4,
-    alignItems: "center",
+  homeButton: {
+    marginRight: 4,
   },
 });
 
 export default MiScreen;
 
-
+
+
 
 
 

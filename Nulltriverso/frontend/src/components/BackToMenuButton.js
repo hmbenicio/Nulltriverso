@@ -3,8 +3,8 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../theme/colors";
 
-const BackToMenuButton = ({ onPress }) => (
-  <View style={styles.wrapper}>
+const BackToMenuButton = ({ onPress, style }) => (
+  <View style={[styles.wrapper, style]}>
     <Pressable
       onPress={onPress}
       style={({ pressed }) => [
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
   wrapper: {
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
+    width: 72,
+    height: 72,
   },
   button: {
     width: 72,

@@ -108,7 +108,10 @@ const BedriddenWeightScreen = ({ onMenu, onProfile, onInfo }) => {
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
             <Text style={styles.kicker}>ANTROPOMETRIA & MEDIDAS</Text>
+          <View style={styles.titleRow}>
+            <BackToMenuButton onPress={onMenu} style={styles.homeButton} />
             <Text style={styles.title}>Peso estimado (Chumlea)</Text>
+          </View>
             <Text style={styles.subtitle}>
               Usa equacoes preditivas (Chumlea 1988) com circunferencia da panturrilha (CPA),
               altura do joelho (AJ), circunferencia do braco (CB) e dobra subescapular (mm).
@@ -218,9 +221,6 @@ const BedriddenWeightScreen = ({ onMenu, onProfile, onInfo }) => {
               • Chumlea WC et al. Prediction of body weight for the nonambulatory elderly from anthropometry. J Am Diet Assoc. 1988.
             </Text>
           </SectionCard>
-          <View style={styles.footer}>
-            <BackToMenuButton onPress={onMenu} />
-          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenBackground>
@@ -247,10 +247,16 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textTransform: "uppercase",
   },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
   title: {
     color: colors.surface,
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "800",
+    flexShrink: 1,
     letterSpacing: -0.4,
     textShadowColor: "rgba(0,0,0,0.35)",
     textShadowOffset: { width: 0, height: 2 },
@@ -331,7 +337,7 @@ const styles = StyleSheet.create({
   },
   highlightValue: {
     color: colors.primary,
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "800",
   },
   highlightLabel: {
@@ -353,15 +359,15 @@ const styles = StyleSheet.create({
     color: colors.inkMuted,
     lineHeight: 20,
   },
-  footer: {
-    marginTop: 4,
-    alignItems: "center",
+  homeButton: {
+    marginRight: 4,
   },
 });
 
 export default BedriddenWeightScreen;
 
-
+
+
 
 
 

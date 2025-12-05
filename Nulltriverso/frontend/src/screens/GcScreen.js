@@ -183,7 +183,10 @@ const GcScreen = ({ onMenu, onProfile, onInfo }) => {
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
             <Text style={styles.kicker}>COMPOSIÇÃO CORPORAL</Text>
+          <View style={styles.titleRow}>
+            <BackToMenuButton onPress={onMenu} style={styles.homeButton} />
             <Text style={styles.title}>% Gordura Corporal</Text>
+          </View>
             <Text style={styles.subtitle}>
               Estime o %GC por dobras (Jackson & Pollock + Siri) ou circunferencias (US Navy).
               Resultados sao aproximados; consistencia na tecnica e essencial.
@@ -344,9 +347,6 @@ const GcScreen = ({ onMenu, onProfile, onInfo }) => {
               • Hodgdon JA, Beckett MB. Prediction of percent body fat for US Navy men and women. 1984.
             </Text>
           </SectionCard>
-          <View style={styles.footer}>
-            <BackToMenuButton onPress={onMenu} />
-          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenBackground>
@@ -373,10 +373,16 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textTransform: "uppercase",
   },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
   title: {
     color: colors.surface,
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "800",
+    flexShrink: 1,
     letterSpacing: -0.4,
     textShadowColor: "rgba(0,0,0,0.35)",
     textShadowOffset: { width: 0, height: 2 },
@@ -492,7 +498,7 @@ const styles = StyleSheet.create({
   },
   highlightValue: {
     color: colors.primary,
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "800",
   },
   highlightLabel: {
@@ -514,15 +520,15 @@ const styles = StyleSheet.create({
     color: colors.inkMuted,
     lineHeight: 20,
   },
-  footer: {
-    marginTop: 4,
-    alignItems: "center",
+  homeButton: {
+    marginRight: 4,
   },
 });
 
 export default GcScreen;
 
-
+
+
 
 
 

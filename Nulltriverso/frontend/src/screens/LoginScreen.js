@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Easing,
@@ -6,12 +6,14 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { menuGradient } from "../theme/gradients";
 import { colors } from "../theme/colors";
 import TextField from "../components/TextField";
@@ -19,6 +21,7 @@ import PrimaryButton from "../components/PrimaryButton";
 import StarField from "../components/StarField";
 
 const LoginScreen = ({ onLogin }) => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const spin = useRef(new Animated.Value(0)).current;
   const spinOpposite = useRef(new Animated.Value(0)).current;
   const pulse = useRef(new Animated.Value(0)).current;
@@ -273,18 +276,51 @@ const LoginScreen = ({ onLogin }) => {
           </View>
           <View style={styles.cardWrapper}>
             <View style={styles.card}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.loginTitle}>Acesse sua conta</Text>
+                <Text style={styles.cardSubtitle}>
+                  Conecte-se para continuar
+                </Text>
+              </View>
               <View style={styles.form}>
-                <TextField
-                  placeholder="seu@email.com"
-                  placeholderTextColor="#f5e9ff"
-                  style={styles.input}
-                />
-                <TextField
-                  placeholder="Digite sua senha"
-                  placeholderTextColor="#f5e9ff"
-                  secureTextEntry
-                  style={styles.input}
-                />
+                <View style={styles.inputWrapper}>
+                  <MaterialCommunityIcons
+                    name="email-outline"
+                    size={22}
+                    color="#f5e9ff"
+                    style={styles.inputIcon}
+                  />
+                  <TextField
+                    placeholder="seu@email.com"
+                    placeholderTextColor="#f5e9ff"
+                    style={[styles.input, styles.inputWithIcon]}
+                  />
+                </View>
+                <View style={styles.inputWrapper}>
+                  <MaterialCommunityIcons
+                    name="lock-outline"
+                    size={22}
+                    color="#f5e9ff"
+                    style={styles.inputIcon}
+                  />
+                  <TextField
+                    placeholder="Digite sua senha"
+                    placeholderTextColor="#f5e9ff"
+                    secureTextEntry={!passwordVisible}
+                    style={[styles.input, styles.inputWithIcon]}
+                  />
+                  <Pressable
+                    onPress={() => setPasswordVisible((prev) => !prev)}
+                    hitSlop={10}
+                    style={styles.passwordToggle}
+                  >
+                    <MaterialCommunityIcons
+                      name={passwordVisible ? "eye-off-outline" : "eye-outline"}
+                      size={22}
+                      color="#f5e9ff"
+                    />
+                  </Pressable>
+                </View>
                 <Text style={styles.helper}>Esqueci minha senha</Text>
                 <PrimaryButton
                   label="Seja bem-vindo!"
@@ -467,6 +503,20 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "800",
   },
+  loginTitle: {
+    color: "#f5e9ff",
+    fontSize: 24,
+    fontWeight: "800",
+    textAlign: "center",
+    letterSpacing: 0.4,
+  },
+  cardSubtitle: {
+    color: "#e9def5",
+    textAlign: "center",
+    marginTop: 6,
+    fontSize: 14,
+    fontWeight: "600",
+  },
   divider: {
     height: 1,
     backgroundColor: colors.border,
@@ -481,6 +531,24 @@ const styles = StyleSheet.create({
     color: "#fff",
     borderRadius: 50,
     paddingHorizontal: 18,
+    paddingVertical: 14,
+  },
+  inputWrapper: {
+    position: "relative",
+    justifyContent: "center",
+  },
+  inputWithIcon: {
+    paddingLeft: 48,
+  },
+  inputIcon: {
+    position: "absolute",
+    left: 18,
+    zIndex: 1,
+  },
+  passwordToggle: {
+    position: "absolute",
+    right: 18,
+    padding: 4,
   },
   helper: {
     color: "#f0e4f6",
@@ -497,10 +565,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
   },
   ctaText: {
-    color: "#5b1e6d",
+    color: "#111827",
     fontWeight: "800",
   },
 });
 
 export default LoginScreen;
-
