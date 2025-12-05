@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import { Alert } from "react-native";
 import LoginScreen from "./src/screens/LoginScreen";
+import RegisterScreen from "./src/screens/RegisterScreen";
 import MenuScreen from "./src/screens/MenuScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import EerScreen from "./src/screens/EerScreen";
@@ -41,6 +42,7 @@ export default function App() {
   const navigation = useMemo(
     () => ({
       goToLogin: goTo(ROUTES.LOGIN),
+      goToRegister: goTo(ROUTES.REGISTER),
       goToMenu: goTo(ROUTES.MENU),
       goToImc: goTo(ROUTES.IMC),
       goToEer: goTo(ROUTES.EER),
@@ -70,7 +72,19 @@ export default function App() {
 
   switch (screen) {
     case ROUTES.LOGIN:
-      return <LoginScreen onLogin={navigation.goToMenu} />;
+      return (
+        <LoginScreen
+          onLogin={navigation.goToMenu}
+          onCreateAccount={navigation.goToRegister}
+        />
+      );
+    case ROUTES.REGISTER:
+      return (
+        <RegisterScreen
+          onBackToLogin={navigation.goToLogin}
+          onRegister={navigation.goToMenu}
+        />
+      );
     case ROUTES.MENU:
       return (
         <MenuScreen

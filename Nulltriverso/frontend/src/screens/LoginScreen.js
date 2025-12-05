@@ -20,7 +20,7 @@ import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import StarField from "../components/StarField";
 
-const LoginScreen = ({ onLogin }) => {
+const LoginScreen = ({ onLogin, onCreateAccount }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const spin = useRef(new Animated.Value(0)).current;
@@ -342,7 +342,9 @@ const LoginScreen = ({ onLogin }) => {
                   style={styles.cta}
                   textStyle={styles.ctaText}
                 />
-                <Text style={styles.helper}>Criar conta</Text>
+                <Pressable onPress={onCreateAccount} hitSlop={8}>
+                  <Text style={styles.helper}>Criar conta</Text>
+                </Pressable>
               </View>
             </View>
           </View>
