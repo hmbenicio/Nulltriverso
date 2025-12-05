@@ -46,7 +46,6 @@ Requisitos: Node.js 18+ e Expo Go em um dispositivo real ou emulador. Testes em 
 
 ## Documentacao principal
 
-- `Docs/01-Documentacao de Contexto.md`
 - > <ol>
 > <li><a href="Docs/01-Documentação de Contexto.md"> Documentação de Contexto</a></li>
 > <li><a href="Docs/02-Especificação do Projeto.md"> Especificação do Projeto</a></li>
