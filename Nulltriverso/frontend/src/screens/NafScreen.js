@@ -21,16 +21,22 @@ import { colors } from "../theme/colors";
 import { NAF_LEVELS_EXTENDED, NAF_STORAGE_KEY } from "../constants/naf";
 import { parseLocaleNumber } from "../utils/number";
 
-const NafScreen = ({ onMenu, onProfile, onInfo }) => {
+const NafScreen = ({ onMenu, onProfile, onInfo, onTmb }) => {
   const [selected, setSelected] = useState(NAF_LEVELS_EXTENDED[0].key);
   const [tmb, setTmb] = useState("");
   const [result, setResult] = useState(null);
+  const [hasCalculated, setHasCalculated] = useState(false);
 
   useEffect(() => {
     const load = async () => {
       try {
         const stored = await AsyncStorage.getItem(NAF_STORAGE_KEY);
-        if (stored) setResult(JSON.parse(stored));
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          setResult(parsed);
+          if (parsed?.levelKey) setSelected(parsed.levelKey);
+          if (parsed?.tmb) setTmb(String(parsed.tmb));
+        }
       } catch (err) {
         console.warn("Erro ao carregar NAF", err);
       }
@@ -64,6 +70,7 @@ const NafScreen = ({ onMenu, onProfile, onInfo }) => {
       updatedAt: new Date().toISOString(),
     };
     setResult(payload);
+    setHasCalculated(true);
     try {
       await AsyncStorage.setItem(NAF_STORAGE_KEY, JSON.stringify(payload));
     } catch (err) {
@@ -104,7 +111,10 @@ const NafScreen = ({ onMenu, onProfile, onInfo }) => {
                       styles.levelCard,
                       active && styles.levelCardActive,
                     ]}
-                    onPress={() => setSelected(item.key)}
+                    onPress={() => {
+                      setSelected(item.key);
+                      setHasCalculated(false);
+                    }}
                   >
                     <View style={styles.levelHeader}>
                       <Text style={[styles.levelTitle, active && styles.levelTitleActive]}>
@@ -123,26 +133,34 @@ const NafScreen = ({ onMenu, onProfile, onInfo }) => {
 
           <SectionCard>
             <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>TMB (opcional)</Text>
+              <Text style={styles.cardTitle}>TMB</Text>
+              <Pressable style={styles.verifyButton} onPress={onTmb}>
+                <Text style={styles.verifyText}>Verificar</Text>
+              </Pressable>
             </View>
             <TextField
               placeholder="Informe sua TMB (kcal/dia) para estimar GET"
               keyboardType="decimal-pad"
               value={tmb}
-              onChangeText={setTmb}
+              onChangeText={(value) => {
+                setTmb(value);
+                setHasCalculated(false);
+              }}
             />
-            {getMinMax ? (
+            {hasCalculated && result?.getRange ? (
               <View style={styles.getBox}>
                 <Text style={styles.getLabel}>GET estimado</Text>
                 <Text style={styles.getValue}>
-                  {getMinMax.min.toFixed(0)} a {getMinMax.max.toFixed(0)} kcal/dia
+                  {result.getRange.min.toFixed(0)} a {result.getRange.max.toFixed(0)} kcal/dia
                 </Text>
                 <Text style={styles.getHelper}>
-                  Calculado como TMB x {level.factorRange}
+                  Calculado como TMB x {result.factorRange}
                 </Text>
               </View>
             ) : (
-              <Text style={styles.helperText}>Sem TMB, exibimos apenas o fator.</Text>
+              <Text style={styles.helperText}>
+                Informe a TMB e toque em "Calcular NAF" para ver o GET estimado.
+              </Text>
             )}
             <PrimaryButton label="Calcular NAF" onPress={handleCalculate} />
           </SectionCard>
@@ -151,7 +169,7 @@ const NafScreen = ({ onMenu, onProfile, onInfo }) => {
             <View style={styles.resultsHeader}>
               <Text style={styles.cardTitle}>Resumo</Text>
             </View>
-            {result ? (
+            {hasCalculated && result ? (
               <View style={styles.resultBody}>
                 <ResultRow label="Nivel" value={result.levelLabel} />
                 <ResultRow label="Fator de atividade" value={result.factorRange} />
@@ -237,6 +255,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  verifyButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    backgroundColor: `${colors.primary}10`,
+  },
+  verifyText: {
+    color: colors.primary,
+    fontWeight: "700",
   },
   cardTitle: {
     color: colors.ink,
