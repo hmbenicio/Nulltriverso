@@ -21,7 +21,7 @@ const ScreenBackground = ({
       pointerEvents="none"
       style={[
         styles.overlay,
-        { backgroundColor: `rgba(255,255,255,${overlayOpacity})` },
+        { backgroundColor: `rgba(70,180,255,${overlayOpacity})` },
       ]}
     />
     <View style={[styles.content, contentStyle]}>{children}</View>
