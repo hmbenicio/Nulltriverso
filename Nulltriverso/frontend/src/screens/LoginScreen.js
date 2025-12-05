@@ -22,6 +22,7 @@ import StarField from "../components/StarField";
 
 const LoginScreen = ({ onLogin }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const spin = useRef(new Animated.Value(0)).current;
   const spinOpposite = useRef(new Animated.Value(0)).current;
   const pulse = useRef(new Animated.Value(0)).current;
@@ -322,6 +323,18 @@ const LoginScreen = ({ onLogin }) => {
                     />
                   </Pressable>
                 </View>
+                <Pressable
+                  style={styles.rememberRow}
+                  onPress={() => setRememberMe((prev) => !prev)}
+                  hitSlop={8}
+                >
+                  <MaterialCommunityIcons
+                    name={rememberMe ? "checkbox-marked-outline" : "checkbox-blank-outline"}
+                    size={22}
+                    color="#f5e9ff"
+                  />
+                  <Text style={styles.rememberLabel}>Lembrar senha</Text>
+                </Pressable>
                 <Text style={styles.helper}>Esqueci minha senha</Text>
                 <PrimaryButton
                   label="Seja bem-vindo!"
@@ -554,6 +567,17 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 18,
     padding: 4,
+  },
+  rememberRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginTop: -4,
+  },
+  rememberLabel: {
+    color: "#f5e9ff",
+    fontWeight: "700",
+    letterSpacing: 0.1,
   },
   helper: {
     color: "#f0e4f6",
