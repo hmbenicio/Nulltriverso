@@ -119,7 +119,10 @@ const MacroScreen = ({ onMenu, onProfile, onInfo }) => {
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
             <Text style={styles.kicker}>DIETA & HIDRATACAO</Text>
+          <View style={styles.titleRow}>
+            <BackToMenuButton onPress={onMenu} style={styles.homeButton} />
             <Text style={styles.title}>Distribuicao de macronutrientes</Text>
+          </View>
             <Text style={styles.subtitle}>
               1) Defina o total de calorias diario (TDEE), 2) escolha a proporcao de macros e 3) converta em gramas.
             </Text>
@@ -215,9 +218,6 @@ const MacroScreen = ({ onMenu, onProfile, onInfo }) => {
                Proteina pode variar de 0,8 a 2,0 g/kg conforme objetivo e treino; personalize com profissional de saude.
             </Text>
           </SectionCard>
-          <View style={styles.footer}>
-            <BackToMenuButton onPress={onMenu} />
-          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenBackground>
@@ -244,10 +244,16 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textTransform: "uppercase",
   },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
   title: {
     color: colors.surface,
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "800",
+    flexShrink: 1,
     letterSpacing: -0.4,
     textShadowColor: "rgba(0,0,0,0.35)",
     textShadowOffset: { width: 0, height: 2 },
@@ -346,15 +352,15 @@ const styles = StyleSheet.create({
     color: colors.inkMuted,
     lineHeight: 20,
   },
-  footer: {
-    marginTop: 4,
-    alignItems: "center",
+  homeButton: {
+    marginRight: 4,
   },
 });
 
 export default MacroScreen;
 
-
+
+
 
 
 

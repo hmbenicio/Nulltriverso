@@ -82,7 +82,10 @@ const NafScreen = ({ onMenu, onProfile, onInfo }) => {
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
             <Text style={styles.kicker}>ENERGIA & METABOLISMO</Text>
+          <View style={styles.titleRow}>
+            <BackToMenuButton onPress={onMenu} style={styles.homeButton} />
             <Text style={styles.title}>NAF · Nivel de Atividade Fisica</Text>
+          </View>
             <Text style={styles.subtitle}>
               Selecione o perfil de atividade e, opcionalmente, informe sua TMB para ver o intervalo estimado de GET (TMB x fator).
             </Text>
@@ -185,9 +188,6 @@ const NafScreen = ({ onMenu, onProfile, onInfo }) => {
               • Questionarios como IPAQ ou MET-min/dia refinam a classificacao.
             </Text>
           </SectionCard>
-          <View style={styles.footer}>
-            <BackToMenuButton onPress={onMenu} />
-          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenBackground>
@@ -214,10 +214,16 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textTransform: "uppercase",
   },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
   title: {
     color: colors.surface,
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "800",
+    flexShrink: 1,
     letterSpacing: -0.4,
     textShadowColor: "rgba(0,0,0,0.35)",
     textShadowOffset: { width: 0, height: 2 },
@@ -316,7 +322,7 @@ const styles = StyleSheet.create({
   },
   highlightValue: {
     color: colors.primary,
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "800",
   },
   highlightLabel: {
@@ -338,15 +344,15 @@ const styles = StyleSheet.create({
     color: colors.inkMuted,
     lineHeight: 20,
   },
-  footer: {
-    marginTop: 4,
-    alignItems: "center",
+  homeButton: {
+    marginRight: 4,
   },
 });
 
 export default NafScreen;
 
-
+
+
 
 
 

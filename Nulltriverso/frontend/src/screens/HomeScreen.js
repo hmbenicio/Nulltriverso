@@ -108,7 +108,10 @@ const HomeScreen = ({ onMenu, onProfile, onInfo }) => {
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
             <Text style={styles.kicker}>ANTROPOMETRIA & MEDIDAS</Text>
-            <Text style={styles.title}>Calculadora de IMC</Text>
+            <View style={styles.titleRow}>
+              <BackToMenuButton onPress={onMenu} style={styles.homeButton} />
+              <Text style={styles.title}>Calculadora de IMC</Text>
+            </View>
             <Text style={styles.subtitle}>
               IMC usa a mesma formula para homens e mulheres: peso dividido pela altura em metros ao quadrado.
             </Text>
@@ -214,9 +217,6 @@ const HomeScreen = ({ onMenu, onProfile, onInfo }) => {
               WHO. Body mass index - BMI classification. Acesso em 2024. Disponivel em https://www.who.int/data/gho/data/themes/topics/topic-details/GHO/body-mass-index
             </Text>
           </SectionCard>
-          <View style={styles.footer}>
-            <BackToMenuButton onPress={onMenu} />
-          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenBackground>
@@ -245,8 +245,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.surface,
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: "800",
+    flexShrink: 1,
     letterSpacing: -0.5,
     textShadowColor: "rgba(0,0,0,0.35)",
     textShadowOffset: { width: 0, height: 2 },
@@ -255,6 +256,11 @@ const styles = StyleSheet.create({
   subtitle: {
     color: "rgba(255,255,255,0.85)",
     lineHeight: 21,
+  },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
   },
   cardHeader: {
     flexDirection: "row",
@@ -333,15 +339,15 @@ const styles = StyleSheet.create({
     color: colors.inkMuted,
     lineHeight: 20,
   },
-  footer: {
-    marginTop: 4,
-    alignItems: "center",
+  homeButton: {
+    marginRight: 4,
   },
 });
 
 export default HomeScreen;
 
-
+
+
 
 
 

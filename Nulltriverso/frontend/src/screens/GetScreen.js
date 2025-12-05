@@ -108,7 +108,10 @@ const GetScreen = ({ onMenu, onProfile, onInfo }) => {
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
             <Text style={styles.kicker}>ENERGIA & METABOLISMO</Text>
-            <Text style={styles.title}>GET · Gasto Energetico Total</Text>
+            <View style={styles.titleRow}>
+              <BackToMenuButton onPress={onMenu} style={styles.homeButton} />
+              <Text style={styles.title}>GET · Gasto Energetico Total</Text>
+            </View>
             <Text style={styles.subtitle}>
               Usa GEB (Harris-Benedict), multiplica pelo NAF e ja inclui o efeito termico dos alimentos
               dentro do fator de atividade.
@@ -246,9 +249,6 @@ const GetScreen = ({ onMenu, onProfile, onInfo }) => {
               • Harris JA, Benedict FG. A biometric study of human basal metabolism. Proc Natl Acad Sci. 1918.
             </Text>
           </SectionCard>
-          <View style={styles.footer}>
-            <BackToMenuButton onPress={onMenu} />
-          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenBackground>
@@ -275,10 +275,16 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textTransform: "uppercase",
   },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
   title: {
     color: colors.surface,
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "800",
+    flexShrink: 1,
     letterSpacing: -0.4,
     textShadowColor: "rgba(0,0,0,0.35)",
     textShadowOffset: { width: 0, height: 2 },
@@ -390,7 +396,7 @@ const styles = StyleSheet.create({
   },
   highlightValue: {
     color: colors.primary,
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "800",
   },
   highlightLabel: {
@@ -412,15 +418,15 @@ const styles = StyleSheet.create({
     color: colors.inkMuted,
     lineHeight: 20,
   },
-  footer: {
-    marginTop: 4,
-    alignItems: "center",
+  homeButton: {
+    marginRight: 4,
   },
 });
 
 export default GetScreen;
 
-
+
+
 
 
 
