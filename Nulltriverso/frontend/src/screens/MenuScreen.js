@@ -153,12 +153,12 @@ const MenuScreen = ({
       <View style={styles.header}>
         <View style={styles.logoWrapper}>
           <Image
-            source={require("../../assets/logos_ws/Logo_02_WS_1.png")}
+            source={require("../../assets/logos/Logo_00_1.png")}
             style={[styles.headerLogo, styles.headerLogoGlow]}
             blurRadius={22}
           />
           <Image
-            source={require("../../assets/logos_ws/Logo_02_WS_1.png")}
+            source={require("../../assets/logos/Logo_00_1.png")}
             style={styles.headerLogo}
           />
         </View>
@@ -315,24 +315,26 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     paddingHorizontal: H_PADDING,
-    paddingTop: 48,
+    paddingTop: 8,
     paddingBottom: 120,
     position: "relative",
   },
   header: {
-    marginBottom: 5,
+    marginBottom: 0,
     alignItems: "center",
+    alignSelf: "stretch",
+    marginHorizontal: -H_PADDING,
   },
   logoWrapper: {
     width: "100%",
-    height: 120,
+    height: 200,
     position: "relative",
     justifyContent: "center",
     alignItems: "center",
   },
   headerLogo: {
     width: "100%",
-    height: 120,
+    height: 200,
     resizeMode: "contain",
     borderRadius: 16,
   },
@@ -352,6 +354,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     width: "100%",
+    marginTop: -32,
   },
   panel: {
     backgroundColor: "rgba(255,255,255,0.06)",
