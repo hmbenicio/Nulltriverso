@@ -5,7 +5,7 @@ Nulltriverso combina o "Null" da programacao com um universo de calculos nutrici
 
 ## Destaques da solucao
 - Tela inicial com gradiente roxo/ambar, campo de estrelas e animacao de "buraco negro"; CTA "Seja bem-vindo!" leva direto ao menu.  
-- Menu ilustrado com 12 logos proprias e animacao de entrada.  
+- Menu ilustrado com 12 logos proprias e animacao de entrada (PNG otimizados).  
 - Formularios curtos, validacao imediata e suporte a virgula/ponto.  
 - Resultados com badges/cores e resumos em `ResultRow`; IMC inclui gauge semicircular e linha mockada.  
 - Equacoes explicitas: OMS, WHO/ASHWELL para RCQ/RCEst, Harris-Benedict, IOM, Siri, US Navy, Chumlea, Holliday-Segar e faixas de macros/NAF recomendadas.  

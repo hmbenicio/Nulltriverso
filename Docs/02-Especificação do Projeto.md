@@ -1,20 +1,20 @@
 # Especificacao do Projeto
 
-Esta versao entrega o menu completo de calculadoras do Nulltriverso (12 cards) com logica client-side e persistencia local, agora precedido por uma tela de boas-vindas/login animada (sem autenticacao) que conduz ao menu. Todas as formulas sao exibidas nos textos de apoio e referenciadas na documentacao.
+Versao atual entrega menu completo com 12 calculadoras, fluxo 100% client-side e persistencia local. Uma tela de boas-vindas/login animada antecede o menu apenas para reforcar a identidade; nao existe autenticacao real. Todas as formulas sao expostas na interface e repetidas na documentacao.
 
 ## Personas
 
-- **Helena (30, nutricionista clinica)**: precisa de IMC, RCQ/RCEst, %GC e peso acamado em consulta rapida, sem travar em cadastro (login e apenas estetico).  
-- **Carlos (45, professor ativo)**: quer saber TMB, GET e macros para planejar treinos e dieta, validando se valores fazem sentido.  
-- **Lia (26, estudante de nutricao)**: usa protocolos Jackson & Pollock, US Navy e MAMA para estudo; confere de onde vem cada formula.  
-- **Joao (52, cuidando da mae acamada)**: estima peso com fita e dobra subescapular para ajustar medicamentos e dieta domiciliar.
+- **Helena (30, nutricionista clinica)**: IMC, RCQ/RCEst, %GC e peso acamado em consulta rapida sem travar em cadastro.  
+- **Carlos (45, professor ativo)**: TMB, GET e macros para planejar treino/dieta, conferindo coerencia dos numeros.  
+- **Lia (26, estudante)**: protocolos Jackson & Pollock, US Navy e MAMA para estudo; checa referencia de cada formula.  
+- **Joao (52, cuidador)**: estima peso de acamado com fita e dobra subescapular para ajustar medicacao/dieta.
 
 ## Historias de usuario
 
 | EU COMO | QUERO | PARA |
 | ------- | ----- | ---- |
-| Pessoa usuaria | Entrar rapidamente no app sem criar conta | Chegar ao menu a partir do CTA "Seja bem-vindo!" |
-| Pessoa usuaria | Calcular IMC com feedback visual | Entender minha faixa rapidamente |
+| Pessoa usuaria | Entrar rapidamente no app sem criar conta | Chegar ao menu pelo CTA "Seja bem-vindo!" |
+| Pessoa usuaria | Calcular IMC com feedback visual | Entender a faixa rapidamente |
 | Profissional | Medir RCEst/RCQ e ver faixa de risco | Avaliar gordura abdominal de forma simples |
 | Estudante | Selecionar protocolo de %GC | Comparar metodos (dobras x circunferencias) |
 | Nutricionista | Estimar peso acamado (Chumlea) | Dosar dieta/medicacao sem balanca |
@@ -27,11 +27,11 @@ Esta versao entrega o menu completo de calculadoras do Nulltriverso (12 cards) c
 ## Modelagem resumida
 
 1. Tela de boas-vindas/login com gradiente, campo de estrelas e animacao de "buraco negro"; CTA "Seja bem-vindo!" abre o menu (sem backend).  
-2. Menu em grade com 3 colunas, logos autorais e animacao de entrada.  
+2. Menu em grade com 3 colunas, logos otimizados e animacao de entrada.  
 3. Formularios validam numeros (ponto ou virgula), campos obrigatorios e unidades quando aplicavel.  
 4. Funcoes puras em `utils/` executam cada equacao com constantes separadas em `constants/`.  
-5. Resultado aparece em `SectionCard` com `ResultRow`, badge/cores e dicas do metodo.  
-6. Ultimo calculo de cada tela e salvo em AsyncStorage e carregado no `useEffect` inicial.
+5. Resultado em `SectionCard` com `ResultRow`, badge/cores e dicas do metodo.  
+6. Ultimo calculo de cada tela salvo em AsyncStorage e carregado no `useEffect` inicial.
 
 ## Indicadores de desempenho
 
@@ -71,13 +71,14 @@ Esta versao entrega o menu completo de calculadoras do Nulltriverso (12 cards) c
 | RNF-03 | Paleta centralizada em `src/theme/colors.js` e componentes reutilizaveis | Media |
 | RNF-04 | Funcoes de calculo puras separadas das telas | Alta |
 | RNF-05 | Resposta de calculo em < 200 ms em aparelho medio | Media |
+| RNF-06 | Assets locais otimizados para carregamento rapido | Media |
 
 ## Restricoes
 
 | ID | Restricao |
 | -- | --------- |
 | R-01 | Sem backend nesta versao; somente armazenamento local. |
-| R-02 | Tela de login nao autentica nem bloqueia uso; serve apenas para boas-vindas e narrativa visual. |
+| R-02 | Tela de login nao autentica nem bloqueia uso; e apenas narrativa visual. |
 | R-03 | Somente dependencias suportadas pelo Expo 54 (sem nativos adicionais). |
 | R-04 | Icones e imagens locais (sem download em tempo de execucao). |
 

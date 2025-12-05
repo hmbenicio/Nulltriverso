@@ -8,7 +8,8 @@
 - Cronometrar tempo para concluir IMC e uma segunda calculadora (EER, %GC, MAMA, Peso acamado ou Macros).  
 - Contar mensagens de erro exibidas por participante.  
 - Avaliar clareza do menu e dos protocolos (Likert 1-5).  
-- Verificar se encontram o ultimo resultado apos reabrir o app.
+- Verificar se encontram o ultimo resultado apos reabrir o app.  
+- Perguntar sobre fluidez do login/menu e percepcao dos logos otimizados.
 
 ## Tabela de resultados (preencher)
 

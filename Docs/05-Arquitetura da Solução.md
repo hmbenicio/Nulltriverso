@@ -4,7 +4,7 @@
 - **Cliente mobile**: React Native 0.81 com Expo 54.  
 - **Persistencia local**: `@react-native-async-storage/async-storage` salva o ultimo calculo de cada modulo.  
 - **Visualizacoes**: `react-native-svg` para gauge e linha do IMC.  
-- **Identidade**: gradientes definidos em `theme/gradients`, campo de estrelas (`StarField`) e animacoes leves na tela de login/menu.  
+- **Identidade**: gradientes definidos em `theme/gradients`, campo de estrelas (`StarField`) e animacoes leves na tela de login/menu com logos otimizados.  
 - **Backend**: inexistente nesta fase; todo o processamento ocorre no dispositivo.
 
 ## Camadas e responsabilidades
@@ -14,6 +14,7 @@
 - **Constantes (`src/constants/`)**: faixas/cores de IMC, RCQ, WHtR, fatores de atividade, NAFs, protocolos de %GC, metodos de hidratacao/macros e chaves de storage.  
 - **Utilidades (`src/utils/`)**: funcoes puras para IMC, WHtR/RCQ, peso acamado, TMB/GET, EER, %GC, MAMA, macros, hidratacao e parse numerico.  
 - **Tema (`src/theme/colors.js`)**: tokens centralizados para fundo, texto, borda e estados; `src/theme/gradients.js` concentra gradientes de login/menu.
+- **Assets (`assets/`)**: logos e icones PNG reduzidos (512-700 px) para carregamento rapido no menu/login e nos docs.
 
 ## Fluxo de dados (exemplos)
 - **IMC**: inputs -> `utils/imc` (IMC + cor/status) -> salva em `imc:last` -> recarrega no `useEffect`.  
@@ -29,7 +30,7 @@
 ## Decisoes tecnicas
 - **Funcoes puras** e desacopladas para facilitar testes e reuso futuro (backend/web).  
 - **Chaves de storage separadas** evitam colisao e permitem carregar cada modulo isoladamente.  
-- **Assets locais** garantem operacao offline e identidade controlada.  
+- **Assets locais otimizados** garantem operacao offline, tamanho menor e identidade controlada.  
 - **Animacoes leves** (Animated) para manter performance em aparelhos de entrada.  
 - **Tela de login sem autenticacao real**: CTA apenas navega para o menu, mantendo a experiencia offline e sem bloqueio.
 

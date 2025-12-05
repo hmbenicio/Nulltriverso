@@ -1,58 +1,45 @@
 # Nulltriverso - Ecossistema de calculos nutricionais
 
-Aplicacao mobile Expo/React Native que une o conceito de "Null" da programacao com o universo da nutricao. Traz um multiverso de calculadoras offline usadas por nutricionistas, estudantes e pessoas interessadas em bem-estar, com identidade visual consistente e todas as formulas citadas na tela.
+Aplicacao mobile em React Native + Expo com 12 calculadoras offline, identidade visual autoral (gradientes, campo de estrelas e logos proprios) e todas as formulas expostas na interface. Nenhum dado sai do dispositivo; o app existe para portfolio profissional de Helbert Miranda Benicio (Analista/Dev e Nutricionista CRN9 21602).
 
-## Funcionalidades
+## O que ha no app
 
-- **Tela de boas-vindas/login** com gradiente, campo de estrelas, animacao de "buraco negro" e CTA "Seja bem-vindo!" (sem autenticacao real; atalho para o menu).  
-- **Menu ilustrado** com 12 cards tematicos (logos autorais) e efeito de estrelas.  
-- **IMC** (OMS) com badge colorida, barra de progresso, gauge semicircular e linha de tendencia mockada.  
-- **RCEst / WHtR** e **RCQ** para risco cardiometabolico (cintura/estatura e cintura/quadril).  
-- **Peso estimado em acamados** (Chumlea) com CPA, altura do joelho, CB e dobra subescapular por sexo.  
-- **TMB (Harris-Benedict)**, **EER (IOM + bonus gestacional)** e **GET** (GEB x NAF).  
-- **NAF** detalhado (sedentario a muito ativo) com intervalo de GET a partir da TMB informada.  
-- **% Gordura corporal** (Jackson & Pollock 3/7 dobras + Siri ou circunferencias US Navy).  
-- **Massa muscular do braco (MAMA)** com CB + PCT em mm ou cm, exibindo CMB e area.  
-- **Distribuicao de macronutrientes** (kcal -> gramas) e **necessidade hidrica** (30-35 ml/kg, 1 ml/kcal ou Holliday-Segar).  
-- Persistencia local via AsyncStorage em todas as telas, aceitando ponto ou virgula nos numeros.
-
-## Fluxo do app
-
-1. O app abre na **tela de login/boas-vindas** e o botao "Seja bem-vindo!" leva ao menu (sem backend).  
-2. O **Menu** mostra 12 calculadoras; cada card leva a um fluxo especifico.  
-3. Cada tela valida entradas, mostra erros curtos e executa o calculo.  
-4. O resultado e salvo/local e recarregado ao reabrir.  
-5. Visual padrao: gradiente, campo de estrelas, cards `SectionCard`, botoes verdes e `ResultRow` para resumo.  
-6. A barra inferior facilita voltar ao menu, acessar perfil (stub) e sair (stub) retornando ao login.
+- Tela de boas-vindas/login animada com CTA "Seja bem-vindo!" que libera o menu (sem autenticacao real).  
+- Menu ilustrado em grade com 12 cards: IMC, RCEst/WHtR, RCQ, Peso acamado, TMB, EER, GET, NAF, % Gordura corporal, Massa muscular do braco (MAMA), Distribuicao de macros e Hidrica.  
+- Validacao imediata (ponto ou virgula aceitos), mensagens curtas e resultados coloridos com resumo em `ResultRow`.  
+- Gauge semicircular e linha mockada na tela de IMC; pills para protocolos e metodos em RCQ/RCEst/%GC/NAF/Hidrica.  
+- Persistencia local via AsyncStorage: ao reabrir a tela, o ultimo calculo volta preenchido.  
+- Barra inferior compartilhada para voltar ao menu, acionar perfil (stub) e sair (retorna ao login).
 
 ## Stack
 
 - React Native 0.81 + Expo 54  
 - AsyncStorage para armazenamento local  
 - react-native-svg para gauge/linha do IMC  
-- expo-linear-gradient para identidade visual
+- expo-linear-gradient para fundos do login/menu  
+- Assets locais otimizados (logos e icones reduzidos para carregamento rapido)
 
 ## Como executar
 
 ```bash
 cd Nulltriverso/frontend
 npm install
-npm start   # Expo menu (a = Android, i = iOS, w = Web)
+npm start   # Expo DevTools (a = Android, i = iOS, w = Web)
 ```
 
-Requisitos: Node.js 18+ e Expo Go (dispositivo real ou emulador). Recomendo testar em aparelho real para validar teclados decimais e animacoes do menu.
+Requisitos: Node.js 18+ e Expo Go em um dispositivo real ou emulador. Testes em aparelho real sao recomendados para validar teclados decimais e animacoes.
 
 ## Estrutura
 
-- `Nulltriverso/frontend/src/components` - inputs, botoes, cards, gauge e linha IMC.  
-- `Nulltriverso/frontend/src/screens` - menu + calculadoras (IMC, RCQ, RCEst, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macro, Hidrica).  
-- `Nulltriverso/frontend/src/constants` - faixas/cores, fatores, protocolos e chaves de storage.  
-- `Nulltriverso/frontend/src/utils` - funcoes de calculo e parse numerico.  
-- `Docs/` - documentacao funcional, tecnica, testes e apresentacao.  
-- `Apresentacao/` - roteiro de demo.  
-- `Nulltriverso/backend` - reservado para futuras integracoes (vazio).
+- `Nulltriverso/frontend/App.js` controla o fluxo entre login, menu e calculadoras.  
+- `Nulltriverso/frontend/src/screens` reune telas de menu + 12 calculadoras (IMC, RCEst, RCQ, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macro, Hidrica).  
+- `Nulltriverso/frontend/src/components` traz cards, botoes, inputs, gauge/linha de IMC, barra inferior, campo de estrelas e seletores.  
+- `Nulltriverso/frontend/src/constants` guarda faixas, fatores, protocolos e chaves de storage.  
+- `Nulltriverso/frontend/src/utils` concentra funcoes puras para todos os calculos.  
+- `Docs/` possui a documentacao completa; `Apresentacao/` traz roteiro de demo.  
+- `Nulltriverso/backend` permanece reservado para futura integracao.
 
-## Documentacao
+## Documentacao principal
 - `Docs/01-Documentacao de Contexto.md`
 - `Docs/02-Especificacao do Projeto.md`
 - `Docs/03-Metodologia.md`
@@ -68,4 +55,4 @@ Requisitos: Node.js 18+ e Expo Go (dispositivo real ou emulador). Recomendo test
 - `Docs/13-Referencias.md`
 
 ## Contato
-Projeto pessoal para portfolio profissional, desenvolvido por Helbert Miranda Benicio (Analista/Dev e Nutricionista CRN9 21602 - CFN).
+Helbert Miranda Benicio - nutricionista CRN9 21602 e desenvolvedor. Projeto pessoal para portfolio.
