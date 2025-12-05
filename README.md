@@ -1,8 +1,9 @@
-# Nulltriverso - Ecossistema de calculos nutricionais
 
 <p align="center">
   <img src="Nulltriverso/frontend/assets/logos/Logo_00_1.png" alt="Logo do Nulltriverso" width="320" />
 </p>
+
+# Nulltriverso - Ecossistema de calculos nutricionais
 
 Aplicacao mobile em React Native + Expo com 12 calculadoras offline, identidade visual autoral (gradientes, campo de estrelas e logos proprios) e todas as formulas expostas na interface. Nenhum dado sai do dispositivo; o app existe para portfolio profissional de Helbert Miranda Benicio (Analista/Dev e Nutricionista CRN9 21602).
 
