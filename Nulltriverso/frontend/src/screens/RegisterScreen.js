@@ -525,11 +525,13 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "800",
     letterSpacing: 0.3,
+    textAlign: "center",
   },
   subtitle: {
     color: "#e5dbf4",
     fontSize: 15,
     lineHeight: 20,
+    textAlign: "center",
   },
   card: {
     width: "100%",
