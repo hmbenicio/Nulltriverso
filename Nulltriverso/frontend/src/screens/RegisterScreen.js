@@ -138,7 +138,7 @@ const RegisterScreen = ({ onBackToLogin, onRegister }) => {
                 />
               </View>
               <View style={styles.doubleRow}>
-                <View style={[styles.inputWrapper, styles.doubleItem]}>
+                <View style={[styles.inputWrapper, styles.doubleItem, styles.birthDate]}>
                   <MaterialCommunityIcons
                     name="calendar-month-outline"
                     size={20}
@@ -153,7 +153,7 @@ const RegisterScreen = ({ onBackToLogin, onRegister }) => {
                     onChangeText={(text) => setBirthDate(formatDate(text))}
                   />
                 </View>
-                <View style={[styles.doubleItem, styles.genderRow]}>
+                <View style={[styles.doubleItem, styles.genderRow, styles.genderColumn]}>
                   <Pressable
                     style={[styles.genderButton, selectedGender === "male" && styles.genderButtonSelected]}
                     onPress={() => setSelectedGender("male")}
@@ -161,7 +161,7 @@ const RegisterScreen = ({ onBackToLogin, onRegister }) => {
                   >
                     <MaterialCommunityIcons
                       name="gender-male"
-                      size={28}
+                      size={26}
                       color={selectedGender === "male" ? "#0f482f" : "#ffffff"}
                     />
                   </Pressable>
@@ -172,7 +172,7 @@ const RegisterScreen = ({ onBackToLogin, onRegister }) => {
                   >
                     <MaterialCommunityIcons
                       name="gender-female"
-                      size={28}
+                      size={26}
                       color={selectedGender === "female" ? "#0f482f" : "#ffffff"}
                     />
                   </Pressable>
@@ -619,6 +619,12 @@ const styles = StyleSheet.create({
   doubleItem: {
     flex: 1,
   },
+  birthDate: {
+    flex: 1.2,
+  },
+  genderColumn: {
+    flex: 0.8,
+  },
   genderRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -627,8 +633,8 @@ const styles = StyleSheet.create({
   },
   genderButton: {
     flex: 1,
-    height: 52,
-    borderRadius: 14,
+    height: 46,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: "rgba(13,27,42,0.18)",
     backgroundColor: "transparent",
