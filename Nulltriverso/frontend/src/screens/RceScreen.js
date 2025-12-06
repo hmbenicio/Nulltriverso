@@ -94,7 +94,7 @@ const RceScreen = ({ onMenu, onProfile, onInfo }) => {
             <Text style={styles.title}>RCEst · Cintura/Estatura</Text>
           </View>
             <Text style={styles.subtitle}>
-              Usa a razao cintura/altura em centimetros. Alerta quando a cintura ultrapassa metade da altura (≥ 0,5).
+              Usa a razao cintura/altura em centimetros. Alerta quando a cintura ultrapassa metade da altura (>= 0,50).
             </Text>
           </View>
           <SectionCard>
@@ -147,7 +147,7 @@ const RceScreen = ({ onMenu, onProfile, onInfo }) => {
               • RCEst = cintura / altura (mesma unidade). Ideal manter abaixo de 0,50.
             </Text>
             <Text style={styles.helperText}>
-              • Faixas indicativas: &lt;0,40 muito baixo; 0,40-0,50 saudavel; 0,50-0,60 risco aumentado; &gt;0,60 risco muito alto.
+              • Faixas indicativas: &lt;0,40 muito baixo; 0,40-0,49 saudavel; 0,50-0,59 risco aumentado; &gt;=0,60 risco muito alto.
             </Text>
             <Text style={styles.helperText}>
               • Indicador sensivel para gordura abdominal e risco cardiometabolico.
