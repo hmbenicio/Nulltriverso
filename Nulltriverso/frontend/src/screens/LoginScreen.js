@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -28,6 +29,11 @@ const LoginScreen = ({ onLogin, onCreateAccount, onForgotPassword }) => {
   const pulse = useRef(new Animated.Value(0)).current;
   const sweep = useRef(new Animated.Value(0)).current;
   const shimmer = useRef(new Animated.Value(0)).current;
+  const scrollViewRef = useRef(null);
+  const [inputPositions, setInputPositions] = useState({
+    email: 0,
+    password: 0,
+  });
   const starOrbits = [
     { radius: 96, size: 8, angle: 12 },
     { radius: 110, size: 7, angle: 128 },
@@ -146,6 +152,11 @@ const LoginScreen = ({ onLogin, onCreateAccount, onForgotPassword }) => {
     onLogin?.();
   };
 
+  const scrollToInput = (field) => {
+    const targetY = Math.max(inputPositions[field] - 40, 0);
+    scrollViewRef.current?.scrollTo({ y: targetY, animated: true });
+  };
+
   return (
     <LinearGradient
       colors={menuGradient}
@@ -159,198 +170,224 @@ const LoginScreen = ({ onLogin, onCreateAccount, onForgotPassword }) => {
       <View style={styles.vignette} />
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={0}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
       >
-        <View style={styles.content}>
-          <View style={styles.logoArea}>
-            <View style={styles.blackHole}>
-              <Animated.View
-                style={[styles.disk, { transform: [{ rotate: spinRotation }] }]}
-              >
-                <LinearGradient
-                  colors={[
-                    "rgba(255,255,255,0.05)",
-                    "rgba(255,255,255,0.18)",
-                    "rgba(255,255,255,0.32)",
-                  ]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={styles.diskGradient}
-                />
-              </Animated.View>
-              <Animated.View
-                pointerEvents="none"
-                style={[
-                  styles.halo,
-                  {
-                    opacity: shimmerOpacity,
-                    transform: [{ scale: shimmerScale }],
-                  },
-                ]}
-              />
-              <Animated.View
-                pointerEvents="none"
-                style={[
-                  styles.sweepRing,
-                  {
-                    transform: [
-                      { rotate: sweepRotation },
-                      { scale: shimmerScale },
-                    ],
-                    opacity: shimmerOpacity,
-                  },
-                ]}
-              />
-              <Animated.View
-                pointerEvents="none"
-                style={[
-                  styles.moonOrbit,
-                  { transform: [{ rotate: sweepRotation }] },
-                ]}
-              >
+        <ScrollView
+          ref={scrollViewRef}
+          contentContainerStyle={styles.scrollContent}
+          keyboardDismissMode="on-drag"
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.content}>
+            <View style={styles.logoArea}>
+              <View style={styles.blackHole}>
                 <Animated.View
+                  style={[styles.disk, { transform: [{ rotate: spinRotation }] }]}
+                >
+                  <LinearGradient
+                    colors={[
+                      "rgba(255,255,255,0.05)",
+                      "rgba(255,255,255,0.18)",
+                      "rgba(255,255,255,0.32)",
+                    ]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.diskGradient}
+                  />
+                </Animated.View>
+                <Animated.View
+                  pointerEvents="none"
                   style={[
-                    styles.moon,
+                    styles.halo,
                     {
-                      transform: [{ translateX: 112 }, { scale: pulseScale }],
+                      opacity: shimmerOpacity,
+                      transform: [{ scale: shimmerScale }],
+                    },
+                  ]}
+                />
+                <Animated.View
+                  pointerEvents="none"
+                  style={[
+                    styles.sweepRing,
+                    {
+                      transform: [
+                        { rotate: sweepRotation },
+                        { scale: shimmerScale },
+                      ],
                       opacity: shimmerOpacity,
                     },
                   ]}
                 />
-              </Animated.View>
-              {starOrbits.map((star, index) => (
                 <Animated.View
-                  key={`star-${index}`}
                   pointerEvents="none"
                   style={[
-                    styles.starOrbit,
-                    {
-                      width: star.radius * 2,
-                      height: star.radius * 2,
-                      transform: [{ rotate: sweepRotation }],
-                    },
+                    styles.moonOrbit,
+                    { transform: [{ rotate: sweepRotation }] },
                   ]}
                 >
                   <Animated.View
                     style={[
-                      styles.star,
+                      styles.moon,
                       {
-                        width: star.size,
-                        height: star.size,
-                        borderRadius: star.size / 2,
+                        transform: [{ translateX: 112 }, { scale: pulseScale }],
                         opacity: shimmerOpacity,
-                        transform: [
-                          { rotate: `${star.angle}deg` },
-                          { translateX: star.radius },
-                          { scale: pulseScale },
-                        ],
                       },
                     ]}
                   />
                 </Animated.View>
-              ))}
-              <Animated.View
-                style={[
-                  styles.disk,
-                  styles.diskSecondary,
-                  {
-                    transform: [
-                      { rotate: spinRotationOpposite },
-                      { scale: pulseScale },
-                    ],
-                  },
-                ]}
-              >
-                <LinearGradient
-                  colors={["transparent", "transparent", "transparent"]}
-                  start={{ x: 0.9, y: 0.2 }}
-                  end={{ x: 0, y: 1 }}
-                  style={styles.diskGradient}
+                {starOrbits.map((star, index) => (
+                  <Animated.View
+                    key={`star-${index}`}
+                    pointerEvents="none"
+                    style={[
+                      styles.starOrbit,
+                      {
+                        width: star.radius * 2,
+                        height: star.radius * 2,
+                        transform: [{ rotate: sweepRotation }],
+                      },
+                    ]}
+                  >
+                    <Animated.View
+                      style={[
+                        styles.star,
+                        {
+                          width: star.size,
+                          height: star.size,
+                          borderRadius: star.size / 2,
+                          opacity: shimmerOpacity,
+                          transform: [
+                            { rotate: `${star.angle}deg` },
+                            { translateX: star.radius },
+                            { scale: pulseScale },
+                          ],
+                        },
+                      ]}
+                    />
+                  </Animated.View>
+                ))}
+                <Animated.View
+                  style={[
+                    styles.disk,
+                    styles.diskSecondary,
+                    {
+                      transform: [
+                        { rotate: spinRotationOpposite },
+                        { scale: pulseScale },
+                      ],
+                    },
+                  ]}
+                >
+                  <LinearGradient
+                    colors={["transparent", "transparent", "transparent"]}
+                    start={{ x: 0.9, y: 0.2 }}
+                    end={{ x: 0, y: 1 }}
+                    style={styles.diskGradient}
+                  />
+                </Animated.View>
+                <View style={styles.logoGlow} pointerEvents="none" />
+                <Image
+                  source={require("../../assets/logos/Logo_00_1.png")}
+                  style={styles.logo}
                 />
-              </Animated.View>
-              <View style={styles.logoGlow} pointerEvents="none" />
-              <Image
-                source={require("../../assets/logos/Logo_00_1.png")}
-                style={styles.logo}
-              />
-            </View>
-          </View>
-          <View style={styles.cardWrapper}>
-            <View style={styles.card}>
-              <View style={styles.cardHeader}>
-                <Text style={styles.loginTitle}>Acesse sua conta</Text>
-                <Text style={styles.cardSubtitle}>
-                  Conecte-se para continuar
-                </Text>
               </View>
-              <View style={styles.form}>
-                <View style={styles.inputWrapper}>
-                  <MaterialCommunityIcons
-                    name="email-outline"
-                    size={22}
-                    color="#f5e9ff"
-                    style={styles.inputIcon}
-                  />
-                  <TextField
-                    placeholder="seu@email.com"
-                    placeholderTextColor="#f5e9ff"
-                    style={[styles.input, styles.inputWithIcon]}
-                  />
+            </View>
+            <View style={styles.cardWrapper}>
+              <View style={styles.card}>
+                <View style={styles.cardHeader}>
+                  <Text style={styles.loginTitle}>Acesse sua conta</Text>
+                  <Text style={styles.cardSubtitle}>
+                    Conecte-se para continuar
+                  </Text>
                 </View>
-                <View style={styles.inputWrapper}>
-                  <MaterialCommunityIcons
-                    name="lock-outline"
-                    size={22}
-                    color="#f5e9ff"
-                    style={styles.inputIcon}
-                  />
-                  <TextField
-                    placeholder="Digite sua senha"
-                    placeholderTextColor="#f5e9ff"
-                    secureTextEntry={!passwordVisible}
-                    style={[styles.input, styles.inputWithIcon]}
-                  />
-                  <Pressable
-                    onPress={() => setPasswordVisible((prev) => !prev)}
-                    hitSlop={10}
-                    style={styles.passwordToggle}
+                <View style={styles.form}>
+                  <View
+                    style={styles.inputWrapper}
+                    onLayout={({ nativeEvent }) =>
+                      setInputPositions((prev) => ({
+                        ...prev,
+                        email: nativeEvent.layout.y,
+                      }))
+                    }
                   >
                     <MaterialCommunityIcons
-                      name={passwordVisible ? "eye-off-outline" : "eye-outline"}
+                      name="email-outline"
+                      size={22}
+                      color="#f5e9ff"
+                      style={styles.inputIcon}
+                    />
+                    <TextField
+                      placeholder="seu@email.com"
+                      placeholderTextColor="#f5e9ff"
+                      style={[styles.input, styles.inputWithIcon]}
+                      onFocus={() => scrollToInput("email")}
+                    />
+                  </View>
+                  <View
+                    style={styles.inputWrapper}
+                    onLayout={({ nativeEvent }) =>
+                      setInputPositions((prev) => ({
+                        ...prev,
+                        password: nativeEvent.layout.y,
+                      }))
+                    }
+                  >
+                    <MaterialCommunityIcons
+                      name="lock-outline"
+                      size={22}
+                      color="#f5e9ff"
+                      style={styles.inputIcon}
+                    />
+                    <TextField
+                      placeholder="Digite sua senha"
+                      placeholderTextColor="#f5e9ff"
+                      secureTextEntry={!passwordVisible}
+                      style={[styles.input, styles.inputWithIcon]}
+                      onFocus={() => scrollToInput("password")}
+                    />
+                    <Pressable
+                      onPress={() => setPasswordVisible((prev) => !prev)}
+                      hitSlop={10}
+                      style={styles.passwordToggle}
+                    >
+                      <MaterialCommunityIcons
+                        name={passwordVisible ? "eye-off-outline" : "eye-outline"}
+                        size={22}
+                        color="#f5e9ff"
+                      />
+                    </Pressable>
+                  </View>
+                  <Pressable
+                    style={styles.rememberRow}
+                    onPress={() => setRememberMe((prev) => !prev)}
+                    hitSlop={8}
+                  >
+                    <MaterialCommunityIcons
+                      name={rememberMe ? "checkbox-marked-outline" : "checkbox-blank-outline"}
                       size={22}
                       color="#f5e9ff"
                     />
+                    <Text style={styles.rememberLabel}>Lembrar senha</Text>
+                  </Pressable>
+                  <Pressable onPress={onForgotPassword} hitSlop={8}>
+                    <Text style={styles.helper}>Esqueci minha senha</Text>
+                  </Pressable>
+                  <PrimaryButton
+                    label="Seja bem-vindo!"
+                    onPress={handleSubmit}
+                    style={styles.cta}
+                    textStyle={styles.ctaText}
+                  />
+                  <Pressable onPress={onCreateAccount} hitSlop={8}>
+                    <Text style={styles.helper}>Criar conta</Text>
                   </Pressable>
                 </View>
-                <Pressable
-                  style={styles.rememberRow}
-                  onPress={() => setRememberMe((prev) => !prev)}
-                  hitSlop={8}
-                >
-                  <MaterialCommunityIcons
-                    name={rememberMe ? "checkbox-marked-outline" : "checkbox-blank-outline"}
-                    size={22}
-                    color="#f5e9ff"
-                  />
-                  <Text style={styles.rememberLabel}>Lembrar senha</Text>
-                </Pressable>
-                <Pressable onPress={onForgotPassword} hitSlop={8}>
-                  <Text style={styles.helper}>Esqueci minha senha</Text>
-                </Pressable>
-                <PrimaryButton
-                  label="Seja bem-vindo!"
-                  onPress={handleSubmit}
-                  style={styles.cta}
-                  textStyle={styles.ctaText}
-                />
-                <Pressable onPress={onCreateAccount} hitSlop={8}>
-                  <Text style={styles.helper}>Criar conta</Text>
-                </Pressable>
               </View>
             </View>
           </View>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </LinearGradient>
   );
@@ -364,6 +401,10 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: "center",
   },
   content: {
     flex: 1,
