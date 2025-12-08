@@ -33,7 +33,7 @@ const initialForm = {
 };
 
 
-const HomeScreen = ({ onMenu, onProfile, onInfo }) => {
+const ImcScreen = ({ onMenu, onProfile, onInfo }) => {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default ImcScreen;
 
 
 
