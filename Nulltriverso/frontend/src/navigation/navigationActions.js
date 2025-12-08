@@ -11,6 +11,7 @@ export const createNavigationActions = (navigate) => ({
   goToGc: () => navigate(ROUTES.GC),
   goToMi: () => navigate(ROUTES.MI),
   goToPeso: () => navigate(ROUTES.PESO),
+  goToProfile: () => navigate(ROUTES.PROFILE),
   goToWhtr: () => navigate(ROUTES.WHTR),
   goToRcq: () => navigate(ROUTES.RCQ),
   goToRcest: () => navigate(ROUTES.RCEST),

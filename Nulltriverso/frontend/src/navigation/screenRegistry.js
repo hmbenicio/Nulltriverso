@@ -13,6 +13,7 @@ import RceScreen from "../screens/RceScreen";
 import RcqScreen from "../screens/RcqScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import ResetPasswordScreen from "../screens/ResetPasswordScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import TmbScreen from "../screens/TmbScreen";
 import WhtrScreen from "../screens/WhtrScreen";
 import { ROUTES } from "./routes";
@@ -52,6 +53,10 @@ export const buildScreenRegistry = ({ actions, handlers, commonNavigation }) => 
       onProfile: handlers.onProfile,
       onExit: handlers.onExit,
     }),
+  },
+  [ROUTES.PROFILE]: {
+    component: ProfileScreen,
+    getProps: () => commonNavigation,
   },
   [ROUTES.IMC]: {
     component: ImcScreen,

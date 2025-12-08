@@ -9,6 +9,7 @@ export const ROUTES = {
   GC: "gc",
   MI: "mi",
   PESO: "peso",
+  PROFILE: "profile",
   WHTR: "whtr",
   RCQ: "rcq",
   RCEST: "rcest",

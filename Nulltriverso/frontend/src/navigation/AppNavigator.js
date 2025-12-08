@@ -8,15 +8,13 @@ import { buildScreenRegistry, renderScreenFromRegistry } from "./screenRegistry"
 const useNavigationHandlers = (actions) =>
   useMemo(
     () => ({
-      onProfile: () => {
-        Alert.alert("Perfil", "Funcionalidade de perfil nao implementada.");
-      },
+      onProfile: actions.goToProfile,
       onInfo: () => {
         Alert.alert("Informacoes", "Area de informacoes em desenvolvimento.");
       },
       onExit: actions.goToLogin,
     }),
-    [actions.goToLogin]
+    [actions.goToLogin, actions.goToProfile]
   );
 
 const useCommonNavigation = (actions, handlers) =>
