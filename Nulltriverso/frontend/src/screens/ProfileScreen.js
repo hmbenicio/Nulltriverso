@@ -1,0 +1,516 @@
+import React, { useMemo, useState } from "react";
+import {
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
+import ScreenBackground from "../components/ScreenBackground";
+import InlineMenuBar from "../components/InlineMenuBar";
+import TextField from "../components/TextField";
+import PrimaryButton from "../components/PrimaryButton";
+import { colors } from "../theme/colors";
+
+const mockProfile = {
+  name: "Alexandra Ribeiro",
+  cpf: "123.456.789-00",
+  email: "alexandra.ribeiro@email.com",
+  role: "Nutricionista",
+  birthDate: "1990-08-23",
+};
+
+const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const dots = useMemo(() => Array.from({ length: 56 }, (_, index) => index), []);
+
+  const formattedCpfNumber = useMemo(() => {
+    const digits = mockProfile.cpf.replace(/\D/g, "");
+    return digits.replace(/(\d{4})(\d{3})(\d{3})(\d{2})/, "$1 $2 $3 $4");
+  }, []);
+
+  const birthExpiry = useMemo(() => {
+    const birth = new Date(mockProfile.birthDate);
+    if (Number.isNaN(birth.getTime())) return "--/--";
+    const day = `${birth.getDate()}`.padStart(2, "0");
+    const month = `${birth.getMonth() + 1}`.padStart(2, "0");
+    return `${day}/${month}`;
+  }, []);
+
+  const handleChangePassword = () => {
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      Alert.alert("Campos faltando", "Preencha todos os campos para continuar.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      Alert.alert("Senhas diferentes", "A nova senha e a confirmacao precisam ser iguais.");
+      return;
+    }
+
+    Alert.alert(
+      "Senha atualizada",
+      "Sua senha foi alterada com sucesso. Use a nova senha no proximo acesso."
+    );
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+  };
+
+  return (
+    <ScreenBackground contentStyle={styles.screen}>
+      <StatusBar style="light" />
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.header}>
+          <View style={styles.avatar}>
+            <LinearGradient
+              colors={["#f6f0e5", "#e2c9a7", "#8fa58b"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.avatarInner}
+            >
+              <MaterialCommunityIcons name="account" size={44} color="#1d3a2d" />
+            </LinearGradient>
+          </View>
+          <View style={styles.headerText}>
+            <Text style={styles.kicker}>SEU ESPACO</Text>
+            <Text style={styles.title}>Perfil e seguranca</Text>
+            <Text style={styles.subtitle}>
+              Revise seus dados pessoais e mantenha sua senha em dia.
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.cardLabelRow}>
+          <Text style={styles.cardLabel}>Dados pessoais</Text>
+          <View style={styles.badge}>
+            <MaterialCommunityIcons name="shield-check" size={16} color="#123425" />
+            <Text style={styles.badgeText}>Verificado</Text>
+          </View>
+        </View>
+        <LinearGradient
+          colors={["#191c1f", "#24292f", "#171a1d"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.creditCard}
+        >
+          <View style={styles.cardOverlay} />
+          <View style={styles.cardDots}>
+            {dots.map((dot) => (
+              <View key={`dot-${dot}`} style={styles.cardDot} />
+            ))}
+          </View>
+          <Text style={styles.cardVertical}>{mockProfile.role}</Text>
+
+          <View style={styles.cardTopRow}>
+            <View style={styles.brandGroup}>
+              <Text style={styles.cardBrand}>Nulltriverso</Text>
+              <Text style={styles.cardTagline}>Perfil seguro</Text>
+            </View>
+          </View>
+
+          <View style={styles.cardChipRow}>
+            <View style={styles.chip}>
+              <LinearGradient
+                colors={["#e9ecef", "#cfd3d8"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.chipFill}
+              />
+              <View style={styles.chipLines} />
+              <View style={styles.chipNotch} />
+            </View>
+            <MaterialCommunityIcons name="wifi" size={26} color="#f2e9d8" />
+          </View>
+
+          <View style={styles.cardNumberBlock}>
+            <Text style={styles.cardNumber}>{formattedCpfNumber}</Text>
+          </View>
+
+          <View style={styles.cardMetaRow}>
+            <View style={styles.validBlock}>
+              <View style={styles.validRow}>
+                <Text style={styles.validLabel}>BIRTHDAY</Text>
+              </View>
+              <Text style={styles.validValue}>{birthExpiry}</Text>
+            </View>
+            <View style={styles.nameBlock}>
+              <Text style={styles.validLabel}>USUARIO</Text>
+              <Text style={styles.cardHolder}>{mockProfile.name.toUpperCase()}</Text>
+            </View>
+            <Image
+              source={require("../../assets/logos/Logo_00_1.png")}
+              style={styles.bottomLogo}
+            />
+          </View>
+        </LinearGradient>
+
+        <View style={styles.cardLabelRow}>
+          <Text style={styles.cardLabel}>Seguranca</Text>
+          <View style={styles.tipPill}>
+            <MaterialCommunityIcons name="lock-reset" size={16} color="#1d3a2d" />
+            <Text style={styles.tipText}>Atualize sua senha</Text>
+          </View>
+        </View>
+        <View style={styles.securityCard}>
+          <Text style={styles.sectionTitle}>Alterar senha</Text>
+          <Text style={styles.sectionSubtitle}>
+            Use uma combinacao forte com letras maiusculas, minusculas e numeros.
+          </Text>
+          <View style={styles.form}>
+            <TextField
+              placeholder="Senha atual"
+              secureTextEntry
+              value={currentPassword}
+              onChangeText={setCurrentPassword}
+              style={styles.input}
+            />
+            <TextField
+              placeholder="Nova senha"
+              secureTextEntry
+              value={newPassword}
+              onChangeText={setNewPassword}
+              style={styles.input}
+            />
+            <TextField
+              placeholder="Confirmar nova senha"
+              secureTextEntry
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              style={styles.input}
+            />
+            <PrimaryButton
+              label="Alterar senha"
+              onPress={handleChangePassword}
+              style={styles.cta}
+            />
+          </View>
+        </View>
+      </ScrollView>
+      <InlineMenuBar onProfile={onProfile} onMenu={onMenu} onInfo={onInfo} />
+    </ScreenBackground>
+  );
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    paddingHorizontal: 20,
+    paddingTop: 40,
+    paddingBottom: 120,
+  },
+  content: {
+    gap: 20,
+    paddingBottom: 20,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+  },
+  avatar: {
+    width: 72,
+    height: 72,
+    borderRadius: 24,
+    backgroundColor: "rgba(255,255,255,0.12)",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#0f482f",
+    shadowOpacity: 0.28,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 10 },
+  },
+  avatarInner: {
+    width: 64,
+    height: 64,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerText: {
+    flex: 1,
+    gap: 6,
+  },
+  kicker: {
+    color: "rgba(255,255,255,0.76)",
+    letterSpacing: 1,
+    fontWeight: "800",
+    fontSize: 12,
+  },
+  title: {
+    color: colors.surface,
+    fontSize: 24,
+    fontWeight: "900",
+    letterSpacing: -0.2,
+  },
+  subtitle: {
+    color: "rgba(255,255,255,0.9)",
+    lineHeight: 20,
+  },
+  cardLabelRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  cardLabel: {
+    color: colors.surface,
+    fontWeight: "800",
+    fontSize: 16,
+    letterSpacing: 0.2,
+  },
+  badge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    backgroundColor: "rgba(255,255,255,0.78)",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 50,
+  },
+  badgeText: {
+    color: "#123425",
+    fontWeight: "800",
+    fontSize: 12,
+  },
+  creditCard: {
+    borderRadius: 22,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    overflow: "hidden",
+    position: "relative",
+    aspectRatio: 1.6,
+    shadowColor: "#0e241a",
+    shadowOpacity: 0.28,
+    shadowRadius: 20,
+    shadowOffset: { width: 0, height: 14 },
+  },
+  cardOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.12)",
+  },
+  cardDots: {
+    position: "absolute",
+    top: 14,
+    left: 12,
+    width: 110,
+    height: "100%",
+    overflow: "hidden",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 6,
+  },
+  cardDot: {
+    width: 5,
+    height: 5,
+    borderRadius: 3,
+    backgroundColor: "rgba(255,255,255,0.12)",
+    marginRight: 3,
+    marginBottom: 3,
+  },
+  cardVertical: {
+    position: "absolute",
+    right: -10,
+    top: "50%",
+    transform: [{ rotate: "90deg" }, { translateY: -8 }],
+    color: "rgba(255,255,255,0.86)",
+    fontWeight: "800",
+    letterSpacing: 1,
+    fontSize: 12,
+    textAlign: "center",
+  },
+  cardTopRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    gap: 10,
+    marginBottom: 6,
+  },
+  brandGroup: {
+    alignItems: "flex-end",
+  },
+  cardBrand: {
+    color: "#f5efe4",
+    fontWeight: "800",
+    fontSize: 16,
+    letterSpacing: 1,
+  },
+  cardTagline: {
+    color: "rgba(255,255,255,0.7)",
+    fontWeight: "700",
+    fontSize: 11,
+    letterSpacing: 0.8,
+  },
+  brandLogo: {
+    width: 42,
+    height: 42,
+    resizeMode: "contain",
+  },
+  cardChipRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginTop: 8,
+    marginBottom: 6,
+  },
+  chip: {
+    width: 52,
+    height: 36,
+    borderRadius: 8,
+    overflow: "hidden",
+    backgroundColor: "#dfe2e5",
+    borderWidth: 1,
+    borderColor: "rgba(0,0,0,0.18)",
+    shadowColor: "#000",
+    shadowOpacity: 0.18,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    position: "relative",
+  },
+  chipFill: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  chipLines: {
+    position: "absolute",
+    top: 7,
+    left: 8,
+    right: 8,
+    height: 22,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderColor: "rgba(0,0,0,0.16)",
+    borderRadius: 6,
+  },
+  chipNotch: {
+    position: "absolute",
+    top: 10,
+    left: 18,
+    width: 18,
+    height: 12,
+    borderRadius: 2,
+    backgroundColor: "rgba(0,0,0,0.08)",
+  },
+  wave: {
+    height: 18,
+    width: 36,
+    borderRadius: 10,
+    backgroundColor: "rgba(255,255,255,0.3)",
+  },
+  cardNumberBlock: {
+    marginTop: 12,
+    gap: 4,
+    alignItems: "flex-start",
+    paddingLeft: 6,
+  },
+  cardNumber: {
+    color: "#f7f2e7",
+    fontSize: 21,
+    letterSpacing: 3.6,
+    fontWeight: "900",
+  },
+  cardMetaRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 8,
+  },
+  validBlock: {
+    gap: 1,
+    alignItems: "flex-start",
+    minWidth: 72,
+  },
+  validRow: {
+    flexDirection: "row",
+    gap: 2,
+    alignItems: "center",
+  },
+  validLabel: {
+    color: "rgba(255,255,255,0.62)",
+    fontSize: 10,
+    letterSpacing: 1,
+  },
+  validValue: {
+    color: "#f7f2e7",
+    fontWeight: "800",
+    fontSize: 13,
+    letterSpacing: 1,
+  },
+  nameBlock: {
+    flex: 1,
+    marginLeft: 12,
+    justifyContent: "center",
+  },
+  cardHolder: {
+    color: "#f7f2e7",
+    fontWeight: "800",
+    letterSpacing: 0.8,
+    fontSize: 13,
+  },
+  bottomLogo: {
+    width: 68,
+    height: 68,
+    resizeMode: "contain",
+    tintColor: "#f5efe4",
+    alignSelf: "flex-end",
+    marginTop: 6,
+  },
+  securityCard: {
+    backgroundColor: "rgba(255,255,255,0.1)",
+    borderRadius: 18,
+    padding: 18,
+    gap: 10,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.2)",
+    shadowColor: "#0e241a",
+    shadowOpacity: 0.2,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 10 },
+  },
+  sectionTitle: {
+    color: colors.surface,
+    fontWeight: "800",
+    fontSize: 18,
+  },
+  sectionSubtitle: {
+    color: "rgba(255,255,255,0.86)",
+    lineHeight: 20,
+  },
+  form: {
+    gap: 12,
+    marginTop: 6,
+  },
+  input: {
+    backgroundColor: "rgba(255,255,255,0.12)",
+    borderColor: "rgba(255,255,255,0.28)",
+    color: colors.surface,
+  },
+  cta: {
+    backgroundColor: "#e0c29d",
+  },
+  tipPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    backgroundColor: "rgba(255,255,255,0.9)",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 50,
+  },
+  tipText: {
+    color: "#1d3a2d",
+    fontWeight: "800",
+    fontSize: 12,
+  },
+});
+
+export default ProfileScreen;
