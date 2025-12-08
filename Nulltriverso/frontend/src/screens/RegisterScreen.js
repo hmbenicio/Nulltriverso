@@ -658,7 +658,7 @@ const styles = StyleSheet.create({
   typeLabel: {
     color: "#ffffff",
     fontWeight: "700",
-    fontSize: 13,
+    fontSize: 14,
     marginLeft: 4,
   },
   selectInput: {
@@ -720,7 +720,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   typeDetailsTitle: {
-    color: "#0d1b2a",
+    color: "#ffffff",
     fontWeight: "800",
     fontSize: 14,
   },
