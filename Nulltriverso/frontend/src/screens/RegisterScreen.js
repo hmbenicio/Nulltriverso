@@ -88,7 +88,7 @@ const RegisterScreen = ({ onBackToLogin, onRegister }) => {
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={80}
+        keyboardVerticalOffset={0}
       >
         <ScrollView
           contentContainerStyle={styles.content}

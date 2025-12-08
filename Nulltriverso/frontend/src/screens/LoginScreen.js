@@ -160,7 +160,7 @@ const LoginScreen = ({ onLogin, onCreateAccount, onForgotPassword }) => {
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={80}
+        keyboardVerticalOffset={0}
       >
         <View style={styles.content}>
           <View style={styles.logoArea}>

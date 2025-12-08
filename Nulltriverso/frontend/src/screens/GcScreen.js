@@ -178,7 +178,7 @@ const GcScreen = ({ onMenu, onProfile, onInfo }) => {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={styles.flex}
-        keyboardVerticalOffset={80}
+        keyboardVerticalOffset={0}
       >
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
           <View style={styles.header}>
