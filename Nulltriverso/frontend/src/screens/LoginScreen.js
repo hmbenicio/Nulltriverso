@@ -20,7 +20,7 @@ import TextField from "../components/TextField";
 import PrimaryButton from "../components/PrimaryButton";
 import StarField from "../components/StarField";
 
-const LoginScreen = ({ onLogin, onCreateAccount }) => {
+const LoginScreen = ({ onLogin, onCreateAccount, onForgotPassword }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const spin = useRef(new Animated.Value(0)).current;
@@ -335,7 +335,9 @@ const LoginScreen = ({ onLogin, onCreateAccount }) => {
                   />
                   <Text style={styles.rememberLabel}>Lembrar senha</Text>
                 </Pressable>
-                <Text style={styles.helper}>Esqueci minha senha</Text>
+                <Pressable onPress={onForgotPassword} hitSlop={8}>
+                  <Text style={styles.helper}>Esqueci minha senha</Text>
+                </Pressable>
                 <PrimaryButton
                   label="Seja bem-vindo!"
                   onPress={handleSubmit}

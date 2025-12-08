@@ -12,6 +12,7 @@ export const ROUTES = {
   WHTR: "whtr",
   RCQ: "rcq",
   RCEST: "rcest",
+  RESET_PASSWORD: "reset-password",
   NAF: "naf",
   HIDRICA: "hidrica",
   MACRO: "macro",

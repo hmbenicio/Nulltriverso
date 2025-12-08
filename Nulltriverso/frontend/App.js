@@ -16,6 +16,7 @@ import RceScreen from "./src/screens/RceScreen";
 import NafScreen from "./src/screens/NafScreen";
 import HidricaScreen from "./src/screens/HidricaScreen";
 import MacroScreen from "./src/screens/MacroScreen";
+import ResetPasswordScreen from "./src/screens/ResetPasswordScreen";
 import { ROUTES } from "./src/navigation/routes";
 import { useAppNavigation } from "./src/navigation/useAppNavigation";
 
@@ -54,6 +55,7 @@ export default function App() {
       goToWhtr: goTo(ROUTES.WHTR),
       goToRcq: goTo(ROUTES.RCQ),
       goToRcest: goTo(ROUTES.RCEST),
+      goToResetPassword: goTo(ROUTES.RESET_PASSWORD),
       goToNaf: goTo(ROUTES.NAF),
       goToHidrica: goTo(ROUTES.HIDRICA),
       goToMacro: goTo(ROUTES.MACRO),
@@ -75,6 +77,7 @@ export default function App() {
       return (
         <LoginScreen
           onLogin={navigation.goToMenu}
+          onForgotPassword={navigation.goToResetPassword}
           onCreateAccount={navigation.goToRegister}
         />
       );
@@ -125,6 +128,13 @@ export default function App() {
       return <RcqScreen {...commonNavigation} />;
     case ROUTES.RCEST:
       return <RceScreen {...commonNavigation} />;
+    case ROUTES.RESET_PASSWORD:
+      return (
+        <ResetPasswordScreen
+          onBackToLogin={navigation.goToLogin}
+          onSubmit={navigation.goToLogin}
+        />
+      );
     case ROUTES.NAF:
       return <NafScreen {...commonNavigation} onTmb={navigation.goToTmb} />;
     case ROUTES.HIDRICA:
