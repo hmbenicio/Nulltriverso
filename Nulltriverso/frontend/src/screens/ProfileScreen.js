@@ -1,7 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import {
   Alert,
+  Animated,
   Image,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -17,19 +19,35 @@ import PrimaryButton from "../components/PrimaryButton";
 import { colors } from "../theme/colors";
 
 const mockProfile = {
-  name: "Alexandra Ribeiro",
-  cpf: "123.456.789-00",
-  email: "alexandra.ribeiro@email.com",
-  role: "Nutricionista",
-  birthDate: "1990-08-23",
+  name: "Helbert Benício",
+  cpf: "094.688.166-99",
+  email: "hmbenicio@gmail.com",
+  role: "Profissional",
+  birthDate: "1989-09-25",
+};
+
+const mockProfileBack = {
+  contactEmail: "hmbenicio@gmail.com",
+  contactPhone: "+55 (31) 97502-8184",
+  blurb:
+    "Nulltriverso é um ecossistema que une tecnologia e nutrição para simplificar cálculos e análises.",
 };
 
 const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [flipped, setFlipped] = useState(false);
+  const flipAnim = useRef(new Animated.Value(0)).current;
+  const otpCode = useMemo(() => {
+    const code = Math.floor(Math.random() * 1000000);
+    return `${code}`.padStart(6, "0");
+  }, []);
 
-  const dots = useMemo(() => Array.from({ length: 56 }, (_, index) => index), []);
+  const dots = useMemo(
+    () => Array.from({ length: 56 }, (_, index) => index),
+    []
+  );
 
   const formattedCpfNumber = useMemo(() => {
     const digits = mockProfile.cpf.replace(/\D/g, "");
@@ -44,14 +62,41 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
     return `${day}/${month}`;
   }, []);
 
+  const handleFlipCard = () => {
+    const next = !flipped;
+    setFlipped(next);
+    Animated.spring(flipAnim, {
+      toValue: next ? 1 : 0,
+      useNativeDriver: true,
+      speed: 10,
+      bounciness: 7,
+    }).start();
+  };
+
+  const frontRotate = flipAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "180deg"],
+  });
+
+  const backRotate = flipAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["180deg", "360deg"],
+  });
+
   const handleChangePassword = () => {
     if (!currentPassword || !newPassword || !confirmPassword) {
-      Alert.alert("Campos faltando", "Preencha todos os campos para continuar.");
+      Alert.alert(
+        "Campos faltando",
+        "Preencha todos os campos para continuar."
+      );
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      Alert.alert("Senhas diferentes", "A nova senha e a confirmacao precisam ser iguais.");
+      Alert.alert(
+        "Senhas diferentes",
+        "A nova senha e a confirmacao precisam ser iguais."
+      );
       return;
     }
 
@@ -73,14 +118,11 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
       >
         <View style={styles.header}>
           <View style={styles.avatar}>
-            <LinearGradient
-              colors={["#f6f0e5", "#e2c9a7", "#8fa58b"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.avatarInner}
-            >
-              <MaterialCommunityIcons name="account" size={44} color="#1d3a2d" />
-            </LinearGradient>
+            <MaterialCommunityIcons
+              name="shield-account"
+              size={56}
+              color="#f5efe4"
+            />
           </View>
           <View style={styles.headerText}>
             <Text style={styles.kicker}>SEU ESPACO</Text>
@@ -94,78 +136,142 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
         <View style={styles.cardLabelRow}>
           <Text style={styles.cardLabel}>Dados pessoais</Text>
           <View style={styles.badge}>
-            <MaterialCommunityIcons name="shield-check" size={16} color="#123425" />
+            <MaterialCommunityIcons
+              name="shield-check"
+              size={16}
+              color="#123425"
+            />
             <Text style={styles.badgeText}>Verificado</Text>
           </View>
         </View>
-        <LinearGradient
-          colors={["#191c1f", "#24292f", "#171a1d"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.creditCard}
-        >
-          <View style={styles.cardOverlay} />
-          <View style={styles.cardDots}>
-            {dots.map((dot) => (
-              <View key={`dot-${dot}`} style={styles.cardDot} />
-            ))}
-          </View>
-          <Text style={styles.cardVertical}>{mockProfile.role}</Text>
-
-          <View style={styles.cardTopRow}>
-            <View style={styles.brandGroup}>
-              <Text style={styles.cardBrand}>Nulltriverso</Text>
-              <Text style={styles.cardTagline}>Perfil seguro</Text>
-            </View>
-          </View>
-
-          <View style={styles.cardChipRow}>
-            <View style={styles.chip}>
+        <Pressable onPress={handleFlipCard}>
+          <View style={styles.cardContainer}>
+            <Animated.View
+              style={[
+                styles.cardFace,
+                { transform: [{ rotateY: frontRotate }] },
+              ]}
+            >
               <LinearGradient
-                colors={["#e9ecef", "#cfd3d8"]}
+                colors={["#191c1f", "#24292f", "#171a1d"]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
-                style={styles.chipFill}
-              />
-              <View style={styles.chipLines} />
-              <View style={styles.chipNotch} />
-            </View>
-            <MaterialCommunityIcons name="wifi" size={26} color="#f2e9d8" />
-          </View>
+                style={styles.creditCard}
+              >
+                <View style={styles.cardOverlay} />
+                <View style={styles.cardDots}>
+                  {dots.map((dot) => (
+                    <View key={`dot-${dot}`} style={styles.cardDot} />
+                  ))}
+                </View>
+                <Text style={styles.cardVertical}>{mockProfile.role}</Text>
 
-          <View style={styles.cardNumberBlock}>
-            <Text style={styles.cardNumber}>{formattedCpfNumber}</Text>
-          </View>
+                <View style={styles.cardTopRow}>
+                  <View style={styles.brandGroup}>
+                    <Text style={styles.cardBrand}>Nulltriverso</Text>
+                    <Text style={styles.cardTagline}>Perfil seguro</Text>
+                  </View>
+                </View>
 
-          <View style={styles.cardMetaRow}>
-            <View style={styles.validBlock}>
-              <View style={styles.validRow}>
-                <Text style={styles.validLabel}>BIRTHDAY</Text>
+                <View style={styles.cardChipRow}>
+                  <View style={styles.chip}>
+                    <LinearGradient
+                      colors={["#e9ecef", "#cfd3d8"]}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                      style={styles.chipFill}
+                    />
+                    <View style={styles.chipLines} />
+                    <View style={styles.chipNotch} />
+                  </View>
+                  <MaterialCommunityIcons
+                    name="wifi"
+                    size={26}
+                    color="#f2e9d8"
+                  />
+                </View>
+
+                <View style={styles.cardNumberBlock}>
+                  <Text style={styles.cardNumber}>{formattedCpfNumber}</Text>
+                </View>
+
+                <View style={styles.cardMetaRow}>
+                  <View style={styles.validBlock}>
+                    <View style={styles.validRow}>
+                      <Text style={styles.validLabel}>BIRTHDAY</Text>
+                    </View>
+                    <Text style={styles.validValue}>{birthExpiry}</Text>
+                  </View>
+                  <View style={styles.nameBlock}>
+                    <Text style={styles.validLabel}>USUARIO</Text>
+                    <Text style={styles.cardHolder}>
+                      {mockProfile.name.toUpperCase()}
+                    </Text>
+                  </View>
+                  <Image
+                    source={require("../../assets/logos/Logo_00_1.png")}
+                    style={styles.bottomLogo}
+                  />
+                </View>
+              </LinearGradient>
+            </Animated.View>
+
+            <Animated.View
+              style={[
+                styles.cardFace,
+                styles.cardBack,
+                { transform: [{ rotateY: backRotate }] },
+              ]}
+            >
+              <View style={styles.backStrip}>
+                <Text style={styles.backStripLabel}>Código de recuperação</Text>
+                <View style={styles.signatureLine} />
+                <View style={styles.cvvBox}>
+                  <Text style={styles.cvvText}>{otpCode}</Text>
+                </View>
               </View>
-              <Text style={styles.validValue}>{birthExpiry}</Text>
-            </View>
-            <View style={styles.nameBlock}>
-              <Text style={styles.validLabel}>USUARIO</Text>
-              <Text style={styles.cardHolder}>{mockProfile.name.toUpperCase()}</Text>
-            </View>
-            <Image
-              source={require("../../assets/logos/Logo_00_1.png")}
-              style={styles.bottomLogo}
-            />
+              <View style={styles.backContact}>
+                <Text style={styles.backWebsite}>
+                  {mockProfileBack.contactEmail}
+                </Text>
+                <Text style={styles.backPhone}>
+                  {mockProfileBack.contactPhone}
+                </Text>
+              </View>
+              <View style={styles.backMetaRow}>
+                <View style={styles.backChip}>
+                  <Image
+                    source={require("../../assets/logos/Logo_00_1.png")}
+                    style={styles.backChipLogo}
+                    resizeMode="contain"
+                  />
+                </View>
+                <View style={styles.backBlurb}>
+                  <Text style={styles.backBlurbText}>
+                    {mockProfileBack.blurb}
+                  </Text>
+                </View>
+              </View>
+            </Animated.View>
           </View>
-        </LinearGradient>
+        </Pressable>
 
         <View style={styles.cardLabelRow}>
           <Text style={styles.cardLabel}>Seguranca</Text>
           <View style={styles.tipPill}>
-            <MaterialCommunityIcons name="lock-reset" size={16} color="#1d3a2d" />
+            <MaterialCommunityIcons
+              name="lock-reset"
+              size={16}
+              color="#1d3a2d"
+            />
             <Text style={styles.tipText}>Atualize sua senha</Text>
           </View>
         </View>
         <View style={styles.securityCard}>
           <Text style={styles.sectionTitle}>Alterar senha</Text>
           <Text style={styles.sectionSubtitle}>
-            Use uma combinacao forte com letras maiusculas, minusculas e numeros.
+            Use uma combinacao forte com letras maiusculas, minusculas e
+            numeros.
           </Text>
           <View style={styles.form}>
             <TextField
@@ -218,21 +324,8 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   avatar: {
-    width: 72,
-    height: 72,
-    borderRadius: 24,
-    backgroundColor: "rgba(255,255,255,0.12)",
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#0f482f",
-    shadowOpacity: 0.28,
-    shadowRadius: 18,
-    shadowOffset: { width: 0, height: 10 },
-  },
-  avatarInner: {
-    width: 64,
-    height: 64,
-    borderRadius: 20,
+    width: 52,
+    height: 52,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -281,17 +374,40 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     fontSize: 12,
   },
+  cardContainer: {
+    width: "100%",
+    aspectRatio: 1.6,
+    alignSelf: "center",
+    perspective: 1000,
+    position: "relative",
+  },
+  cardFace: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 22,
+    overflow: "hidden",
+    backfaceVisibility: "hidden",
+    shadowColor: "#0e241a",
+    shadowOpacity: 0.28,
+    shadowRadius: 20,
+    shadowOffset: { width: 0, height: 14 },
+  },
   creditCard: {
+    flex: 1,
     borderRadius: 22,
     paddingVertical: 14,
     paddingHorizontal: 16,
     overflow: "hidden",
     position: "relative",
-    aspectRatio: 1.6,
-    shadowColor: "#0e241a",
-    shadowOpacity: 0.28,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 14 },
+  },
+  cardBack: {
+    flex: 1,
+    backgroundColor: "#111418",
+    padding: 18,
+    gap: 14,
+    alignItems: "stretch",
+    justifyContent: "flex-start",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.12)",
   },
   cardOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -320,9 +436,9 @@ const styles = StyleSheet.create({
   },
   cardVertical: {
     position: "absolute",
-    right: -10,
+    right: -30,
     top: "50%",
-    transform: [{ rotate: "90deg" }, { translateY: -8 }],
+    transform: [{ rotate: "-90deg" }, { translateY: -8 }],
     color: "rgba(255,255,255,0.86)",
     fontWeight: "800",
     letterSpacing: 1,
@@ -510,6 +626,100 @@ const styles = StyleSheet.create({
     color: "#1d3a2d",
     fontWeight: "800",
     fontSize: 12,
+  },
+  backBadge: {
+    display: "none",
+  },
+  backStrip: {
+    backgroundColor: "rgba(255,255,255,0.08)",
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    position: "relative",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+  },
+  backStripLabel: {
+    color: "rgba(255,255,255,0.7)",
+    fontSize: 11,
+    fontWeight: "700",
+    marginBottom: 6,
+  },
+  signatureLine: {
+    height: 32,
+    backgroundColor: "rgba(255,255,255,0.1)",
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.15)",
+  },
+  cvvBox: {
+    position: "absolute",
+    right: 12,
+    top: "50%",
+    transform: [{ translateY: -12 }],
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 8,
+    borderWidth: 1.5,
+    borderColor: "#d65a5a",
+    backgroundColor: "rgba(0,0,0,0.25)",
+  },
+  cvvText: {
+    color: "#e6d4b6",
+    fontWeight: "900",
+    fontSize: 14,
+    letterSpacing: 1,
+  },
+  backContact: {
+    alignItems: "flex-end",
+    gap: 2,
+    paddingHorizontal: 6,
+  },
+  backWebsite: {
+    color: "#ffffff",
+    fontWeight: "800",
+    fontSize: 13,
+  },
+  backPhone: {
+    color: "rgba(255,255,255,0.8)",
+    fontWeight: "700",
+    fontSize: 12,
+  },
+  backMetaRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    gap: 0,
+    paddingHorizontal: 0,
+    marginTop: "auto",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  backChip: {
+    width: 108,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+    marginLeft: 0,
+    marginRight: 0,
+    marginVertical: 0,
+  },
+  backBlurb: {
+    flex: 1,
+    gap: 0,
+  },
+  backBlurbText: {
+    color: "rgba(255,255,255,0.75)",
+    fontSize: 12,
+    lineHeight: 14,
+  },
+  backChipLogo: {
+    width: 108,
+    height: 60,
+    tintColor: "rgba(255,255,255,0.9)",
   },
 });
 
