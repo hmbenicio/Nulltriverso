@@ -3,6 +3,8 @@ import {
   Alert,
   Animated,
   Image,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -37,6 +39,9 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [currentPasswordVisible, setCurrentPasswordVisible] = useState(false);
+  const [newPasswordVisible, setNewPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
   const otpCode = useMemo(() => {
@@ -134,7 +139,14 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
         </View>
 
         <View style={styles.cardLabelRow}>
-          <Text style={styles.cardLabel}>Dados pessoais</Text>
+          <View style={styles.cardLabelGroup}>
+            <MaterialCommunityIcons
+              name="card-account-details"
+              size={22}
+              color={colors.surface}
+            />
+            <Text style={styles.cardLabel}>Dados pessoais</Text>
+          </View>
           <View style={styles.badge}>
             <MaterialCommunityIcons
               name="shield-check"
@@ -257,7 +269,14 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
         </Pressable>
 
         <View style={styles.cardLabelRow}>
-          <Text style={styles.cardLabel}>Seguranca</Text>
+          <View style={styles.cardLabelGroup}>
+            <MaterialCommunityIcons
+              name="shield-lock"
+              size={22}
+              color={colors.surface}
+            />
+            <Text style={styles.cardLabel}>Seguranca</Text>
+          </View>
           <View style={styles.tipPill}>
             <MaterialCommunityIcons
               name="lock-reset"
@@ -274,27 +293,88 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
             numeros.
           </Text>
           <View style={styles.form}>
-            <TextField
-              placeholder="Senha atual"
-              secureTextEntry
-              value={currentPassword}
-              onChangeText={setCurrentPassword}
-              style={styles.input}
-            />
-            <TextField
-              placeholder="Nova senha"
-              secureTextEntry
-              value={newPassword}
-              onChangeText={setNewPassword}
-              style={styles.input}
-            />
-            <TextField
-              placeholder="Confirmar nova senha"
-              secureTextEntry
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              style={styles.input}
-            />
+            <View style={styles.inputWrapper}>
+              <MaterialCommunityIcons
+                name="lock-alert-outline"
+                size={20}
+                color="#0d1b2a"
+                style={styles.inputIcon}
+              />
+              <TextField
+                placeholder="Senha atual"
+                secureTextEntry={!currentPasswordVisible}
+                value={currentPassword}
+                onChangeText={setCurrentPassword}
+                style={[styles.input, styles.inputWithIcon]}
+              />
+              <Pressable
+                onPress={() =>
+                  setCurrentPasswordVisible((prevVisible) => !prevVisible)
+                }
+                hitSlop={10}
+                style={styles.passwordToggle}
+              >
+                <MaterialCommunityIcons
+                  name={currentPasswordVisible ? "eye-off-outline" : "eye-outline"}
+                  size={20}
+                  color="#0d1b2a"
+                />
+              </Pressable>
+            </View>
+            <View style={styles.inputWrapper}>
+              <MaterialCommunityIcons
+                name="lock-plus-outline"
+                size={20}
+                color="#0d1b2a"
+                style={styles.inputIcon}
+              />
+              <TextField
+                placeholder="Nova senha"
+                secureTextEntry={!newPasswordVisible}
+                value={newPassword}
+                onChangeText={setNewPassword}
+                style={[styles.input, styles.inputWithIcon]}
+              />
+              <Pressable
+                onPress={() => setNewPasswordVisible((prevVisible) => !prevVisible)}
+                hitSlop={10}
+                style={styles.passwordToggle}
+              >
+                <MaterialCommunityIcons
+                  name={newPasswordVisible ? "eye-off-outline" : "eye-outline"}
+                  size={20}
+                  color="#0d1b2a"
+                />
+              </Pressable>
+            </View>
+            <View style={styles.inputWrapper}>
+              <MaterialCommunityIcons
+                name="lock-check-outline"
+                size={20}
+                color="#0d1b2a"
+                style={styles.inputIcon}
+              />
+              <TextField
+                placeholder="Confirmar nova senha"
+                secureTextEntry={!confirmPasswordVisible}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                style={[styles.input, styles.inputWithIcon]}
+              />
+              <Pressable
+                onPress={() =>
+                  setConfirmPasswordVisible((prevVisible) => !prevVisible)
+                }
+                hitSlop={10}
+                style={styles.passwordToggle}
+              >
+                <MaterialCommunityIcons
+                  name={confirmPasswordVisible ? "eye-off-outline" : "eye-outline"}
+                  size={20}
+                  color="#0d1b2a"
+                />
+              </Pressable>
+            </View>
             <PrimaryButton
               label="Alterar senha"
               onPress={handleChangePassword}
@@ -353,6 +433,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  cardLabelGroup: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
   cardLabel: {
     color: colors.surface,
@@ -606,9 +691,29 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   input: {
-    backgroundColor: "rgba(255,255,255,0.12)",
-    borderColor: "rgba(255,255,255,0.28)",
-    color: colors.surface,
+    backgroundColor: "rgba(255,255,255,0.9)",
+    borderColor: "rgba(13,27,42,0.18)",
+    color: "#0d1b2a",
+    borderRadius: 14,
+    paddingHorizontal: 18,
+    paddingVertical: 14,
+  },
+  inputWrapper: {
+    position: "relative",
+    justifyContent: "center",
+  },
+  inputWithIcon: {
+    paddingLeft: 48,
+  },
+  inputIcon: {
+    position: "absolute",
+    left: 16,
+    zIndex: 1,
+  },
+  passwordToggle: {
+    position: "absolute",
+    right: 16,
+    padding: 6,
   },
   cta: {
     backgroundColor: "#e0c29d",

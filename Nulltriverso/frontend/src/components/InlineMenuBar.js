@@ -21,13 +21,17 @@ const MenuButton = ({ icon, onPress }) => (
 
 const styles = StyleSheet.create({
   menuBar: {
+    position: "absolute",
+    left: 20,
+    right: 20,
+    bottom: 24,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "rgba(255,255,255,0.1)",
     borderRadius: 16,
-    paddingVertical: 4,
-    paddingHorizontal: 4,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
     gap: 0,
     alignSelf: "center",
     width: "100%",
@@ -36,14 +40,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 16,
     shadowOffset: { width: 0, height: 10 },
-    marginTop: -16,
-    marginBottom: -16,
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.14)",
   },
   barDivider: {
     width: 1,
-    height: 32,
+    height: 26,
     backgroundColor: "rgba(255,255,255,0.18)",
   },
   barButton: {
