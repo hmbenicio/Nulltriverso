@@ -6,7 +6,7 @@ Guia de padroes visuais e de codigo que sustentam todas as calculadoras do Nullt
 - Padding horizontal de 24 px, cards com padding generoso e `gap` consistente.  
 - Scroll unico por tela com `KeyboardAvoidingView` para manter inputs visiveis com o teclado aberto.  
 - Headers com kicker maiusculo, titulo curto e subtitulo que cita a logica da tela.  
-- Tela de login/boas-vindas ocupa toda a viewport com animação constante e CTA centralizado.
+- Telas de login/cadastro/reset ocupam toda a viewport com animacao constante e CTA centralizado; calculadoras usam o mesmo fundo/gradiente.
 
 ## Componentizacao
 - **SectionCard** para formularios, resultados e dicas; aceita `style` extra.  
@@ -14,10 +14,10 @@ Guia de padroes visuais e de codigo que sustentam todas as calculadoras do Nullt
 - **PrimaryButton** verde ocupando toda a largura do card.  
 - **Pills/tiles** para sexo, fator de atividade, protocolo, metodo ou unidade; alteram borda/fundo quando ativos.  
 - **ResultRow** para pares chave/valor nos resumos.  
-- **ImcGauge/ImcLineChart** plugaveis e desacoplados do estado global.  
-- **BottomBar** fixa com botoes de menu, perfil (stub) e sair (stub).  
+- **ImcGauge** plugavel e desacoplado do estado global.  
+- **BackToMenuButton** em cada calculadora; barra fixa no menu (Perfil/Menu/Sair) e barra compacta no Perfil.  
 - **Cards ilustrados** do menu usam assets locais `assets/0X_Icone_*.png`.  
-- **StarField + gradientes** (`menuGradient` e `loginGradient`) para fundir tela inicial e menu na mesma identidade.  
+- **StarField + gradientes** (`menuGradient` e `loginGradient`) para fundir tela inicial, cadastro/reset, menu e perfil na mesma identidade.  
 - **Animacoes de login** usando `Animated` (rotacao/pulso) sobre `LinearGradient` e imagem da logo.
 
 ## Paleta e tokens
@@ -31,13 +31,13 @@ Guia de padroes visuais e de codigo que sustentam todas as calculadoras do Nullt
 - Linguagem direta: "Peso invalido.", "As porcentagens devem somar 100%.".  
 - Titulos trazem nome + sigla (ex.: "NAF - Nivel de Atividade Fisica").  
 - Dicas de rodape sempre citam o metodo usado (IOM, Harris-Benedict, Siri, US Navy, Chumlea, Holliday-Segar etc.).  
-- Tela de login usa copy de boas-vindas e helper "Criar conta"/"Esqueci minha senha" apenas como rótulos estéticos.
+- Login/cadastro/reset usam copies de boas-vindas e helpers ("Criar conta", "Esqueci minha senha") como narrativa visual; perfil exibe dados mockados e call-to-actions ilustrativos.
 
 ## Estados e feedback
 - Erros proximos aos inputs; pills mudam cor quando selecionadas.  
 - Badge/cores acompanham a faixa de risco (IMC/RCQ/WHtR) e metodos (hidrica, macros).  
 - Valores arredondados conforme contexto: 2 casas para IMC/razoes, 0-1 casa para kcal/ml/gramas.  
-- CTA do login retorna ao menu sem validar credencial; botao "Sair" na BottomBar retorna ao login.
+- CTA do login retorna ao menu sem validar credencial; botoes de reset/perfil exibem alertas locais de sucesso.
 
 ## Boas praticas de codigo
 - Separar constantes (faixas, fatores, protocolos) de logica (`utils`) e apresentacao (`screens`/`components`).  

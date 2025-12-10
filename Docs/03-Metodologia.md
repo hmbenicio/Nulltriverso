@@ -1,7 +1,7 @@
 # Metodologia
 
 ## Abordagem
-- **Iteracoes curtas por calculadora**: cada card entregue fim a fim (UI, validacao, calculo, persistencia) precedido pela tela de boas-vindas/login animada que nao exige cadastro.  
+- **Iteracoes curtas por calculadora**: cada card entregue fim a fim (UI, validacao, calculo, persistencia) precedido pela tela de boas-vindas/login animada e fluxos auxiliares (cadastro, reset e perfil) que nao exigem backend.  
 - **Definicao de pronto**: campos validados, resultado correto exibido com cores/dicas, ultimo calculo salvo e recarregado.  
 - **Revisao rapida**: ajustes de copy e fatores com olhar de nutricionista/estudante; foco em clareza, referencias na tela e consistencia visual.
 
@@ -19,7 +19,7 @@
 
 ## Fluxo de trabalho
 - **To Do**: definir formula e texto de apoio, inputs e validacoes, referencias bibliograficas.  
-- **Doing**: implementar tela, conectar util de calculo, aplicar paleta e salvar resultado.  
+- **Doing**: implementar tela, conectar util de calculo, aplicar paleta e salvar resultado (ou fluxo mock de cadastro/reset/perfil).  
 - **Review**: testar em aparelho/emulador, revisar mensagens e referencias citadas, conferir tamanho de imagens.  
 - **Done**: documentacao atualizada, chaves de storage fixadas, codigo integrado ao menu/login e imagens otimizadas.
 
@@ -31,6 +31,7 @@
 
 ## Entregaveis desta fase
 - Tela de boas-vindas/login com gradiente, estrelas e animacao de "buraco negro" conduzindo ao menu (CTA "Seja bem-vindo!").  
+- Telas auxiliares de cadastro, recuperacao de senha (OTP mock) e perfil com cartao flip e formulario ilustrativo.  
 - Menu completo com 12 calculadoras: IMC, RCEst, RCQ, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macro e Hidrica.  
 - Documentacao revisada (contexto a referencias) com imagens dos cards/telas.  
 - Plano de testes atualizado e registro de smoke.  

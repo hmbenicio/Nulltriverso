@@ -3,14 +3,13 @@
 ## Visao macro
 - **Cliente mobile**: React Native 0.81 com Expo 54.  
 - **Persistencia local**: `@react-native-async-storage/async-storage` salva o ultimo calculo de cada modulo.  
-- **Visualizacoes**: `react-native-svg` para gauge e linha do IMC.  
+- **Visualizacoes**: `react-native-svg` para gauge do IMC.  
 - **Identidade**: gradientes definidos em `theme/gradients`, campo de estrelas (`StarField`) e animacoes leves na tela de login/menu com logos otimizados.  
 - **Backend**: inexistente nesta fase; todo o processamento ocorre no dispositivo.
 
-## Camadas e responsabilidades
-- **Navegacao**: `useAppNavigation` em `App.js` controla a troca entre login, menu e calculadoras; `BottomBar` padroniza menu/perfil/sair (volta ao login).  
-- **Telas (`src/screens/`)**: `LoginScreen`, `MenuScreen` e 11 calculadoras (`HomeScreen`, `RceScreen`, `WhtrScreen`, `RcqScreen`, `BedriddenWeightScreen`, `TmbScreen`, `EerScreen`, `GetScreen`, `NafScreen`, `GcScreen`, `MiScreen`, `MacroScreen`, `HidricaScreen`). Cada tela valida inputs, chama `utils/` e monta o resumo.  
-- **Componentes (`src/components/`)**: cards, botoes, inputs, ResultRow, gauge, grafico de linha, barra inferior e `StarField` reutilizavel no fundo da tela inicial e do menu.  
+- **Navegacao**: `AppNavigator` usa `useAppNavigation`, `navigationActions` e `screenRegistry` para resolver tela corrente (login, cadastro, reset, perfil, menu e calculadoras); menu bar fixa em `MenuScreen` aciona Perfil/Menu/Sair.  
+- **Telas (`src/screens/`)**: `LoginScreen`, `RegisterScreen`, `ResetPasswordScreen`, `ProfileScreen`, `MenuScreen` e 12 calculadoras (`ImcScreen`, `RceScreen`, `WhtrScreen`, `RcqScreen`, `BedriddenWeightScreen`, `TmbScreen`, `EerScreen`, `GetScreen`, `NafScreen`, `GcScreen`, `MiScreen`, `MacroScreen`, `HidricaScreen`). Cada tela valida inputs, chama `utils/` e monta o resumo.  
+- **Componentes (`src/components/`)**: cards, botoes, inputs, ResultRow, gauge, barra de menu/atalho, BackToMenuButton, `StarField` reutilizavel no fundo da tela inicial/menu/perfil.  
 - **Constantes (`src/constants/`)**: faixas/cores de IMC, RCQ, WHtR, fatores de atividade, NAFs, protocolos de %GC, metodos de hidratacao/macros e chaves de storage.  
 - **Utilidades (`src/utils/`)**: funcoes puras para IMC, WHtR/RCQ, peso acamado, TMB/GET, EER, %GC, MAMA, macros, hidratacao e parse numerico.  
 - **Tema (`src/theme/colors.js`)**: tokens centralizados para fundo, texto, borda e estados; `src/theme/gradients.js` concentra gradientes de login/menu.
@@ -33,6 +32,7 @@
 - **Assets locais otimizados** garantem operacao offline, tamanho menor e identidade controlada.  
 - **Animacoes leves** (Animated) para manter performance em aparelhos de entrada.  
 - **Tela de login sem autenticacao real**: CTA apenas navega para o menu, mantendo a experiencia offline e sem bloqueio.
+- **Fluxos auxiliares sem backend**: cadastro, recuperacao e perfil sao mockados e servem apenas para narrativa visual.
 
 ## Evolucoes previstas
 - Historico completo e sincronizacao opcional com backend.  

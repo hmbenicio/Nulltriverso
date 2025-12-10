@@ -4,16 +4,17 @@ Roteiro para demonstrar o ecossistema mobile de calculadoras nutricionais (12 ca
 
 ## Roteiro sugerido de apresentacao
 - Contexto: conceito Null + nutricao, portfolio de Helbert Miranda Benicio (Nutricionista CRN9 21602).  
-- Mostrar tela de boas-vindas/login com animacoes e CTA "Seja bem-vindo!" levando ao menu.  
-- Menu com 12 logos e animacao de entrada.  
-- IMC: validar campos, exibir gauge/linha e faixa OMS.  
+- Mostrar tela de boas-vindas/login com animacoes e CTA "Seja bem-vindo!" levando ao menu; abrir rapidamente "Criar conta" (formatacao de campos) e "Esqueci minha senha" (OTP mock).  
+- Menu com 12 logos e animacao de entrada + barra inferior com Perfil/Menu/Sair.  
+- IMC: validar campos, exibir gauge/barra e faixa OMS.  
 - RCEst e RCQ: inserir medidas e comentar risco cardiometabolico.  
 - Peso acamado: aplicar Chumlea por sexo com CPA/AJ/CB/DCSE.  
 - TMB -> GET -> NAF: comparar fatores, mostrar intervalo GET.  
 - EER: fator por sexo + bonus gestacional.  
 - %GC: Jackson & Pollock (dobras) vs US Navy (circunferencias).  
 - MI: CB + PCT em mm, conversao e area.  
-- Macros e Hidrica: validar faixas e exibir gramas/ml por dia.  
+- Macros (com presets) e Hidrica: validar faixas e exibir gramas/ml por dia.  
+- Perfil: acionar o flip do cartao mock e o alerta de troca de senha.  
 - Fechar e reabrir app para mostrar resultados persistidos.
 
 ## Como gravar a demonstracao

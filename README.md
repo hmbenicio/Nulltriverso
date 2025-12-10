@@ -9,18 +9,18 @@ Aplicacao mobile em React Native + Expo com 12 calculadoras offline, identidade 
 
 ## O que ha no app
 
-- Tela de boas-vindas/login animada com CTA "Seja bem-vindo!" que libera o menu (sem autenticacao real).
-- Menu ilustrado em grade com 12 cards: IMC, RCEst/WHtR, RCQ, Peso acamado, TMB, EER, GET, NAF, % Gordura corporal, Massa muscular do braco (MAMA), Distribuicao de macros e Hidrica.
-- Validacao imediata (ponto ou virgula aceitos), mensagens curtas e resultados coloridos com resumo em `ResultRow`.
-- Gauge semicircular e linha mockada na tela de IMC; pills para protocolos e metodos em RCQ/RCEst/%GC/NAF/Hidrica.
-- Persistencia local via AsyncStorage: ao reabrir a tela, o ultimo calculo volta preenchido.
-- Barra inferior compartilhada para voltar ao menu, acionar perfil (stub) e sair (retorna ao login).
+- Tela de boas-vindas/login com gradiente e "vortice" animado, campos ilustrativos de email/senha, toggle de visibilidade e links para criar conta ou recuperar acesso (fluxos sem backend).
+- Cadastro e recuperacao de senha em telas proprias, com formatacao de CPF/data/telefone, OTP ficticio e trocas de senha apenas ilustrativas.
+- Menu ilustrado em grade (3 colunas) com 12 cards: IMC, RCEst/WHtR, RCQ, Peso acamado, TMB, EER, GET, NAF, % Gordura corporal, Massa muscular do braco (MAMA), Distribuicao de macros e Hidrica; barra inferior fixa com Perfil/Menu/Sair.
+- Calculadoras validam campos obrigatorios, aceitam ponto ou virgula, exibem mensagens curtas e resumem resultados com `ResultRow`; ultimo calculo salvo em AsyncStorage e recarregado ao abrir a tela.
+- IMC exibe gauge semicircular e barra de progresso por faixa; protocolos com pills em RCQ/RCEst/%GC/NAF/Hidrica; macros trazem presets (balanceado, proteico, baixo carbo).
+- Tela de Perfil estilizada com cartao flip (dados mockados) e formulario ficticio de troca de senha.
 
 ## Stack
 
 - React Native 0.81 + Expo 54
 - AsyncStorage para armazenamento local
-- react-native-svg para gauge/linha do IMC
+- react-native-svg para gauge do IMC
 - expo-linear-gradient para fundos do login/menu
 - Assets locais otimizados (logos e icones reduzidos para carregamento rapido)
 
@@ -37,8 +37,9 @@ Requisitos: Node.js 18+ e Expo Go em um dispositivo real ou emulador. Testes em 
 ## Estrutura
 
 - `Nulltriverso/frontend/App.js` controla o fluxo entre login, menu e calculadoras.
-- `Nulltriverso/frontend/src/screens` reune telas de menu + 12 calculadoras (IMC, RCEst, RCQ, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macro, Hidrica).
-- `Nulltriverso/frontend/src/components` traz cards, botoes, inputs, gauge/linha de IMC, barra inferior, campo de estrelas e seletores.
+- `Nulltriverso/frontend/src/navigation` concentra rotas, actions, hook de navegacao e registry de telas (login, cadastro, reset, perfil, menu e 12 calculadoras).
+- `Nulltriverso/frontend/src/screens` reune menu + 12 calculadoras (IMC, RCEst, RCQ, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macro, Hidrica) e as telas auxiliares (Login, Register, ResetPassword, Profile).
+- `Nulltriverso/frontend/src/components` traz cards, botoes, inputs, gauge do IMC, barra de menu inferior e campo de estrelas.
 - `Nulltriverso/frontend/src/constants` guarda faixas, fatores, protocolos e chaves de storage.
 - `Nulltriverso/frontend/src/utils` concentra funcoes puras para todos os calculos.
 - `Docs/` possui a documentacao completa; `Apresentacao/` traz roteiro de demo.
@@ -64,3 +65,8 @@ Requisitos: Node.js 18+ e Expo Go em um dispositivo real ou emulador. Testes em 
 
 ## Desenvolvedor
 Helbert Miranda Benicio (Analista/Dev e Nutricionista CRN9 21602).
+
+
+
+
+

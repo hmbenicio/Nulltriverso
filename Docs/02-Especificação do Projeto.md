@@ -26,12 +26,14 @@ Versao atual entrega menu completo com 12 calculadoras, fluxo 100% client-side e
 
 ## Modelagem resumida
 
-1. Tela de boas-vindas/login com gradiente, campo de estrelas e animacao de "buraco negro"; CTA "Seja bem-vindo!" abre o menu (sem backend).  
-2. Menu em grade com 3 colunas, logos otimizados e animacao de entrada.  
-3. Formularios validam numeros (ponto ou virgula), campos obrigatorios e unidades quando aplicavel.  
-4. Funcoes puras em `utils/` executam cada equacao com constantes separadas em `constants/`.  
-5. Resultado em `SectionCard` com `ResultRow`, badge/cores e dicas do metodo.  
-6. Ultimo calculo de cada tela salvo em AsyncStorage e carregado no `useEffect` inicial.
+1. Tela de boas-vindas/login com gradiente, campo de estrelas e animacao de "buraco negro"; CTA "Seja bem-vindo!" abre o menu e links "Criar conta"/"Esqueci minha senha" navegam para telas dedicadas (sem backend).  
+2. Cadastro multissecao com formatacao de CPF/data/telefone e selecao de sexo/tipo de usuario; recuperacao de senha com CPF + OTP ficticio + troca de senha; perfil estilizado com cartao flip (mock) e formulario de senha ilustrativa.  
+3. Navegacao controlada por `AppNavigator` + `screenRegistry` (`src/navigation`), incluindo rotas para login, cadastro, reset, perfil, menu e 12 calculadoras.  
+4. Menu em grade com 3 colunas, logos otimizados e animacao de entrada; barra inferior fixa com Perfil/Menu/Sair.  
+5. Formularios validam numeros (ponto ou virgula), campos obrigatorios e unidades quando aplicavel.  
+6. Funcoes puras em `utils/` executam cada equacao com constantes separadas em `constants/`.  
+7. Resultado em `SectionCard` com `ResultRow`, badge/cores e dicas do metodo; IMC usa gauge e barra de progresso.  
+8. Ultimo calculo de cada tela salvo em AsyncStorage e carregado no `useEffect` inicial.
 
 ## Indicadores de desempenho
 
@@ -48,17 +50,20 @@ Versao atual entrega menu completo com 12 calculadoras, fluxo 100% client-side e
 
 | ID | Descricao | Prioridade |
 | -- | --------- | ---------- |
-| RF-00 | Tela inicial de boas-vindas/login com CTA "Seja bem-vindo!" levando ao menu, sem autenticacao real | Media |
+| RF-00 | Tela inicial de boas-vindas/login com CTA "Seja bem-vindo!" levando ao menu e links para "Criar conta"/"Esqueci minha senha" (sem autenticacao real) | Media |
+| RF-00b | Tela de cadastro com sessoes de identidade/contato/seguranca, formatacao de CPF/data/telefone e selecao de sexo/tipo de usuario | Media |
+| RF-00c | Tela de recuperacao de senha com validacao de email/CPF, campos de OTP ficticio e troca de senha ilustrativa | Media |
+| RF-00d | Tela de perfil com cartao flip (dados mockados) e formulario de alteracao de senha sem backend | Baixa |
 | RF-01 | Menu com 12 cards (IMC, RCEst, RCQ, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macro, Hidrica) | Alta |
 | RF-02 | Validar campos obrigatorios e numeros positivos; aceitar ponto ou virgula | Alta |
-| RF-03 | IMC com faixas OMS, gauge e linha | Alta |
+| RF-03 | IMC com faixas OMS e gauge + barra de progresso | Alta |
 | RF-04 | RCEst (WHtR) e RCQ com classificacao por sexo/faixa | Alta |
 | RF-05 | Peso acamado por Chumlea (equacoes por sexo) | Alta |
 | RF-06 | TMB (Harris-Benedict), EER (IOM + gestacao) e GET (GEB x NAF) | Alta |
 | RF-07 | NAF detalhado com intervalo de GET a partir da TMB informada | Alta |
 | RF-08 | %GC por Jackson & Pollock (3/7 dobras + Siri) ou US Navy | Alta |
 | RF-09 | MAMA com CB + PCT (mm ou cm), exibindo CMB e area | Alta |
-| RF-10 | Distribuicao de macros (kcal -> gramas) dentro de faixas recomendadas | Media |
+| RF-10 | Distribuicao de macros (kcal -> gramas) dentro de faixas recomendadas e presets (balanceado, proteico, baixo carbo) | Media |
 | RF-11 | Necessidade hidrica por 30-35 ml/kg, 1 ml/kcal ou Holliday-Segar | Media |
 | RF-12 | Persistir ultimo resultado de cada modulo em AsyncStorage | Alta |
 
@@ -93,12 +98,18 @@ Versao atual entrega menu completo com 12 calculadoras, fluxo 100% client-side e
 - **MAMA**: informar CB + PCT (mm ou cm) -> calcular CMB e area -> salvar.  
 - **Macros**: inserir kcal e percentuais -> validar faixas -> converter para g/dia -> salvar.  
 - **Hidrica**: escolher metodo -> preencher peso (e GET, se preciso) -> estimar ml/dia -> salvar.
+- **Cadastro**: abrir pela tela inicial -> preencher sessoes -> aceitar termos -> concluir (fluxo ilustrativo).  
+- **Recuperacao de senha**: abrir via "Esqueci minha senha" -> informar email/CPF -> preencher OTP -> definir nova senha (sem backend).  
+- **Perfil**: acessar via menu -> visualizar cartao flip mock -> alterar senha de forma ilustrativa.
 
 ## Matriz de rastreabilidade (trecho)
 
 | Historia | RF/RNF | Teste previsto |
 | -------- | ------ | -------------- |
 | Entrar sem cadastro | RF-00, RNF-02 | TS-LOGIN-01 |
+| Criar conta (mock) | RF-00b, RNF-02 | TS-REG-01 |
+| Recuperar senha (mock) | RF-00c, RNF-02 | TS-RESET-01 |
+| Ver perfil (mock) | RF-00d, RNF-02 | TS-PROFILE-01 |
 | Calcular IMC | RF-02, RF-03, RNF-02 | TS-IMC-01, TS-IMC-02 |
 | Avaliar RCEst/RCQ | RF-02, RF-04, RNF-02 | TS-RCE-01, TS-RCQ-01 |
 | Estimar peso acamado | RF-02, RF-05 | TS-PESO-01 |

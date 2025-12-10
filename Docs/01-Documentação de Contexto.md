@@ -11,6 +11,7 @@ Profissionais, estudantes e curiosos precisam validar rapidamente indicadores co
 **Objetivo geral:** entregar um multiverso mobile de calculadoras nutricionais offline e coerentes, citando referencias cientificas e pronto para portfolio profissional.
 
 **Objetivos especificos**
+- Oferecer onboarding e narrativa completos (login, cadastro, recuperacao e perfil estilizado) sem exigir backend ou cadastro real.
 - Manter fluxos curtos com validacao imediata e mensagens diretas em portugues.
 - Disponibilizar 12 calculadoras: IMC (OMS), RCEst/WHtR, RCQ, peso estimado de acamados (Chumlea), TMB (Harris-Benedict), EER (IOM + gestacao), GET (GEB x NAF), NAF detalhado, %GC (Jackson & Pollock + Siri / US Navy), MAMA, distribuicao de macronutrientes e necessidade hidrica.
 - Persistir o ultimo calculo de cada modulo com AsyncStorage para reuso instantaneo.
