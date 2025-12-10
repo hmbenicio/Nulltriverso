@@ -1,7 +1,7 @@
 # Plano de Testes de Software
 
 ## Objetivo
-Garantir que todas as calculadoras funcionem offline, apliquem corretamente as formulas descritas e persistam o ultimo resultado sem erros, iniciando a partir da tela de boas-vindas/login (sem autenticacao).
+Garantir que onboarding (login/cadastro/reset/perfil) funcione como narrativa visual e que todas as calculadoras operem offline, apliquem corretamente as formulas descritas e persistam o ultimo resultado sem erros, iniciando a partir da tela de boas-vindas/login (sem autenticacao).
 
 ## Estrategia
 - Smoke manual no Expo Go (Android/iOS) seguindo casos definidos.  
@@ -15,6 +15,9 @@ Garantir que todas as calculadoras funcionem offline, apliquem corretamente as f
 | ID | Cenario | Passos resumidos | Resultado esperado |
 | -- | ------- | ---------------- | ------------------ |
 | TS-LOGIN-01 | Entrar no app | Abrir app, tocar em "Seja bem-vindo!" | Navegar para o menu sem exigir credenciais |
+| TS-REG-01 | Cadastro ilustrativo | Abrir "Criar conta", preencher sessoes e concluir | Navegar ao menu sem erros/validacoes bloqueantes |
+| TS-RESET-01 | Recuperar senha mock | Abrir "Esqueci minha senha", preencher email/CPF/OTP e nova senha | Exibir alerta de sucesso local e voltar ao login/menu |
+| TS-PROFILE-01 | Perfil mockado | Abrir Perfil via barra do menu e acionar troca de senha | Cartao flip renderiza e alerta de sucesso apos trocar senha |
 | TS-IMC-01 | Campos obrigatorios | Nome vazio, calcular | Erro "Informe seu nome." |
 | TS-IMC-02 | Calculo IMC | Peso 80, altura 180 | IMC 24.69, faixa "Peso normal", gauge verde |
 | TS-IMC-03 | Persistencia IMC | Calcular, fechar e reabrir | Resultado carregado de `imc:last` |
@@ -34,7 +37,7 @@ Garantir que todas as calculadoras funcionem offline, apliquem corretamente as f
 | TS-PER-01 | Persistencia geral | Calcular em todas as telas, reabrir | Todos os ultimos resultados carregados |
 
 ## Criterios de aceite
-- Todos os casos criticos (TS-LOGIN-01, TS-IMC-01/02/03, TS-RCE-01, TS-RCQ-01, TS-PESO-01, TS-TMB-01, TS-EER-01/02, TS-GET-01, TS-GC-01, TS-MI-01, TS-PER-01) aprovados.  
+- Todos os casos criticos (TS-LOGIN-01, TS-REG-01, TS-RESET-01, TS-IMC-01/02/03, TS-RCE-01, TS-RCQ-01, TS-PESO-01, TS-TMB-01, TS-EER-01/02, TS-GET-01, TS-GC-01, TS-MI-01, TS-PER-01) aprovados.  
 - Nenhum crash ao abrir, calcular ou reabrir.  
 - Erros exibidos para campos vazios ou valores nao positivos.
 

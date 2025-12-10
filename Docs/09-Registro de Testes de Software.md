@@ -5,6 +5,9 @@
 | ID | Resultado | Observacoes |
 | -- | --------- | ----------- |
 | TS-LOGIN-01 | Aprovado | CTA "Seja bem-vindo!" abre o menu sem autenticar; assets leves carregam sem atraso. |
+| TS-REG-01 | Nao testado | Fluxo de cadastro mock pendente de execucao em aparelho fisico. |
+| TS-RESET-01 | Nao testado | Fluxo de reset (email/CPF/OTP) pendente de smoke; espera-se alerta local de sucesso. |
+| TS-PROFILE-01 | Nao testado | Cartao flip e alteracao de senha mock aguardam validacao visual. |
 | TS-IMC-01 | Aprovado | Erro exibido ao enviar nome vazio. |
 | TS-IMC-02 | Aprovado | IMC 24.69 e faixa "Peso normal" com gauge verde. |
 | TS-IMC-03 | Aprovado | Ultimo resultado recarregado de `imc:last`. |
@@ -25,9 +28,11 @@
 
 ## Resumo
 - Smoke concluido cobrindo todas as 12 calculadoras. Valores validados contra formulas implementadas nos `utils`.  
+- Fluxos de cadastro/reset/perfil ainda nao foram executados; agendar smoke em dispositivo real.  
 - Nenhum crash ou falha de leitura/gravacao no AsyncStorage durante a sessao.  
 - Imagens comprimidas do menu/login carregando instantaneamente.
 
 ## Pendencias para proxima rodada
 - Automatizar testes das funcoes de `utils/`.  
+- Executar smoke das telas de cadastro, reset de senha e perfil mockado.  
 - Capturar evidencias (prints) em aparelho fisico para anexar ao repo/portfolio.
