@@ -117,6 +117,11 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
   return (
     <ScreenBackground contentStyle={styles.screen}>
       <StatusBar style="light" />
+      <KeyboardAvoidingView
+        style={styles.keyboardAvoider}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        keyboardVerticalOffset={0}
+      >
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
@@ -383,6 +388,7 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
           </View>
         </View>
       </ScrollView>
+      </KeyboardAvoidingView>
       <InlineMenuBar onProfile={onProfile} onMenu={onMenu} onInfo={onInfo} />
     </ScreenBackground>
   );
@@ -393,6 +399,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 40,
     paddingBottom: 120,
+  },
+  keyboardAvoider: {
+    flex: 1,
   },
   content: {
     gap: 20,
