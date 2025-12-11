@@ -751,7 +751,7 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 10,
     paddingLeft: 6,
-    paddingRight: 110,
+    paddingRight: 80,
   },
   identityRow: {
     gap: 4,
@@ -767,7 +767,7 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     fontSize: 14,
     lineHeight: 18,
-    letterSpacing: 0.4,
+    letterSpacing: 0.2,
   },
   identityValue: {
     color: "#0b1c30",
