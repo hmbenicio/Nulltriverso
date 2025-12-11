@@ -384,6 +384,7 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
               label="Alterar senha"
               onPress={handleChangePassword}
               style={styles.cta}
+              textStyle={styles.ctaText}
             />
           </View>
         </View>
@@ -725,7 +726,16 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   cta: {
-    backgroundColor: "#e0c29d",
+    backgroundColor: "#f7f7f7",
+    borderRadius: 50,
+    shadowColor: "#1a0f2a",
+    shadowOpacity: 0.24,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 8 },
+  },
+  ctaText: {
+    color: "#111827",
+    fontWeight: "800",
   },
   tipPill: {
     flexDirection: "row",
