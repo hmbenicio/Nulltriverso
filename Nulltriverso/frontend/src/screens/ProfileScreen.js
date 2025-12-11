@@ -21,7 +21,7 @@ import PrimaryButton from "../components/PrimaryButton";
 import { colors } from "../theme/colors";
 
 const mockProfile = {
-  name: "Helbert Benício",
+  name: "Helbert Miranda Benício",
   cpf: "094.688.166-99",
   email: "hmbenicio@gmail.com",
   role: "Profissional",
@@ -33,6 +33,16 @@ const mockProfileBack = {
   contactPhone: "+55 (31) 97502-8184",
   blurb:
     "Nulltriverso é um ecossistema que une tecnologia e nutrição para simplificar cálculos e análises.",
+};
+
+const mockIdentityCard = {
+  council: "NULLTRIVERSO",
+  regional: "ECOSSISTEMA DE CALCULOS NUTRICIONAIS",
+  title: "CÉDULA DE IDENTIDADE DO USUÁRIO",
+  crm: "009999/PA",
+  filiacao: "USUARIO",
+  inscricao: "14/09/1966",
+  via: "1",
 };
 
 const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
@@ -50,22 +60,11 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
   }, []);
 
   const dots = useMemo(
-    () => Array.from({ length: 56 }, (_, index) => index),
+    () => Array.from({ length: 220 }, (_, index) => index),
     []
   );
 
-  const formattedCpfNumber = useMemo(() => {
-    const digits = mockProfile.cpf.replace(/\D/g, "");
-    return digits.replace(/(\d{4})(\d{3})(\d{3})(\d{2})/, "$1 $2 $3 $4");
-  }, []);
-
-  const birthExpiry = useMemo(() => {
-    const birth = new Date(mockProfile.birthDate);
-    if (Number.isNaN(birth.getTime())) return "--/--";
-    const day = `${birth.getDate()}`.padStart(2, "0");
-    const month = `${birth.getMonth() + 1}`.padStart(2, "0");
-    return `${day}/${month}`;
-  }, []);
+  const filiacaoText = useMemo(() => mockProfile.role.toUpperCase(), []);
 
   const handleFlipCard = () => {
     const next = !flipped;
@@ -122,273 +121,336 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         keyboardVerticalOffset={0}
       >
-      <ScrollView
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.header}>
-          <View style={styles.avatar}>
-            <MaterialCommunityIcons
-              name="shield-account"
-              size={56}
-              color="#f5efe4"
-            />
+        <ScrollView
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.header}>
+            <View style={styles.avatar}>
+              <MaterialCommunityIcons
+                name="shield-account"
+                size={56}
+                color="#f5efe4"
+              />
+            </View>
+            <View style={styles.headerText}>
+              <Text style={styles.kicker}>SEU ESPACO</Text>
+              <Text style={styles.title}>Perfil e seguranca</Text>
+              <Text style={styles.subtitle}>
+                Revise seus dados pessoais e mantenha sua senha em dia.
+              </Text>
+            </View>
           </View>
-          <View style={styles.headerText}>
-            <Text style={styles.kicker}>SEU ESPACO</Text>
-            <Text style={styles.title}>Perfil e seguranca</Text>
-            <Text style={styles.subtitle}>
-              Revise seus dados pessoais e mantenha sua senha em dia.
-            </Text>
-          </View>
-        </View>
 
-        <View style={styles.cardLabelRow}>
-          <View style={styles.cardLabelGroup}>
-            <MaterialCommunityIcons
-              name="card-account-details"
-              size={22}
-              color={colors.surface}
-            />
-            <Text style={styles.cardLabel}>Dados pessoais</Text>
+          <View style={styles.cardLabelRow}>
+            <View style={styles.cardLabelGroup}>
+              <MaterialCommunityIcons
+                name="card-account-details"
+                size={22}
+                color={colors.surface}
+              />
+              <Text style={styles.cardLabel}>Dados pessoais</Text>
+            </View>
+            <View style={styles.badge}>
+              <MaterialCommunityIcons
+                name="shield-check"
+                size={16}
+                color="#123425"
+              />
+              <Text style={styles.badgeText}>Verificado</Text>
+            </View>
           </View>
-          <View style={styles.badge}>
-            <MaterialCommunityIcons
-              name="shield-check"
-              size={16}
-              color="#123425"
-            />
-            <Text style={styles.badgeText}>Verificado</Text>
-          </View>
-        </View>
-        <Pressable onPress={handleFlipCard}>
-          <View style={styles.cardContainer}>
-            <Animated.View
-              style={[
-                styles.cardFace,
-                { transform: [{ rotateY: frontRotate }] },
-              ]}
-            >
-              <LinearGradient
-                colors={["#191c1f", "#24292f", "#171a1d"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={styles.creditCard}
+          <Pressable onPress={handleFlipCard}>
+            <View style={styles.cardContainer}>
+              <Animated.View
+                style={[
+                  styles.cardFace,
+                  { transform: [{ rotateY: frontRotate }] },
+                ]}
               >
-                <View style={styles.cardOverlay} />
-                <View style={styles.cardDots}>
-                  {dots.map((dot) => (
-                    <View key={`dot-${dot}`} style={styles.cardDot} />
-                  ))}
-                </View>
-                <Text style={styles.cardVertical}>{mockProfile.role}</Text>
-
-                <View style={styles.cardTopRow}>
-                  <View style={styles.brandGroup}>
-                    <Text style={styles.cardBrand}>Nulltriverso</Text>
-                    <Text style={styles.cardTagline}>Perfil seguro</Text>
+                <LinearGradient
+                  colors={["#dbe9f5", "#cbdce9", "#dfeaf6"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={styles.identityCard}
+                >
+                  <View style={styles.cardOverlay} />
+                  <View style={styles.cardDots}>
+                    {dots.map((dot) => (
+                      <View key={`dot-${dot}`} style={styles.cardDot} />
+                    ))}
                   </View>
-                </View>
-
-                <View style={styles.cardChipRow}>
-                  <View style={styles.chip}>
-                    <LinearGradient
-                      colors={["#e9ecef", "#cfd3d8"]}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 1 }}
-                      style={styles.chipFill}
-                    />
-                    <View style={styles.chipLines} />
-                    <View style={styles.chipNotch} />
-                  </View>
-                  <MaterialCommunityIcons
-                    name="wifi"
-                    size={26}
-                    color="#f2e9d8"
-                  />
-                </View>
-
-                <View style={styles.cardNumberBlock}>
-                  <Text style={styles.cardNumber}>{formattedCpfNumber}</Text>
-                </View>
-
-                <View style={styles.cardMetaRow}>
-                  <View style={styles.validBlock}>
-                    <View style={styles.validRow}>
-                      <Text style={styles.validLabel}>BIRTHDAY</Text>
+                  <View style={styles.identityHeader}>
+                    <View style={styles.crestBlock}>
+                      <LinearGradient
+                        colors={["transparent", "transparent"]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={styles.crestCircle}
+                      >
+                        <Image
+                          source={require("../../assets/logos/Logo_00_1.png")}
+                          style={styles.crestLogo}
+                          resizeMode="contain"
+                        />
+                      </LinearGradient>
+                      <View style={styles.crestRibbon}>
+                        <View
+                          style={[styles.ribbonStripe, styles.ribbonGreen]}
+                        />
+                        <View
+                          style={[styles.ribbonStripe, styles.ribbonYellow]}
+                        />
+                        <View
+                          style={[styles.ribbonStripe, styles.ribbonBlue]}
+                        />
+                      </View>
                     </View>
-                    <Text style={styles.validValue}>{birthExpiry}</Text>
+                    <View style={styles.identityHeaderText}>
+                      <Text style={styles.councilTitle}>
+                        {mockIdentityCard.council}
+                      </Text>
+                      <Text style={styles.councilSubtitle}>
+                        {mockIdentityCard.regional}
+                      </Text>
+                      <Text style={styles.cardHeading}>
+                        {mockIdentityCard.title}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={styles.nameBlock}>
-                    <Text style={styles.validLabel}>USUARIO</Text>
-                    <Text style={styles.cardHolder}>
-                      {mockProfile.name.toUpperCase()}
-                    </Text>
-                  </View>
-                  <Image
-                    source={require("../../assets/logos/Logo_00_1.png")}
-                    style={styles.bottomLogo}
-                  />
-                </View>
-              </LinearGradient>
-            </Animated.View>
 
-            <Animated.View
-              style={[
-                styles.cardFace,
-                styles.cardBack,
-                { transform: [{ rotateY: backRotate }] },
-              ]}
-            >
-              <View style={styles.backStrip}>
-                <Text style={styles.backStripLabel}>Código de recuperação</Text>
-                <View style={styles.signatureLine} />
-                <View style={styles.cvvBox}>
-                  <Text style={styles.cvvText}>{otpCode}</Text>
+                  <View style={styles.identityBody}>
+                    <View style={styles.identityLeft}>
+                      <View style={styles.identityLeftTop}>
+                        <View style={styles.identityArrow} />
+                        <View style={styles.identityChip}>
+                          <LinearGradient
+                            colors={["#f2de9f", "#e2c46d"]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            style={styles.identityChipFill}
+                          />
+                          <View style={styles.identityChipLines} />
+                          <View style={styles.identityChipCore} />
+                        </View>
+                      </View>
+                      <View style={styles.identityDocsRow}>
+                        <View
+                          style={[styles.identityMini, styles.identityDocLeft]}
+                        >
+                          <Text style={styles.identityLabel}>CPF</Text>
+                          <Text style={styles.identityValueSmall}>
+                            {mockProfile.cpf}
+                          </Text>
+                        </View>
+                        <View
+                          style={[
+                            styles.identityMini,
+                            styles.identityDocMiddle,
+                          ]}
+                        >
+                          <Text style={styles.identityLabel}>
+                            DATA DE INSCRIÇÃO
+                          </Text>
+                          <Text style={styles.identityValue}>
+                            {mockIdentityCard.inscricao}
+                          </Text>
+                        </View>
+                        <View
+                          style={[styles.identityMini, styles.identityDocRight]}
+                        >
+                          <Text style={styles.identityLabel}>USUÁRIO</Text>
+                          <Text style={styles.identityValue}>
+                            {filiacaoText}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={styles.identityInfo}>
+                      <View style={styles.identityRow}>
+                        <Text style={styles.identityLabel}>NOME</Text>
+                        <Text style={styles.identityValueMain}>
+                          {mockProfile.name.toUpperCase()}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.silhouette}>
+                      <MaterialCommunityIcons
+                        name="account"
+                        size={108}
+                        color="#0f1724"
+                      />
+                    </View>
+                  </View>
+                </LinearGradient>
+              </Animated.View>
+
+              <Animated.View
+                style={[
+                  styles.cardFace,
+                  styles.cardBack,
+                  { transform: [{ rotateY: backRotate }] },
+                ]}
+              >
+                <View style={styles.backStrip}>
+                  <Text style={styles.backStripLabel}>
+                    Código de recuperação
+                  </Text>
+                  <View style={styles.signatureStrip} />
+                  <View style={styles.cvvBox}>
+                    <Text style={styles.cvvText}>{otpCode}</Text>
+                  </View>
                 </View>
-              </View>
-              <View style={styles.backContact}>
-                <Text style={styles.backWebsite}>
-                  {mockProfileBack.contactEmail}
-                </Text>
-                <Text style={styles.backPhone}>
-                  {mockProfileBack.contactPhone}
-                </Text>
-              </View>
-              <View style={styles.backMetaRow}>
-                <View style={styles.backChip}>
-                  <Image
-                    source={require("../../assets/logos/Logo_00_1.png")}
-                    style={styles.backChipLogo}
-                    resizeMode="contain"
-                  />
-                </View>
-                <View style={styles.backBlurb}>
-                  <Text style={styles.backBlurbText}>
-                    {mockProfileBack.blurb}
+                <View style={styles.backContact}>
+                  <Text style={styles.backWebsite}>
+                    {mockProfileBack.contactEmail}
+                  </Text>
+                  <Text style={styles.backPhone}>
+                    {mockProfileBack.contactPhone}
                   </Text>
                 </View>
-              </View>
-            </Animated.View>
-          </View>
-        </Pressable>
+                <View style={styles.backMetaRow}>
+                  <View style={styles.backChip}>
+                    <Image
+                      source={require("../../assets/logos/Logo_00_1.png")}
+                      style={styles.backChipLogo}
+                      resizeMode="contain"
+                    />
+                  </View>
+                  <View style={styles.backBlurb}>
+                    <Text style={styles.backBlurbText}>
+                      {mockProfileBack.blurb}
+                    </Text>
+                  </View>
+                </View>
+              </Animated.View>
+            </View>
+          </Pressable>
 
-        <View style={styles.cardLabelRow}>
-          <View style={styles.cardLabelGroup}>
-            <MaterialCommunityIcons
-              name="shield-lock"
-              size={22}
-              color={colors.surface}
-            />
-            <Text style={styles.cardLabel}>Seguranca</Text>
-          </View>
-          <View style={styles.tipPill}>
-            <MaterialCommunityIcons
-              name="lock-reset"
-              size={16}
-              color="#1d3a2d"
-            />
-            <Text style={styles.tipText}>Atualize sua senha</Text>
-          </View>
-        </View>
-        <View style={styles.securityCard}>
-          <Text style={styles.sectionTitle}>Alterar senha</Text>
-          <Text style={styles.sectionSubtitle}>
-            Use uma combinacao forte com letras maiusculas, minusculas e
-            numeros.
-          </Text>
-          <View style={styles.form}>
-            <View style={styles.inputWrapper}>
+          <View style={styles.cardLabelRow}>
+            <View style={styles.cardLabelGroup}>
               <MaterialCommunityIcons
-                name="lock-alert-outline"
-                size={20}
-                color="#0d1b2a"
-                style={styles.inputIcon}
+                name="shield-lock"
+                size={22}
+                color={colors.surface}
               />
-              <TextField
-                placeholder="Senha atual"
-                secureTextEntry={!currentPasswordVisible}
-                value={currentPassword}
-                onChangeText={setCurrentPassword}
-                style={[styles.input, styles.inputWithIcon]}
+              <Text style={styles.cardLabel}>Seguranca</Text>
+            </View>
+            <View style={styles.tipPill}>
+              <MaterialCommunityIcons
+                name="lock-reset"
+                size={16}
+                color="#1d3a2d"
               />
-              <Pressable
-                onPress={() =>
-                  setCurrentPasswordVisible((prevVisible) => !prevVisible)
-                }
-                hitSlop={10}
-                style={styles.passwordToggle}
-              >
+              <Text style={styles.tipText}>Atualize sua senha</Text>
+            </View>
+          </View>
+          <View style={styles.securityCard}>
+            <Text style={styles.sectionTitle}>Alterar senha</Text>
+            <Text style={styles.sectionSubtitle}>
+              Use uma combinacao forte com letras maiusculas, minusculas e
+              numeros.
+            </Text>
+            <View style={styles.form}>
+              <View style={styles.inputWrapper}>
                 <MaterialCommunityIcons
-                  name={currentPasswordVisible ? "eye-off-outline" : "eye-outline"}
+                  name="lock-alert-outline"
                   size={20}
                   color="#0d1b2a"
+                  style={styles.inputIcon}
                 />
-              </Pressable>
-            </View>
-            <View style={styles.inputWrapper}>
-              <MaterialCommunityIcons
-                name="lock-plus-outline"
-                size={20}
-                color="#0d1b2a"
-                style={styles.inputIcon}
-              />
-              <TextField
-                placeholder="Nova senha"
-                secureTextEntry={!newPasswordVisible}
-                value={newPassword}
-                onChangeText={setNewPassword}
-                style={[styles.input, styles.inputWithIcon]}
-              />
-              <Pressable
-                onPress={() => setNewPasswordVisible((prevVisible) => !prevVisible)}
-                hitSlop={10}
-                style={styles.passwordToggle}
-              >
+                <TextField
+                  placeholder="Senha atual"
+                  secureTextEntry={!currentPasswordVisible}
+                  value={currentPassword}
+                  onChangeText={setCurrentPassword}
+                  style={[styles.input, styles.inputWithIcon]}
+                />
+                <Pressable
+                  onPress={() =>
+                    setCurrentPasswordVisible((prevVisible) => !prevVisible)
+                  }
+                  hitSlop={10}
+                  style={styles.passwordToggle}
+                >
+                  <MaterialCommunityIcons
+                    name={
+                      currentPasswordVisible ? "eye-off-outline" : "eye-outline"
+                    }
+                    size={20}
+                    color="#0d1b2a"
+                  />
+                </Pressable>
+              </View>
+              <View style={styles.inputWrapper}>
                 <MaterialCommunityIcons
-                  name={newPasswordVisible ? "eye-off-outline" : "eye-outline"}
+                  name="lock-plus-outline"
                   size={20}
                   color="#0d1b2a"
+                  style={styles.inputIcon}
                 />
-              </Pressable>
-            </View>
-            <View style={styles.inputWrapper}>
-              <MaterialCommunityIcons
-                name="lock-check-outline"
-                size={20}
-                color="#0d1b2a"
-                style={styles.inputIcon}
-              />
-              <TextField
-                placeholder="Confirmar nova senha"
-                secureTextEntry={!confirmPasswordVisible}
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                style={[styles.input, styles.inputWithIcon]}
-              />
-              <Pressable
-                onPress={() =>
-                  setConfirmPasswordVisible((prevVisible) => !prevVisible)
-                }
-                hitSlop={10}
-                style={styles.passwordToggle}
-              >
+                <TextField
+                  placeholder="Nova senha"
+                  secureTextEntry={!newPasswordVisible}
+                  value={newPassword}
+                  onChangeText={setNewPassword}
+                  style={[styles.input, styles.inputWithIcon]}
+                />
+                <Pressable
+                  onPress={() =>
+                    setNewPasswordVisible((prevVisible) => !prevVisible)
+                  }
+                  hitSlop={10}
+                  style={styles.passwordToggle}
+                >
+                  <MaterialCommunityIcons
+                    name={
+                      newPasswordVisible ? "eye-off-outline" : "eye-outline"
+                    }
+                    size={20}
+                    color="#0d1b2a"
+                  />
+                </Pressable>
+              </View>
+              <View style={styles.inputWrapper}>
                 <MaterialCommunityIcons
-                  name={confirmPasswordVisible ? "eye-off-outline" : "eye-outline"}
+                  name="lock-check-outline"
                   size={20}
                   color="#0d1b2a"
+                  style={styles.inputIcon}
                 />
-              </Pressable>
+                <TextField
+                  placeholder="Confirmar nova senha"
+                  secureTextEntry={!confirmPasswordVisible}
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                  style={[styles.input, styles.inputWithIcon]}
+                />
+                <Pressable
+                  onPress={() =>
+                    setConfirmPasswordVisible((prevVisible) => !prevVisible)
+                  }
+                  hitSlop={10}
+                  style={styles.passwordToggle}
+                >
+                  <MaterialCommunityIcons
+                    name={
+                      confirmPasswordVisible ? "eye-off-outline" : "eye-outline"
+                    }
+                    size={20}
+                    color="#0d1b2a"
+                  />
+                </Pressable>
+              </View>
+              <PrimaryButton
+                label="Alterar senha"
+                onPress={handleChangePassword}
+                style={styles.cta}
+                textStyle={styles.ctaText}
+              />
             </View>
-            <PrimaryButton
-              label="Alterar senha"
-              onPress={handleChangePassword}
-              style={styles.cta}
-              textStyle={styles.ctaText}
-            />
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
       </KeyboardAvoidingView>
       <InlineMenuBar onProfile={onProfile} onMenu={onMenu} onInfo={onInfo} />
     </ScreenBackground>
@@ -481,199 +543,261 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     overflow: "hidden",
     backfaceVisibility: "hidden",
-    shadowColor: "#0e241a",
-    shadowOpacity: 0.28,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 14 },
+    shadowColor: "#0d2f57",
+    shadowOpacity: 0.24,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 12 },
   },
-  creditCard: {
+  identityCard: {
     flex: 1,
     borderRadius: 22,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 18,
     overflow: "hidden",
     position: "relative",
   },
   cardBack: {
     flex: 1,
-    backgroundColor: "#111418",
+    backgroundColor: "#dbe9f5",
     padding: 18,
     gap: 14,
     alignItems: "stretch",
     justifyContent: "flex-start",
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.12)",
+    borderColor: "rgba(10,55,96,0.15)",
   },
   cardOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(255,255,255,0.04)",
+    backgroundColor: "rgba(255,255,255,0.32)",
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.12)",
+    borderColor: "rgba(9,36,74,0.08)",
   },
   cardDots: {
     position: "absolute",
-    top: 14,
-    left: 12,
-    width: 110,
-    height: "100%",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     overflow: "hidden",
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 6,
+    paddingHorizontal: 12,
+    paddingTop: 10,
+    gap: 2,
   },
   cardDot: {
-    width: 5,
-    height: 5,
+    width: 6,
+    height: 6,
     borderRadius: 3,
-    backgroundColor: "rgba(255,255,255,0.12)",
-    marginRight: 3,
-    marginBottom: 3,
+    backgroundColor: "rgba(9,36,74,0.08)",
+    margin: 3,
   },
-  cardVertical: {
-    position: "absolute",
-    right: -30,
-    top: "50%",
-    transform: [{ rotate: "-90deg" }, { translateY: -8 }],
-    color: "rgba(255,255,255,0.86)",
-    fontWeight: "800",
-    letterSpacing: 1,
-    fontSize: 12,
-    textAlign: "center",
-  },
-  cardTopRow: {
+  identityHeader: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-end",
-    gap: 10,
-    marginBottom: 6,
+    gap: 14,
+    marginBottom: 10,
   },
-  brandGroup: {
-    alignItems: "flex-end",
-  },
-  cardBrand: {
-    color: "#f5efe4",
-    fontWeight: "800",
-    fontSize: 16,
-    letterSpacing: 1,
-  },
-  cardTagline: {
-    color: "rgba(255,255,255,0.7)",
-    fontWeight: "700",
-    fontSize: 11,
-    letterSpacing: 0.8,
-  },
-  brandLogo: {
-    width: 42,
-    height: 42,
-    resizeMode: "contain",
-  },
-  cardChipRow: {
-    flexDirection: "row",
+  crestBlock: {
     alignItems: "center",
-    gap: 12,
-    marginTop: 8,
-    marginBottom: 6,
+    gap: 6,
   },
-  chip: {
-    width: 52,
-    height: 36,
-    borderRadius: 8,
-    overflow: "hidden",
-    backgroundColor: "#dfe2e5",
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.18)",
-    shadowColor: "#000",
-    shadowOpacity: 0.18,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    position: "relative",
+  crestCircle: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 0,
+    backgroundColor: "transparent",
   },
-  chipFill: {
-    ...StyleSheet.absoluteFillObject,
+  crestLogo: {
+    width: 96,
+    height: 96,
+    tintColor: "#0b0b0b",
   },
-  chipLines: {
-    position: "absolute",
-    top: 7,
-    left: 8,
-    right: 8,
-    height: 22,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-    borderColor: "rgba(0,0,0,0.16)",
-    borderRadius: 6,
-  },
-  chipNotch: {
-    position: "absolute",
-    top: 10,
-    left: 18,
-    width: 18,
-    height: 12,
-    borderRadius: 2,
-    backgroundColor: "rgba(0,0,0,0.08)",
-  },
-  wave: {
-    height: 18,
-    width: 36,
-    borderRadius: 10,
-    backgroundColor: "rgba(255,255,255,0.3)",
-  },
-  cardNumberBlock: {
-    marginTop: 12,
-    gap: 4,
-    alignItems: "flex-start",
-    paddingLeft: 6,
-  },
-  cardNumber: {
-    color: "#f7f2e7",
-    fontSize: 21,
-    letterSpacing: 3.6,
+  crestText: {
+    color: "#e9fbff",
     fontWeight: "900",
+    letterSpacing: 1,
+    fontSize: 10,
+    marginTop: 2,
   },
-  cardMetaRow: {
+  crestRibbon: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 8,
+    gap: 3,
   },
-  validBlock: {
-    gap: 1,
-    alignItems: "flex-start",
-    minWidth: 72,
+  ribbonStripe: {
+    width: 14,
+    height: 6,
+    borderRadius: 2,
   },
-  validRow: {
-    flexDirection: "row",
+  ribbonGreen: { backgroundColor: "#1f7f63" },
+  ribbonYellow: { backgroundColor: "#e4be3b" },
+  ribbonBlue: { backgroundColor: "#2d6db5" },
+  identityHeaderText: {
+    flex: 1,
     gap: 2,
     alignItems: "center",
   },
-  validLabel: {
-    color: "rgba(255,255,255,0.62)",
-    fontSize: 10,
-    letterSpacing: 1,
-  },
-  validValue: {
-    color: "#f7f2e7",
-    fontWeight: "800",
-    fontSize: 13,
-    letterSpacing: 1,
-  },
-  nameBlock: {
-    flex: 1,
-    marginLeft: 12,
-    justifyContent: "center",
-  },
-  cardHolder: {
-    color: "#f7f2e7",
-    fontWeight: "800",
+  councilTitle: {
+    color: "#2b4263",
+    fontWeight: "900",
+    fontSize: 16,
     letterSpacing: 0.8,
-    fontSize: 13,
+    textAlign: "center",
   },
-  bottomLogo: {
+  councilSubtitle: {
+    color: "#2b4263",
+    fontWeight: "800",
+    fontSize: 12,
+    letterSpacing: 0.6,
+    textAlign: "center",
+  },
+  cardHeading: {
+    color: "#0f365d",
+    fontWeight: "900",
+    fontSize: 13,
+    letterSpacing: 0.6,
+  },
+  identityBody: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    marginTop: 4,
+  },
+  identityLeft: {
+    width: 110,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    gap: 8,
+    paddingTop: 4,
+    paddingLeft: 0,
+  },
+  identityLeftTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingLeft: -4,
+  },
+  identityDocsRow: {
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 12,
+    justifyContent: "space-between",
+    width: "100%",
+    flexWrap: "nowrap",
+  },
+  identityChip: {
     width: 68,
-    height: 68,
-    resizeMode: "contain",
-    tintColor: "#f5efe4",
-    alignSelf: "flex-end",
-    marginTop: 6,
+    height: 48,
+    borderRadius: 12,
+    overflow: "hidden",
+    backgroundColor: "#e9d59a",
+    borderWidth: 1,
+    borderColor: "rgba(0,0,0,0.12)",
+    shadowColor: "#0a1c30",
+    shadowOpacity: 0.18,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 5 },
+    position: "relative",
+  },
+  identityChipFill: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  identityChipLines: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    right: 10,
+    height: 28,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderColor: "rgba(0,0,0,0.18)",
+    borderRadius: 8,
+  },
+  identityChipCore: {
+    position: "absolute",
+    top: 14,
+    left: 22,
+    width: 24,
+    height: 18,
+    borderRadius: 4,
+    backgroundColor: "rgba(0,0,0,0.12)",
+  },
+  identityArrow: {
+    width: 0,
+    height: 0,
+    borderTopWidth: 16,
+    borderBottomWidth: 16,
+    borderRightWidth: 18,
+    borderTopColor: "transparent",
+    borderBottomColor: "transparent",
+    borderRightColor: "#c1323b",
+    marginTop: 0,
+  },
+  identityIdBlock: {
+    display: "none",
+  },
+  identityValueSmall: {
+    color: "#0b1c30",
+    fontWeight: "800",
+    fontSize: 12,
+    lineHeight: 16,
+  },
+  identityInfo: {
+    flex: 1,
+    gap: 10,
+    paddingLeft: 6,
+    paddingRight: 110,
+  },
+  identityRow: {
+    gap: 4,
+  },
+  identityLabel: {
+    color: "#11487d",
+    fontWeight: "800",
+    fontSize: 10.5,
+    letterSpacing: 0.4,
+  },
+  identityValueMain: {
+    color: "#0b1c30",
+    fontWeight: "900",
+    fontSize: 14,
+    lineHeight: 18,
+    letterSpacing: 0.4,
+  },
+  identityValue: {
+    color: "#0b1c30",
+    fontWeight: "800",
+    fontSize: 12,
+    lineHeight: 16,
+  },
+  identityMini: {
+    minWidth: 120,
+    maxWidth: 200,
+    gap: 2,
+    alignItems: "flex-start",
+    flex: 1,
+  },
+  identityDocLeft: {
+    paddingTop: 8,
+  },
+  identityDocMiddle: {
+    marginLeft: -14,
+    paddingTop: 8,
+  },
+  identityDocRight: {
+    alignItems: "flex-start",
+    paddingTop: 8,
+  },
+  silhouette: {
+    position: "absolute",
+    right: -16,
+    top: -25,
+    opacity: 0.92,
   },
   securityCard: {
     backgroundColor: "rgba(255,255,255,0.1)",
@@ -755,41 +879,45 @@ const styles = StyleSheet.create({
     display: "none",
   },
   backStrip: {
-    backgroundColor: "rgba(255,255,255,0.08)",
-    borderRadius: 8,
-    paddingVertical: 10,
+    backgroundColor: "rgba(255,255,255,0.86)",
+    borderRadius: 10,
+    paddingVertical: 14,
     paddingHorizontal: 12,
     position: "relative",
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.08)",
+    borderColor: "rgba(17,72,125,0.18)",
+    shadowColor: "#0e355f",
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    minHeight: 86,
   },
   backStripLabel: {
-    color: "rgba(255,255,255,0.7)",
+    color: "#0f365d",
     fontSize: 11,
-    fontWeight: "700",
-    marginBottom: 6,
+    fontWeight: "800",
+    marginBottom: 8,
   },
-  signatureLine: {
+  signatureStrip: {
     height: 32,
-    backgroundColor: "rgba(255,255,255,0.1)",
+    backgroundColor: "rgba(232,242,252,0.9)",
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.15)",
+    borderColor: "rgba(17,72,125,0.18)",
   },
   cvvBox: {
     position: "absolute",
     right: 12,
-    top: "50%",
-    transform: [{ translateY: -12 }],
+    top: 26,
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 8,
     borderWidth: 1.5,
-    borderColor: "#d65a5a",
-    backgroundColor: "rgba(0,0,0,0.25)",
+    borderColor: "#bb2c35",
+    backgroundColor: "rgba(255,255,255,0.92)",
   },
   cvvText: {
-    color: "#e6d4b6",
+    color: "#9b1b25",
     fontWeight: "900",
     fontSize: 14,
     letterSpacing: 1,
@@ -800,12 +928,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
   },
   backWebsite: {
-    color: "#ffffff",
+    color: "#0b1c30",
     fontWeight: "800",
     fontSize: 13,
   },
   backPhone: {
-    color: "rgba(255,255,255,0.8)",
+    color: "#1f2e45",
     fontWeight: "700",
     fontSize: 12,
   },
@@ -836,14 +964,14 @@ const styles = StyleSheet.create({
     gap: 0,
   },
   backBlurbText: {
-    color: "rgba(255,255,255,0.75)",
+    color: "#1f2e45",
     fontSize: 12,
     lineHeight: 14,
   },
   backChipLogo: {
     width: 108,
     height: 60,
-    tintColor: "rgba(255,255,255,0.9)",
+    tintColor: "#1f2e45",
   },
 });
 
