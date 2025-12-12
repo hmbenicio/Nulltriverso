@@ -38,7 +38,7 @@ const mockProfileBack = {
 const mockIdentityCard = {
   council: "NULLTRIVERSO",
   regional: "ECOSSISTEMA DE CALCULOS NUTRICIONAIS",
-  title: "CÉDULA DE IDENTIDADE DO USUÁRIO",
+  title: "IDENTIDADE DO USUARIO",
   crm: "009999/PA",
   filiacao: "USUARIO",
   inscricao: "14/09/1966",
@@ -249,9 +249,7 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
                             styles.identityDocMiddle,
                           ]}
                         >
-                          <Text style={styles.identityLabel}>
-                            DATA DE INSCRIÇÃO
-                          </Text>
+                          <Text style={styles.identityLabel}>INSCRIÇÃO</Text>
                           <Text style={styles.identityValue}>
                             {mockIdentityCard.inscricao}
                           </Text>
@@ -277,7 +275,7 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
                     <View style={styles.silhouette}>
                       <MaterialCommunityIcons
                         name="account"
-                        size={108}
+                        size={96}
                         color="#0f1724"
                       />
                     </View>
@@ -551,8 +549,8 @@ const styles = StyleSheet.create({
   identityCard: {
     flex: 1,
     borderRadius: 22,
-    paddingVertical: 16,
-    paddingHorizontal: 18,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
     overflow: "hidden",
     position: "relative",
   },
@@ -610,10 +608,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderWidth: 0,
     backgroundColor: "transparent",
+    marginTop: -8,
   },
   crestLogo: {
-    width: 96,
-    height: 96,
+    width: 78,
+    height: 78,
     tintColor: "#0b0b0b",
   },
   crestText: {
@@ -626,6 +625,7 @@ const styles = StyleSheet.create({
   crestRibbon: {
     flexDirection: "row",
     gap: 3,
+    marginTop: -12,
   },
   ribbonStripe: {
     width: 14,
@@ -650,8 +650,8 @@ const styles = StyleSheet.create({
   councilSubtitle: {
     color: "#2b4263",
     fontWeight: "800",
-    fontSize: 12,
-    letterSpacing: 0.6,
+    fontSize: 9,
+    letterSpacing: 0.4,
     textAlign: "center",
   },
   cardHeading: {
@@ -671,8 +671,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    gap: 8,
-    paddingTop: 4,
+    gap: 14,
+    paddingTop: 0,
     paddingLeft: 0,
   },
   identityLeftTop: {
@@ -682,7 +682,7 @@ const styles = StyleSheet.create({
     paddingLeft: -4,
   },
   identityDocsRow: {
-    marginTop: 10,
+    marginTop: 14,
     flexDirection: "row",
     alignItems: "flex-start",
     gap: 12,
@@ -691,8 +691,8 @@ const styles = StyleSheet.create({
     flexWrap: "nowrap",
   },
   identityChip: {
-    width: 68,
-    height: 48,
+    width: 60,
+    height: 42,
     borderRadius: 12,
     overflow: "hidden",
     backgroundColor: "#e9d59a",
@@ -703,13 +703,14 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 5 },
     position: "relative",
+    transform: [{ translateY: 16 }],
   },
   identityChipFill: {
     ...StyleSheet.absoluteFillObject,
   },
   identityChipLines: {
     position: "absolute",
-    top: 10,
+    top: 6,
     left: 10,
     right: 10,
     height: 28,
@@ -720,8 +721,8 @@ const styles = StyleSheet.create({
   },
   identityChipCore: {
     position: "absolute",
-    top: 14,
-    left: 22,
+    top: 11,
+    left: 17,
     width: 24,
     height: 18,
     borderRadius: 4,
@@ -736,7 +737,7 @@ const styles = StyleSheet.create({
     borderTopColor: "transparent",
     borderBottomColor: "transparent",
     borderRightColor: "#c1323b",
-    marginTop: 0,
+    marginTop: 30,
   },
   identityIdBlock: {
     display: "none",
@@ -750,8 +751,10 @@ const styles = StyleSheet.create({
   identityInfo: {
     flex: 1,
     gap: 10,
-    paddingLeft: 6,
+    paddingLeft: 0,
     paddingRight: 80,
+    marginLeft: -8,
+    paddingTop: 10,
   },
   identityRow: {
     gap: 4,
@@ -786,17 +789,18 @@ const styles = StyleSheet.create({
     paddingTop: 8,
   },
   identityDocMiddle: {
-    marginLeft: -14,
+    marginLeft: -6,
     paddingTop: 8,
   },
   identityDocRight: {
     alignItems: "flex-start",
     paddingTop: 8,
+    marginLeft: -22,
   },
   silhouette: {
     position: "absolute",
     right: -16,
-    top: -25,
+    top: -10,
     opacity: 0.92,
   },
   securityCard: {
