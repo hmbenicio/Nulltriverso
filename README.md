@@ -34,16 +34,25 @@ npm start   # Expo DevTools (a = Android, i = iOS, w = Web)
 
 Requisitos: Node.js 18+ e Expo Go em um dispositivo real ou emulador. Testes em aparelho real sao recomendados para validar teclados decimais e animacoes.
 
-## Estrutura
+## Estrutura atualizada (frontend)
 
 - `Nulltriverso/frontend/App.js` controla o fluxo entre login, menu e calculadoras.
 - `Nulltriverso/frontend/src/navigation` concentra rotas, actions, hook de navegacao e registry de telas (login, cadastro, reset, perfil, menu e 12 calculadoras).
-- `Nulltriverso/frontend/src/screens` reune menu + 12 calculadoras (IMC, RCEst, RCQ, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macro, Hidrica) e as telas auxiliares (Login, Register, ResetPassword, Profile).
-- `Nulltriverso/frontend/src/components` traz cards, botoes, inputs, gauge do IMC, barra de menu inferior e campo de estrelas.
+- `Nulltriverso/frontend/src/screens` reune menu + 12 calculadoras (IMC, RCEst, RCQ, Peso acamado, TMB, EER, GET, NAF, %GC, MI, Macro, Hidrica) e as telas auxiliares (Login, Register, ResetPassword, Profile). Cada tela pode ter subpasta propria para estilos, mocks e subcomponentes (ex.: `screens/profile/profileStyles.js` e `profileMocks.js`).
+- `Nulltriverso/frontend/src/components` traz cards, botoes, inputs, gauge do IMC, barra de menu inferior e campo de estrelas. Mantenha apenas itens genericos aqui; itens especificos da tela ficam na pasta da feature.
 - `Nulltriverso/frontend/src/constants` guarda faixas, fatores, protocolos e chaves de storage.
 - `Nulltriverso/frontend/src/utils` concentra funcoes puras para todos os calculos.
+- `Nulltriverso/frontend/src/theme` unifica cores, gradientes e tokens reutilizaveis.
 - `Docs/` possui a documentacao completa; `Apresentacao/` traz roteiro de demo.
 - `Nulltriverso/backend` permanece reservado para futura integracao.
+
+### Padroes de codigo e organizacao
+
+- Estilos separados em arquivos dedicados por tela (`.../screenNameStyles.js` ou em subpasta `screenName/screenNameStyles.js`); estilos compartilhados ficam em `theme`.
+- Dados mockados e constantes especificas de cada tela vivem em arquivos de mock/fixtures ao lado da tela.
+- Componentes devem ser pequenos e reutilizaveis; extraia blocos grandes das telas para `components/` ou subcomponentes internos de cada feature.
+- Validacoes e calculos permanecem em funcoes puras dentro de `utils`.
+- Evite strings magicas: centralize chaves, rotas e protocolos em `constants`.
 
 ## Documentacao principal
 
@@ -61,11 +70,11 @@ Requisitos: Node.js 18+ e Expo Go em um dispositivo real ou emulador. Testes em 
 > <li><a href="Docs/11-Registro de Testes de Usabilidade.md"> Registro de Testes de Usabilidade</a></li>
 > <li><a href="Docs/12-Apresentação do Projeto.md"> Apresentação do Projeto</a></li>
 > <li><a href="Docs/13-Referências.md"> Referências</a></li>
+> <li><a href="Docs/14-Guia de Codigo e Organizacao.md"> Guia de Codigo e Organizacao</a></li>
 </ol>
 
 ## Desenvolvedor
 Helbert Miranda Benicio (Analista/Dev e Nutricionista CRN9 21602).
-
 
 
 
