@@ -7,6 +7,7 @@ import {
   Platform,
   Pressable,
   ScrollView,
+  Modal,
   Text,
   View,
 } from "react-native";
@@ -33,6 +34,24 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [flipped, setFlipped] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [fullName, setFullName] = useState(mockProfile.name);
+  const [email, setEmail] = useState(mockProfile.email || "");
+  const [phone, setPhone] = useState(mockProfile.phone || "");
+  const [userType, setUserType] = useState(() => {
+    const role = (mockProfile.role || "").toLowerCase();
+    if (role.startsWith("pro")) return "pro";
+    if (role.startsWith("est")) return "student";
+    if (role) return "other";
+    return "";
+  });
+  const [editTypeMenuOpen, setEditTypeMenuOpen] = useState(false);
+  const [proArea, setProArea] = useState("");
+  const [proRole, setProRole] = useState("");
+  const [proRegistration, setProRegistration] = useState("");
+  const [proCouncil, setProCouncil] = useState("");
+  const [studentCourse, setStudentCourse] = useState("");
+  const [studentInstitution, setStudentInstitution] = useState("");
   const flipAnim = useRef(new Animated.Value(0)).current;
   const otpCode = useMemo(() => {
     const code = Math.floor(Math.random() * 1000000);
@@ -93,6 +112,22 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
     setConfirmPassword("");
   };
 
+  const handleOpenEdit = () => {
+    setEditTypeMenuOpen(false);
+    setEditModalVisible(true);
+  };
+
+  const handleCloseEdit = () => {
+    setEditTypeMenuOpen(false);
+    setEditModalVisible(false);
+  };
+
+  const handleSaveEdit = () => {
+    Alert.alert("Perfil atualizado", "Dados pessoais atualizados com sucesso.");
+    setEditTypeMenuOpen(false);
+    setEditModalVisible(false);
+  };
+
   return (
     <ScreenBackground contentStyle={styles.screen}>
       <StatusBar style="light" />
@@ -131,13 +166,17 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
               />
               <Text style={styles.cardLabel}>Dados pessoais</Text>
             </View>
-            <View style={styles.badge}>
-              <MaterialCommunityIcons
-                name="shield-check"
-                size={16}
-                color="#1c3c5a"
-              />
-              <Text style={styles.badgeText}>Verificado</Text>
+            <View style={styles.badgeRow}>
+              <Pressable onPress={handleOpenEdit} hitSlop={8}>
+                <View style={styles.badge}>
+                  <MaterialCommunityIcons
+                    name="pencil-outline"
+                    size={16}
+                    color="#1c3c5a"
+                  />
+                  <Text style={styles.badgeText}>Editar</Text>
+                </View>
+              </Pressable>
             </View>
           </View>
           <Pressable onPress={handleFlipCard}>
@@ -437,6 +476,181 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
         </ScrollView>
       </KeyboardAvoidingView>
       <InlineMenuBar onProfile={onProfile} onMenu={onMenu} onInfo={onInfo} />
+
+      <Modal
+        visible={editModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={handleCloseEdit}
+      >
+        <Pressable
+          style={styles.modalOverlay}
+          onPress={handleCloseEdit}
+        >
+          <Pressable style={styles.modalCard}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>Editar dados pessoais</Text>
+              <Pressable onPress={handleCloseEdit} hitSlop={8}>
+                <MaterialCommunityIcons
+                  name="close"
+                  size={22}
+                  color="#0d1b2a"
+                />
+              </Pressable>
+            </View>
+            <View style={styles.modalForm}>
+              <TextField
+                placeholder="Nome completo"
+                value={fullName}
+                onChangeText={setFullName}
+                style={styles.modalInput}
+              />
+              <TextField
+                placeholder="E-mail"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                style={styles.modalInput}
+              />
+              <TextField
+                placeholder="Telefone"
+                value={phone}
+                onChangeText={setPhone}
+                keyboardType="phone-pad"
+                style={styles.modalInput}
+              />
+              <View style={styles.selectColumn}>
+                <Text style={styles.selectLabel}>Tipo de usuário</Text>
+                <Pressable
+                  style={[
+                    styles.selectInput,
+                    editTypeMenuOpen && styles.selectInputOpen,
+                  ]}
+                  onPress={() => setEditTypeMenuOpen((prev) => !prev)}
+                >
+                  <Text
+                    style={[
+                      styles.selectValue,
+                      !userType && styles.selectPlaceholder,
+                    ]}
+                  >
+                    {userType === "pro"
+                      ? "Profissional"
+                      : userType === "student"
+                      ? "Estudante"
+                      : userType === "other"
+                      ? "Outros"
+                      : "Selecione"}
+                  </Text>
+                  <MaterialCommunityIcons
+                    name={editTypeMenuOpen ? "chevron-up" : "chevron-down"}
+                    size={20}
+                    color="#0d1b2a"
+                  />
+                </Pressable>
+                {editTypeMenuOpen && (
+                  <View style={styles.selectMenu}>
+                    {[
+                      { key: "pro", label: "Profissional" },
+                      { key: "student", label: "Estudante" },
+                      { key: "other", label: "Outros" },
+                    ].map((option) => (
+                      <Pressable
+                        key={option.key}
+                        style={styles.selectOption}
+                        onPress={() => {
+                          setUserType(option.key);
+                          setEditTypeMenuOpen(false);
+                        }}
+                      >
+                        <Text
+                          style={[
+                            styles.selectOptionText,
+                            userType === option.key &&
+                              styles.selectOptionTextActive,
+                          ]}
+                        >
+                          {option.label}
+                        </Text>
+                        {userType === option.key && (
+                          <MaterialCommunityIcons
+                            name="check"
+                            size={18}
+                            color="#0f482f"
+                          />
+                        )}
+                      </Pressable>
+                    ))}
+                  </View>
+                )}
+              </View>
+
+              {userType === "pro" && (
+                <View style={styles.typeDetails}>
+                  <Text style={styles.typeDetailsTitle}>Dados profissionais</Text>
+                  <TextField
+                    placeholder="Area de atuacao"
+                    value={proArea}
+                    onChangeText={setProArea}
+                    style={styles.modalInput}
+                  />
+                  <TextField
+                    placeholder="Profissao"
+                    value={proRole}
+                    onChangeText={setProRole}
+                    style={styles.modalInput}
+                  />
+                  <TextField
+                    placeholder="Numero de registro"
+                    value={proRegistration}
+                    onChangeText={setProRegistration}
+                    style={styles.modalInput}
+                  />
+                  <TextField
+                    placeholder="Conselho"
+                    value={proCouncil}
+                    onChangeText={setProCouncil}
+                    style={styles.modalInput}
+                  />
+                </View>
+              )}
+
+              {userType === "student" && (
+                <View style={styles.typeDetails}>
+                  <Text style={styles.typeDetailsTitle}>Dados estudantis</Text>
+                  <TextField
+                    placeholder="Curso"
+                    value={studentCourse}
+                    onChangeText={setStudentCourse}
+                    style={styles.modalInput}
+                  />
+                  <TextField
+                    placeholder="Instituicao de ensino"
+                    value={studentInstitution}
+                    onChangeText={setStudentInstitution}
+                    style={styles.modalInput}
+                  />
+                </View>
+              )}
+            </View>
+            <View style={styles.modalActions}>
+              <Pressable
+                style={styles.secondaryAction}
+                onPress={() => setEditModalVisible(false)}
+              >
+                <Text style={styles.secondaryActionText}>Cancelar</Text>
+              </Pressable>
+              <PrimaryButton
+                label="Salvar"
+                onPress={handleSaveEdit}
+                style={styles.modalPrimary}
+                textStyle={styles.modalPrimaryText}
+              />
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </ScreenBackground>
   );
 };
