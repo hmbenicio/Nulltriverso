@@ -135,7 +135,7 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
               <MaterialCommunityIcons
                 name="shield-check"
                 size={16}
-                color="#123425"
+                color="#1c3c5a"
               />
               <Text style={styles.badgeText}>Verificado</Text>
             </View>
@@ -149,7 +149,7 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
                 ]}
               >
                 <LinearGradient
-                  colors={["#dbe9f5", "#cbdce9", "#dfeaf6"]}
+                  colors={["#4f7f99", "#75a7bd", "#4f7f99"]}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                   style={styles.identityCard}
@@ -256,7 +256,7 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
                       <MaterialCommunityIcons
                         name="account"
                         size={96}
-                        color="#0f1724"
+                        color="#1f304a"
                       />
                     </View>
                   </View>
@@ -266,41 +266,47 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
               <Animated.View
                 style={[
                   styles.cardFace,
-                  styles.cardBack,
                   { transform: [{ rotateY: backRotate }] },
                 ]}
               >
-                <View style={styles.backStrip}>
-                  <Text style={styles.backStripLabel}>
-                    Código de recuperação
-                  </Text>
-                  <View style={styles.signatureStrip} />
-                  <View style={styles.cvvBox}>
-                    <Text style={styles.cvvText}>{otpCode}</Text>
+                <LinearGradient
+                  colors={["#4f7f99", "#75a7bd", "#4f7f99"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={styles.cardBack}
+                >
+                  <View style={styles.backStrip}>
+                    <Text style={styles.backStripLabel}>
+                      Código de recuperação
+                    </Text>
+                    <View style={styles.signatureStrip} />
+                    <View style={styles.cvvBox}>
+                      <Text style={styles.cvvText}>{otpCode}</Text>
+                    </View>
                   </View>
-                </View>
-                <View style={styles.backContact}>
-                  <Text style={styles.backWebsite}>
-                    {mockProfileBack.contactEmail}
-                  </Text>
-                  <Text style={styles.backPhone}>
-                    {mockProfileBack.contactPhone}
-                  </Text>
-                </View>
-                <View style={styles.backMetaRow}>
-                  <View style={styles.backChip}>
-                    <Image
-                      source={require("../../assets/logos/Logo_00_1.png")}
-                      style={styles.backChipLogo}
-                      resizeMode="contain"
-                    />
-                  </View>
-                  <View style={styles.backBlurb}>
-                    <Text style={styles.backBlurbText}>
-                      {mockProfileBack.blurb}
+                  <View style={styles.backContact}>
+                    <Text style={styles.backWebsite}>
+                      {mockProfileBack.contactEmail}
+                    </Text>
+                    <Text style={styles.backPhone}>
+                      {mockProfileBack.contactPhone}
                     </Text>
                   </View>
-                </View>
+                  <View style={styles.backMetaRow}>
+                    <View style={styles.backChip}>
+                      <Image
+                        source={require("../../assets/logos/Logo_00_1.png")}
+                        style={styles.backChipLogo}
+                        resizeMode="contain"
+                      />
+                    </View>
+                    <View style={styles.backBlurb}>
+                      <Text style={styles.backBlurbText}>
+                        {mockProfileBack.blurb}
+                      </Text>
+                    </View>
+                  </View>
+                </LinearGradient>
               </Animated.View>
             </View>
           </Pressable>
@@ -318,7 +324,7 @@ const ProfileScreen = ({ onMenu, onProfile, onInfo }) => {
               <MaterialCommunityIcons
                 name="lock-reset"
                 size={16}
-                color="#1d3a2d"
+                color="#1c3c5a"
               />
               <Text style={styles.tipText}>Atualize sua senha</Text>
             </View>
